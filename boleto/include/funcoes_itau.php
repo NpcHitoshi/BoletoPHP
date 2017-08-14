@@ -26,7 +26,6 @@
 // | Desenvolvimento Boleto Itaú: Glauber Portella		                  |
 // +----------------------------------------------------------------------+
 
-
 $codigobanco = "341";
 $codigo_banco_com_dv = geraCodigoBanco($codigobanco);
 $nummoeda = "9";
