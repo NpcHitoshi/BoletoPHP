@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="./s/images/faviconNPCATOA.ico"/>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <script src="js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <script src="js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Scada|Signika+Negative|Patua+One" rel="stylesheet" />
+  <link rel="stylesheet" href="fontawesome/css/font-awesome.min.css">  
+  <link rel="stylesheet" type="text/css" href="css/padrao.css">
+  <link rel="stylesheet" type="text/css" href="css/menu.css">
+  <title><c:out value="${title}"/></title>
+</head>
+<body>
+  <!-- Navbar Superior -->
+  <nav class="navbar navbar-inverse navbar-static-top menu_superior">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand text-hide" href="#">Logo NPC RHINDO
+        </a>
+      </div>
+      <div id="navbar8" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="disable">
+            <a href="ProcessaLoginServlet?action=logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+  </nav>
+  <!-- FIM Navbar Superior -->
+  <!-- Menu Lateral -->
+  <div class="nav-side-menu">
+    <div class="brand">Menu</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+    <div class="menu-list">
+      <ul id="menu-content" class="menu-content collapse out">
+        <a href="#">
+          <li class="user">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i> ${login.nomeFuncionario}
+          </li>
+        </a>
+        <a href="ControleFecharAtividadesServlet?action=carregar">
+          <li class="<c:out value="${fecharatd}"/>" >
+          <i class="fa fa-check-circle-o" aria-hidden="true"></i> Fechar Atividades
+        </li>
+      </a>
+      <a href="ControleTiposServlet?action=listar">
+        <li class="<c:out value="${tipoatd}"/>">
+        <i class="fa fa-list-ul" aria-hidden="true"></i> Tipos de Atividade
+      </li>
+    </a>
+    <a href="ControleSolicitacaoServlet?action=listar">
+      <li class="<c:out value="${solicita}"/>">
+      <i class="fa fa-thumb-tack" aria-hidden="true"></i> Solicitações
+    </li>
+  </a>
+  <a href="ControleRelatoriosServlet?action=carregar">
+    <li class="<c:out value="${relatorios}"/>">
+
+    <i class="fa fa-pie-chart" aria-hidden="true"></i> Relatórios
+  </li>
+</a>
+</ul>
+</div>
+</div>  
+<!-- FIM Menu Lateral -->
+</body>
