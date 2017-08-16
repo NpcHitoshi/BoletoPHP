@@ -323,8 +323,12 @@ function modulo_11($num, $base=9, $r=0)  {
     }
 
     /* Calculo do modulo 11 */
+            var_dump($soma);
+        echo $soma;
     if ($r == 0) {
         $soma *= 10;
+        var_dump($soma);
+        echo $soma;
         $digito = $soma % 11;
         if ($digito == 10) {
             $digito = 0;
