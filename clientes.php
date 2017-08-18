@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciador de Boletos | Clientes</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/filtro.js"></script>
+  <link rel="stylesheet" href="assets/css/padrao.css">
+</head>
+<body>
+  <nav class="navbar navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">GPHP</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class=""><a href="#">Boletos</a></li>
+        <li class="active"><a href="#">Clientes</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Usuário</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="col-md-10 col-md-offset-1">
+    <h1 class="title">Clientes</h1>
+    <button class="btn btn-default col-md-offset-10 col-md-2">Novo Cliente</button>
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#ativado">Ativados</a></li>
+      <li><a data-toggle="tab" href="#desativado">Desativados</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="ativado" class="tab-pane fade in active">
+        <input class="form-control input-lg" id="buscar" alt="table1" placeholder="Pesquisar..." type="text">
+        <table class="table1 table table-hover table-inverse">
+         <thead>
+          <tr>
+            <th class="col-md-5">Nome Empresarial</th>
+            <th class="col-md-2">CNPJ</th>
+            <th class="col-md-3">E-mail</th>
+            <th class="col-md-2" colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="busca col-md-4">MICROVIL Teste Teste Teste Teste Teste Ltda</td>
+            <td class="col-md-2">555.555.555.555/12</td>
+            <td class="col-md-3">contato.microvil@microvil.com.br</td>
+            <td class="col-md-3">
+              <button class="btn btn-edit" > 
+                <span class="glyphicon glyphicon-edit"></span> Editar
+              </button>
+              <button class="btn btn-delete">
+                <span class="glyphicon glyphicon-remove"></span> Excluir
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-4 busca">Microvil Teste Teste Teste Teste Teste Ltda</td>
+            <td class="col-md-2">555.555.555.555/12</td>
+            <td class="col-md-3">contato.microvil@microvil.com.br</td>
+            <td class="col-md-3">
+              <button class="btn btn-edit" > 
+                <span class="glyphicon glyphicon-edit"></span> Editar
+              </button>
+              <button class="btn btn-delete">
+                <span class="glyphicon glyphicon-remove"></span> Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="desativado" class="tab-pane fade">
+      <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
+      <table class="table2 table table-hover table-inverse">
+       <thead>
+        <tr>
+          <th class="col-md-5">Nome Empresarial</th>
+          <th class="col-md-2">CNPJ</th>
+          <th class="col-md-3">E-mail</th>
+          <th class="col-md-2" colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="busca col-md-4">MICROVIL Teste Teste Teste Teste Teste Ltda</td>
+          <td class="col-md-2">555.555.555.555/12</td>
+          <td class="col-md-3">contato.microvil@microvil.com.br</td>
+          <td class="col-md-3">
+            <button class="btn btn-edit" > 
+              <span class="glyphicon glyphicon-edit"></span> Editar
+            </button>
+            <button class="btn btn-delete">
+              <span class="glyphicon glyphicon-remove"></span> Excluir
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-4 busca">Microvil Teste Teste Teste Teste Teste Ltda</td>
+          <td class="col-md-2">555.555.555.555/12</td>
+          <td class="col-md-3">contato.microvil@microvil.com.br</td>
+          <td class="col-md-3">
+            <button class="btn btn-edit" > 
+              <span class="glyphicon glyphicon-edit"></span> Editar
+            </button>
+            <button class="btn btn-delete">
+              <span class="glyphicon glyphicon-remove"></span> Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

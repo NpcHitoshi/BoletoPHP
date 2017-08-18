@@ -2,26 +2,24 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Flat HTML5/CSS3 Login Form</title>
-  <link rel="stylesheet" href="css/index.css">
-  <script src="js/jquery-1.2.6.pack.js" type="text/javascript"></script>
-  <script src="js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
+  <title>Gerenciador de Boletos | Login</title>
+  <link rel="stylesheet" href="assets/css/index.css">
+  <script src="assets/js/jquery-1.2.6.pack.js" type="text/javascript"></script>
+  <script src="assets/js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
 </head>
-
-
 <body>
   <div class="login-page">
     <div class="form">
-      <h2><img src="images/logo.png" id="logo"></h2>
+      <h2><img src="assets/images/logo.png" id="logo"></h2>
       <form class="register-form">
-        <input type="text" placeholder="E-mail"/>
+        <input type="text" name="email" placeholder="E-mail"/>
         <button>Enviar</button>
         <p class="message">Lembrou sua senha? <a href="#">Login</a></p>
       </form>
 
       <form class="login-form">
-        <input id="cnpj" type="text" placeholder="CNPJ"/>
-        <input type="password" placeholder="Senha"/>
+        <input id="cnpj" type="text" name="cnpj" placeholder="CNPJ"/>
+        <input type="password" name="senha" placeholder="Senha"/>
         <button>login</button>
         <p class="message">Esqueceu sua senha? <a href="#">Enviar E-mail</a></p>
       </form>

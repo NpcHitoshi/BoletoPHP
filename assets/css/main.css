@@ -1,11 +1,4 @@
 
-
-body {
-  background: #CFD8DC; /* fallback for old browsers */
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;    
-}
-
 #logo{
   height: 60px;
 }
@@ -42,9 +35,4 @@ body {
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
-}
-
-button.btn.btn-default{
-  background: #EF6C00;
-  color:white;
 }

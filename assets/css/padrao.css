@@ -1,0 +1,95 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+@import url('https://fonts.googleapis.com/css?family=Passion+One|Roboto|Teko');
+
+/*Background padrão*/
+html{
+    height: 100%;
+}
+body {
+    height: 100%;
+    background: linear-gradient(#ffffff, #d6d1d1);
+}
+
+/*Menu*/
+.navbar{
+  background-color: #e8eaed;
+  background-image: none;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar a{
+  color: black;
+}
+
+.navbar a:hover{
+  background-color: #ff8d30 !important;
+}
+
+.navbar .active{
+  background-color: #ff8d30;
+}
+
+/*Títulos e Botões*/
+.title{
+  font-family: "Oswald", sans-serif;
+  border-bottom: 1px solid #bbbcbf;
+}
+
+.btn-default{
+  background-color: #ff8d30;
+  border-radius: 0px;
+  font-family: 'Passion One', cursive;
+  font-size: medium;
+}
+
+.btn-edit, .btn-delete{
+  border-radius: 0px;
+  font-family: 'Passion One', cursive;
+  margin-left: 2px;
+}
+
+.btn-edit{
+    background-color: #5998ff;
+}
+
+.btn-edit:hover{
+    background-color: #d1e2ff;
+}
+
+.btn-delete{
+  background-color: #fc3737;
+}
+
+.btn-delete:hover{
+  background-color: #fc7171;
+}
+
+/*Tabs*/
+.nav-tabs{
+  font-family: 'Roboto', sans-serif; 
+}
+
+.nav-tabs li a{
+  background-color: #e8eaed;
+  color: black;
+}
+
+.nav-tabs li a:hover{
+  background-color: #ff8d30;
+}
+
+/*Pesquisar*/
+#buscar, #buscar1{
+  margin-top: 6px;
+  height: 40px;
+  border-radius: 0px;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+/*Tabelas*/
+table{
+    height: 0px;
+    overflow: scroll;
+}
