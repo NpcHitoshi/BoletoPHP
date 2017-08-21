@@ -7,19 +7,19 @@
  * $db = Database::conexao();
  * E agora use as funções do PDO (prepare, query, exec) em cima da variável $db.
  */
-class PDOConnectionDB {
+class Database {
     # Variável que guarda a conexão PDO.
 
     protected static $db;
 
     # Private construct - garante que a classe só possa ser instanciada internamente.
 
-    private function __construct() {
+    function __construct() {
         # Informações sobre o banco de dados:
         $db_host = "localhost";
-        $db_nome = "banco";
-        $db_usuario = "localhost";
-        $db_senha = "senha";
+        $db_nome = "gerenciadorDeBoleto";
+        $db_usuario = "root";
+        $db_senha = "";
         $db_driver = "mysql";
         # Informações sobre o sistema:
         try {

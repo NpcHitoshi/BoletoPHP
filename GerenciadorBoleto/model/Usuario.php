@@ -11,12 +11,8 @@ class Usuario {
     private $tipoConta;
     private $ativo;
 
-    public function __construct($endereco, $razaoSocial, $cnpj, $email, $senha) {
-        $this->endereco = endereco;
-        $this->razaoSocial = razaoSocial;
-        $this->cnpj = cnpj;
-        $this->email = email;
-        $this->senha = senha;
+    public function __construct() {
+
     }
 
     public function getCodigoUsuario() {

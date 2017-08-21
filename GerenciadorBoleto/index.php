@@ -17,10 +17,10 @@
         <p class="message">Lembrou sua senha? <a href="#">Login</a></p>
       </form>
 
-      <form class="login-form">
-        <input id="cnpj" type="text" name="cnpj" placeholder="CNPJ"/>
-        <input type="password" name="senha" placeholder="Senha"/>
-        <button>login</button>
+      <form class="login-form" action="control/ProcessaLogin?action=login" method="POST">
+        <input id="cnpj" type="text" name="cnpj" placeholder="CNPJ" required/>
+        <input type="password" name="senha" placeholder="Senha" required/>
+        <button type="submit">login</button>
         <p class="message">Esqueceu sua senha? <a href="#">Enviar E-mail</a></p>
       </form>
     </div>
