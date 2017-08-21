@@ -43,7 +43,7 @@ body {
   font-size: medium;
 }
 
-.btn-edit, .btn-delete{
+.btn-edit, .btn-delete, .btn-yes{
   border-radius: 0px;
   font-family: 'Passion One', cursive;
   margin-left: 2px;
@@ -63,6 +63,14 @@ body {
 
 .btn-delete:hover{
   background-color: #fc7171;
+}
+
+.btn-yes{
+  background-color: #11c401;
+}
+
+.btn-yes:hover{
+  background-color: #8fd689;
 }
 
 /*Tabs*/
@@ -87,9 +95,18 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-
 /*Tabelas*/
 table{
     height: 0px;
     overflow: scroll;
+}
+
+/*Modal*/
+.modal-content{
+  border-radius: 0px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-header{
+  background-color: #ff8d30;
 }

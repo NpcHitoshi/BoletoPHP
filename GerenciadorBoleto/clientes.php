@@ -29,7 +29,7 @@
   
   <div class="col-md-10 col-md-offset-1">
     <h1 class="title">Clientes</h1>
-    <button class="btn btn-default col-md-offset-10 col-md-2">Novo Cliente</button>
+    <a href="./novo_cliente.php"><button class="btn btn-default col-md-offset-10 col-md-2" >Novo Cliente</button></a>
 
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#ativado">Ativados</a></li>
@@ -57,7 +57,7 @@
               <button class="btn btn-edit" > 
                 <span class="glyphicon glyphicon-edit"></span> Editar
               </button>
-              <button class="btn btn-delete">
+              <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
                 <span class="glyphicon glyphicon-remove"></span> Excluir
               </button>
             </td>
@@ -70,7 +70,7 @@
               <button class="btn btn-edit" > 
                 <span class="glyphicon glyphicon-edit"></span> Editar
               </button>
-              <button class="btn btn-delete">
+              <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
                 <span class="glyphicon glyphicon-remove"></span> Excluir
               </button>
             </td>
@@ -98,7 +98,7 @@
             <button class="btn btn-edit" > 
               <span class="glyphicon glyphicon-edit"></span> Editar
             </button>
-            <button class="btn btn-delete">
+            <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
               <span class="glyphicon glyphicon-remove"></span> Excluir
             </button>
           </td>
@@ -111,7 +111,7 @@
             <button class="btn btn-edit" > 
               <span class="glyphicon glyphicon-edit"></span> Editar
             </button>
-            <button class="btn btn-delete">
+            <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
               <span class="glyphicon glyphicon-remove"></span> Excluir
             </button>
           </td>
@@ -121,6 +121,28 @@
   </div>
 </div>
 </div>
+</div>
+
+<!-- Modal -->
+<div id="modalDelete" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Excluir Registro</h4>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir este registro?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-yes" data-dismiss="modal">Sim</button>
+        <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 </body>
