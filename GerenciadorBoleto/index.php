@@ -25,6 +25,6 @@
       </form>
     </div>
   </div>
-  <script src="js/index.js"></script>
+  <!--<script src="assets/js/index.js"></script> !-->
 </body>
 </html>

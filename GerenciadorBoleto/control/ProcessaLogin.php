@@ -14,6 +14,7 @@ switch ($action) {
             $senha = trim($_POST['senha']);
             $dao = new UsuarioDAO();
             $usuario = $dao->autenticaUsuario($cnpj, $senha);
+            
             if ($usuario->getCodigoUsuario() != null) {
                 $_SESSION["usuario"] = $usuario;
             } else {
@@ -24,6 +25,7 @@ switch ($action) {
         } catch (Exception $e) {
             
         }
+        break;
 
     case "logout":
         if ($usuario != null){
