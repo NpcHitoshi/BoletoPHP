@@ -70,7 +70,7 @@ $dadosboleto["demonstrativo3"] = "BoletoPhp - http://www.boletophp.com.br";
 $dadosboleto["instrucoes1"] = "MULTA DE R$ ".$multa." APOS : ".$data_venc;
 $dadosboleto["instrucoes2"] = "JUROS DE R$ ".$juros." AO DIA";
 $dadosboleto["instrucoes3"] = "NÃO RECEBER APOS 60 DIAS DO VENCIMENTO";
-$dadosboleto["instrucoes4"] = "RROTESTAR 15 DIAS APOS VENCIMENTO";
+$dadosboleto["instrucoes4"] = "PROTESTAR 15 DIAS APOS VENCIMENTO";
 
 // DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
 $dadosboleto["quantidade"] = "";

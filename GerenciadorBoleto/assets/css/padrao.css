@@ -110,3 +110,8 @@ table{
 .modal-header{
   background-color: #ff8d30;
 }
+
+/*Geral*/
+.gasparzinho{
+  visibility: hidden;
+}

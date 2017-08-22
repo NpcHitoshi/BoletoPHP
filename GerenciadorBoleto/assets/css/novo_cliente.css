@@ -1,0 +1,10 @@
+#captcha_cnpj{
+	display: inline-block;
+	border: 2px solid white;
+	margin-bottom: 5px;
+}
+
+#cadastrar{
+	padding-top: 5px;
+	border-top: 1px solid #bbbcbf;
+}
