@@ -12,7 +12,7 @@ class Usuario {
     private $ativo;
 
     public function __construct() {
-
+        
     }
 
     public function getCodigoUsuario() {

@@ -11,6 +11,12 @@
   <link rel="stylesheet" href="assets/css/padrao.css">
 </head>
 <body>
+    <?php
+    session_start();
+    if (($_SESSION["usuario"]) == null) {
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
+    }
+    ?>
   <nav class="navbar navbar">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -51,19 +57,6 @@
         <tbody>
           <tr>
             <td class="busca col-md-4">MICROVIL Teste Teste Teste Teste Teste Ltda</td>
-            <td class="col-md-2">555.555.555.555/12</td>
-            <td class="col-md-3">contato.microvil@microvil.com.br</td>
-            <td class="col-md-3">
-              <button class="btn btn-edit" > 
-                <span class="glyphicon glyphicon-edit"></span> Editar
-              </button>
-              <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                <span class="glyphicon glyphicon-remove"></span> Excluir
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="col-md-4 busca">Microvil Teste Teste Teste Teste Teste Ltda</td>
             <td class="col-md-2">555.555.555.555/12</td>
             <td class="col-md-3">contato.microvil@microvil.com.br</td>
             <td class="col-md-3">
