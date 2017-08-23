@@ -1,8 +1,8 @@
 <?php
 
 require_once "Database.php";
-require_once "../model/Usuario.php";
-
+require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "dao" . DS . "EnderecoDAO.php";
 
 $db = new Database();
 $pdo = $db->conexao();
@@ -12,13 +12,15 @@ class UsuarioDAO {
     private function populaUsuario($row) {
         $usuario = new Usuario();
         $usuario->setCodigoUsuario($row['id_usuario']);
-        $usuario->setCodigoEndereco($row['id_endereco']);
+        $usuario->setEndereco($row['id_endereco']);
         $usuario->setRazaoSocial($row['razao_social']);
         $usuario->setCnpj($row['cnpj']);
         $usuario->setEmail($row['email']);
         $usuario->setSenha($row['senha']);
         $usuario->setTipoConta($row['tipo_conta']);
         $usuario->setAtivo($row['ativo']);
+        $eDao = new EnderecoDAO();
+        $usuario->setEndereco($eDao->buscaEndereco($row['id_endereco']));
         return $usuario;
     }
 
@@ -38,9 +40,26 @@ class UsuarioDAO {
         }
     }
 
-    public function buscaUsuario($codigo) {
+    public function listarUsuarios() {
         try {
-            $sql = "SELECT * FROM usuario WHERE id_usuario = :codigo WHERE ativo = 1";
+            $sql = "SELECT * FROM usuario WHERE ativo = (1) ORDER BY razao_social";
+            $result = Database::conexao()->query($sql);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $usuarios = array();
+
+            foreach ($lista as $l) {
+                $usuarios[] = $this->populaUsuario($l);
+            }
+
+            return $usuarios;
+        } catch (Exception $e) {
+            print "Codigo: ".$e->getCode().", Mensagem:".$e->getMessage();
+        }
+    }
+
+    public function buscarUsuario($codigo) {
+        try {
+            $sql = "SELECT * FROM usuario WHERE id_usuario = :codigo and ativo = (1)";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
@@ -76,7 +95,22 @@ class UsuarioDAO {
 
     public function desativarUsuario(Usuario $codigo) {
         try {
-            $sql = "UPDATE usuario SET ativo = 0 WHERE id_usuario = :codigo";
+            $sql = "UPDATE usuario SET ativo = (0) WHERE id_usuario = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo_usuario", $codigo);
+
+            return $stmt->execute();
+        } catch (Exception $e) {
+            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
+ um LOG do mesmo, tente novamente mais tarde.";
+            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
+                            getCode() . " Mensagem: " . $e->getMessage());
+        }
+    }
+
+    public function ativarUsuario(Usuario $codigo) {
+        try {
+            $sql = "UPDATE usuario SET ativo = (1) WHERE id_usuario = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo_usuario", $codigo);
 

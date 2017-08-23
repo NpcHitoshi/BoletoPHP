@@ -5,10 +5,9 @@ class Cidade {
     private $codigoCidade;
     private $nomeCidade;
     private $estado;
-    
-    function __construct($nomeCidade, $estado) {
-        $this->nomeCidade = $nomeCidade;
-        $this->estado = $estado;
+
+    function __construct() {
+        
     }
 
     function getCodigoCidade() {
@@ -34,4 +33,5 @@ class Cidade {
     function setEstado($estado) {
         $this->estado = $estado;
     }
+
 }

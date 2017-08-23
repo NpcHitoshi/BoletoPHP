@@ -12,14 +12,8 @@ class Boleto {
     private $dataEmissao;
     private $status;
 
-    function __construct($usuario, $banco, $dataVencimento, $valor, $numeroDocumento, $nossoNumero, $dataEmissao) {
-        $this->usuario = $usuario;
-        $this->banco = $banco;
-        $this->dataVencimento = $dataVencimento;
-        $this->valor = $valor;
-        $this->numeroDocumento = $numeroDocumento;
-        $this->nossoNumero = $nossoNumero;
-        $this->dataEmissao = $dataEmissao;
+    function __construct() {
+        
     }
 
     function getCodigoBoleto() {

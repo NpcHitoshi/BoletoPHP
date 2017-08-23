@@ -5,8 +5,8 @@ class Banco {
     private $codigoBanco;
     private $nomeBanco;
 
-    function __construct($nomeBanco) {
-        $this->nomeBanco = $nomeBanco;
+    function __construct() {
+        
     }
 
     function getCodigoBanco() {

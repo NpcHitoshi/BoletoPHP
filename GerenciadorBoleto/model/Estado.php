@@ -5,8 +5,8 @@ class Estado {
     private $codigoEstado;
     private $uf;
 
-    function __construct($uf) {
-        $this->uf = $uf;
+    function __construct() {
+        
     }
 
     function getCodigoEstado() {
