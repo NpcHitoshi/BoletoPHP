@@ -44,13 +44,13 @@ include("getcaptcha.php");
           <input id="cnpj" type="text" name="cnpj" class="form-control" placeholder="CNPJ"/>
         </div>
         <div class="form-group col-md-12">
-          <label for="cnpj">Nome Empresarial:</label>
-          <input id="nome" type="text" name="nome" class="form-control" placeholder="Nome Empresarial"/>
-        </div>
-        <div class="form-group col-md-12">
           <label for="cnpj">Captcha:</label>
           <img id="captcha_cnpj" class="" src="<?php echo $imagem_cnpj; ?>"></br>
-          <input id="captcha" type="text" name="captcha_cnpj" class="form-control" placeholder="O que está escrito na imagem acima?"/>
+          <input id="captcha" type="text" maxlength="6" name="captcha_cnpj" class="form-control" placeholder="O que está escrito na imagem acima?"/>
+        </div>
+        <div class="form-group col-md-12">
+          <label for="cnpj">Nome Empresarial:</label>
+          <input id="nome" type="text" name="nome" class="form-control" placeholder="Nome Empresarial"/>
         </div>
         <div class="form-group col-md-12">
           <label for="cep">E-mail:</label>

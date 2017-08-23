@@ -8,13 +8,15 @@
 require('funcoes.php');
 
 // dados da postagem de formulário de CNPJ
-$cnpj = $_POST['cnpj'];						// Entradas POST devem ser tratadas para evitar injections
-$captcha_cnpj = $_POST['captcha_cnpj'];		// Entradas POST devem ser tratadas para evitar injections
-
+$cnpj = $_GET['cnpj'];		
+$cnpj = str_replace(".", "", $cnpj);
+$cnpj = str_replace("/", "", $cnpj);
+$cnpj = str_replace("-", "", $cnpj);	// Entradas POST devem ser tratadas para evitar injections
+$captcha_cnpj = $_GET['captcha_cnpj'];	// Entradas POST devem ser tratadas para evitar injectio
 if($cnpj AND $captcha_cnpj)
 {
 	$getHtmlCNPJ = getHtmlCNPJ($cnpj, $captcha_cnpj);
 	$campos = parseHtmlCNPJ($getHtmlCNPJ);
+	print_r($campos);
 }
-return $campos;
 ?>
