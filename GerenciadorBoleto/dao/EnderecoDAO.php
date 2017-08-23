@@ -1,35 +1,38 @@
 <?php
 
 require_once "Database.php";
-require "../model/Endereco.php";
-require "../model/Estado.php";
-require "../model/Cidade.php";
+require_once BASE_DIR . "model" . DS . "Endereco.php";
+require_once BASE_DIR . "model" . DS . "Estado.php";
+require_once BASE_DIR . "model" . DS . "Cidade.php";
 
 $db = new Database();
 $pdo = $db->conexao();
 
 class EnderecoDAO {
 
-    private function populaEndereco($row) {
+    public function populaEndereco($row) {
         $endereco = new Endereco();
-        $endereco->setCidade(buscaCidade($row["id_cidade"]));
+        $endereco->setCodigoEndereco($row["id_endereco"]);
         $endereco->setCep($row["cep"]);
         $endereco->setRua($row["rua"]);
         $endereco->setNumero($row["numero"]);
         $endereco->setBairro($row["bairro"]);
+        $endereco->setCidade($this->buscaCidade($row["id_cidade"]));
         $endereco->setComplemento($row["complemento"]);
         return $endereco;
     }
 
-    private function populaCidade($row) {
+    public function populaCidade($row) {
         $cidade = new Cidade();
-        $cidade->setEstado(buscaEstado($row["id_estado"]));
+        $cidade->setCodigoCidade($row["id_cidade"]);
+        $cidade->setEstado($this->buscaEstado($row["id_estado"]));
         $cidade->setNomeCidade($row["nome"]);
         return $cidade;
     }
 
-    private function populaEstado($row) {
+    public function populaEstado($row) {
         $estado = new Estado();
+        $estado->setCodigoEstado($row["id_estado"]);
         $estado->setUf($row["uf"]);
     }
 
@@ -77,7 +80,7 @@ class EnderecoDAO {
                             getCode() . " Mensagem: " . $e->getMessage());
         }
     }
-    
+
     public function inserirEndereco(Endereco $endereco) {
         try {
             $sql = "INSERT INTO endereco(id_cidade, cep, rua, numero, bairro, complemento) VALUES (:id_cidade, :cep,"
@@ -91,7 +94,6 @@ class EnderecoDAO {
             $stmt->bindValue(":bairro", $endereco->getBairro());
             $stmt->bindValue(":complemento", $endereco->getComplemento());
             return $stmt->execute();
-            
         } catch (Exception $e) {
             print "Ocorreu um erro ao tentar executar esta ação, foi gerado
  um LOG do mesmo, tente novamente mais tarde.";
@@ -99,4 +101,5 @@ class EnderecoDAO {
                     $e->getCode() . " Mensagem: " . $e->getMessage());
         }
     }
+
 }

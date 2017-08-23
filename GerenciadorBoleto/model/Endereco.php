@@ -7,14 +7,15 @@ class Endereco {
     private $rua;
     private $numero;
     private $bairro;
-    private $codigoCidade;
-
-    function __construct() {
-        
-    }
+    private $cidade;
+    private $complemento;
 
     function getCodigoEndereco() {
         return $this->codigoEndereco;
+    }
+
+    function getCep() {
+        return $this->cep;
     }
 
     function getRua() {
@@ -29,16 +30,20 @@ class Endereco {
         return $this->bairro;
     }
 
-    function getCep() {
-        return $this->cep;
+    function getCidade() {
+        return $this->cidade;
     }
 
-    function getCodigoCidade() {
-        return $this->codigoCidade;
+    function getComplemento() {
+        return $this->complemento;
     }
 
     function setCodigoEndereco($codigoEndereco) {
         $this->codigoEndereco = $codigoEndereco;
+    }
+
+    function setCep($cep) {
+        $this->cep = $cep;
     }
 
     function setRua($rua) {
@@ -53,12 +58,12 @@ class Endereco {
         $this->bairro = $bairro;
     }
 
-    function setCep($cep) {
-        $this->cep = $cep;
+    function setCidade($cidade) {
+        $this->cidade = $cidade;
     }
 
-    function setCodigoCidade($codigoCidade) {
-        $this->codigoCidade = $codigoCidade;
+    function setComplemento($complemento) {
+        $this->complemento = $complemento;
     }
 
 }

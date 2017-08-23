@@ -9,7 +9,6 @@ $pdo = $db->conexao();
 $action = $_GET["action"];
 $_SESSION["usuario"] = $usuario;
 $usuarioDAO = new UsuarioDAO();
-
 switch (action) {
     case "listar":
         $usuarios = $usuarioDAO->listarUsuarios();
@@ -26,7 +25,6 @@ switch (action) {
         $usuario->setRazaoSocial(trim($_POST["razao_social"]));
         $usuario->setCnpj(trim($_POST["cnpj"]));
         $usuario->setEmail(trim($_POST["email"]));
-        
         $numero = (trim($_POST["numero"]));
         break;
 

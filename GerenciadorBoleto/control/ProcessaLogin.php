@@ -2,12 +2,12 @@
 
 require_once "../dao/Database.php";
 require "../dao/UsuarioDAO.php";
-require "../dao/EnderecoDAO.php";
 
 $db = new Database();
 $pdo = $db->conexao();
 session_start();
 $action = $_GET["action"];
+
 
 switch ($action) {
     case "login":
@@ -19,6 +19,7 @@ switch ($action) {
 
             if ($usuario->getCodigoUsuario() != null) {
                 $_SESSION["usuario"] = $usuario;
+                
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
                 exit;
             } else {

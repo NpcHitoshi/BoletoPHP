@@ -3,24 +3,24 @@
 class Usuario {
 
     private $codigoUsuario;
-    private $codigoEndereco;
+    private $endereco;
     private $razaoSocial;
     private $cnpj;
     private $email;
     private $senha;
     private $tipoConta;
     private $ativo;
-
+    
     public function __construct() {
-        
+
     }
 
     public function getCodigoUsuario() {
         return $this->codigoUsuario;
     }
 
-    function getCodigoEndereco() {
-        return $this->codigoEndereco;
+    public function getEndereco() {
+        return $this->endereco;
     }
 
     public function getRazaoSocial() {
@@ -51,8 +51,8 @@ class Usuario {
         $this->codigoUsuario = $codigoUsuario;
     }
 
-    function setCodigoEndereco($codigoEndereco) {
-        $this->codigoEndereco = $codigoEndereco;
+    function setEndereco($endereco) {
+        $this->endereco = $endereco;
     }
 
     function setRazaoSocial($razaoSocial) {
