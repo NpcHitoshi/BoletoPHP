@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="assets/css/index.css">
   <script src="assets/js/jquery-1.2.6.pack.js" type="text/javascript"></script>
   <script src="assets/js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
+<?php
+define('DS', DIRECTORY_SEPARATOR);
+define('BASE_DIR', dirname(dirname(__FILE__)). DS);
+?>
 </head>
 <body>
   <div class="login-page">

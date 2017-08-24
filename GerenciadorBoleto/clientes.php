@@ -12,8 +12,15 @@
     </head>
     <body>
         <?php
+        if (!defined("DS")) {
+            define('DS', DIRECTORY_SEPARATOR);
+        }
+        if (!defined("BASE_DIR")) {
+            define('BASE_DIR', dirname(__FILE__) . DS);
+        }
+        require_once BASE_DIR . "model" . DS . "Usuario.php";
+        require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
         session_start();
-        //var_dump($_SESSION["usuario"]);
         if (($_SESSION["usuario"]) == null) {
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
         }
@@ -29,7 +36,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Usuário</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
+                    <li><a href="control/ProcessaLogin?action=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
                 </ul>
             </div>
         </nav>
@@ -46,17 +53,6 @@
             <div class="tab-content">
                 <div id="ativado" class="tab-pane fade in active">
                     <input class="form-control input-lg" id="buscar" alt="table1" placeholder="Pesquisar..." type="text">
-                    <?php
-                    require_once "dao/UsuarioDAO.php";
-                    require_once "model/Usuario.php";
-                    $uDao = new UsuarioDao();
-                    $retorno[] = new Usuario();
-                    $retorno = $uDao->listarUsuarios();
-                    foreach ($retorno as $obj){
-                        echo $obj->getCnpj()."<br />";
-                        echo $obj->getRazaoSocial()."<br />";
-                    }
-                    ?>
                     <table class="table1 table table-hover table-inverse">
                         <thead>
                             <tr>
@@ -67,19 +63,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="busca col-md-4">MICROVIL Teste Teste Teste Teste Teste Ltda</td>
-                                <td class="col-md-2">555.555.555.555/12</td>
-                                <td class="col-md-3">contato.microvil@microvil.com.br</td>
-                                <td class="col-md-3">
-                                    <button class="btn btn-edit" > 
-                                        <span class="glyphicon glyphicon-edit"></span> Editar
-                                    </button>
-                                    <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                        <span class="glyphicon glyphicon-remove"></span> Excluir
-                                    </button>
-                                </td>
-                            </tr>
+                            <tr><?php
+                                $uDao = new UsuarioDao();
+                                $retorno[] = new Usuario();
+                                $retorno = $uDao->listarUsuariosAtivos();
+                                foreach ($retorno as $obj) {
+                                    ?>
+                                    <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
+                                    <td class="col-md-2"><?php echo $obj->getCnpj() ?></td>
+                                    <td class="col-md-3"><?php echo $obj->getEmail() ?></td>
+                                    <td class="col-md-3">
+                                        <button class='btn btn-edit' > 
+                                            <span class='glyphicon glyphicon-edit'></span> Editar
+                                        </button>
+                                        <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                            <span class="glyphicon glyphicon-remove"></span> Excluir
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -95,32 +97,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="busca col-md-4">MICROVIL Teste Teste Teste Teste Teste Ltda</td>
-                                <td class="col-md-2">555.555.555.555/12</td>
-                                <td class="col-md-3">contato.microvil@microvil.com.br</td>
-                                <td class="col-md-3">
-                                    <button class="btn btn-edit" > 
-                                        <span class="glyphicon glyphicon-edit"></span> Editar
-                                    </button>
-                                    <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                        <span class="glyphicon glyphicon-remove"></span> Excluir
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4 busca">Microvil Teste Teste Teste Teste Teste Ltda</td>
-                                <td class="col-md-2">555.555.555.555/12</td>
-                                <td class="col-md-3">contato.microvil@microvil.com.br</td>
-                                <td class="col-md-3">
-                                    <button class="btn btn-edit" > 
-                                        <span class="glyphicon glyphicon-edit"></span> Editar
-                                    </button>
-                                    <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                        <span class="glyphicon glyphicon-remove"></span> Excluir
-                                    </button>
-                                </td>
-                            </tr>
+                            <tr><?php
+                                $uDao = new UsuarioDao();
+                                $retorno[] = new Usuario();
+                                $retorno = $uDao->listarUsuariosDesativados();
+                                foreach ($retorno as $obj) {
+                                    ?>
+                                    <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
+                                    <td class="col-md-2"><?php echo $obj->getCnpj() ?></td>
+                                    <td class="col-md-3"><?php echo $obj->getEmail() ?></td>
+                                    <td class="col-md-3">
+                                        <button class='btn btn-edit' > 
+                                            <span class='glyphicon glyphicon-edit'></span> Editar
+                                        </button>
+                                        <button id="btexcluir" name="control/UsuarioControl?action=desativar&codigo=<?php echo $obj->getCodigoUsuario()?>" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                            <span class="glyphicon glyphicon-remove"></span> Excluir
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -142,7 +137,7 @@
                     <p>Tem certeza que deseja excluir este registro?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-yes" data-dismiss="modal">Sim</button>
+                    <button id="Excsim" type="button" class="btn btn-yes" data-dismiss="modal" action="">Sim</button>
                     <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
                 </div>
             </div>

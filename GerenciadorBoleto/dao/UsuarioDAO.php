@@ -40,7 +40,7 @@ class UsuarioDAO {
         }
     }
 
-    public function listarUsuarios() {
+    public function listarUsuariosAtivos() {
         try {
             $sql = "SELECT * FROM usuario WHERE ativo = (1) ORDER BY razao_social";
             $result = Database::conexao()->query($sql);
@@ -53,7 +53,24 @@ class UsuarioDAO {
 
             return $usuarios;
         } catch (Exception $e) {
-            print "Codigo: ".$e->getCode().", Mensagem:".$e->getMessage();
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function listarUsuariosDesativados() {
+        try {
+            $sql = "SELECT * FROM usuario WHERE ativo = (0) ORDER BY razao_social";
+            $result = Database::conexao()->query($sql);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $usuarios = array();
+
+            foreach ($lista as $l) {
+                $usuarios[] = $this->populaUsuario($l);
+            }
+
+            return $usuarios;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 

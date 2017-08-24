@@ -1,27 +1,19 @@
 <?php
 
 require "../dao/Database.php";
-require "../dao/UsuarioDAO.php";
-require "../dao/Endereco.php";
+require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
 
 $db = new Database();
 $pdo = $db->conexao();
 $action = $_GET["action"];
 $_SESSION["usuario"] = $usuario;
-$usuarioDAO = new UsuarioDAO();
+$uDAO = new UsuarioDAO();
+$usuario = new Usuario();
 switch (action) {
-    case "listar":
-        $usuarios = $usuarioDAO->listarUsuarios();
-         $_SESSION["usuario"] = $usuarios;
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
-        exit;
-        break;
-
     case "buscar":
         break;
 
     case "inserir":
-        $usuario = new Usuario();
         $usuario->setRazaoSocial(trim($_POST["razao_social"]));
         $usuario->setCnpj(trim($_POST["cnpj"]));
         $usuario->setEmail(trim($_POST["email"]));
@@ -32,6 +24,8 @@ switch (action) {
         break;
 
     case "desativar":
+        
+        $uDAO->desativarUsuario($usuario);
         break;
 
     case "ativar":

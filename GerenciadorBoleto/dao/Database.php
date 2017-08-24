@@ -1,7 +1,11 @@
 <?php
 
-define('DS', DIRECTORY_SEPARATOR);
-define('BASE_DIR', dirname(dirname(__FILE__)). DS);
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+}
 
 /**
  * Classe de conexão ao banco de dados usando PDO no padrão Singleton.

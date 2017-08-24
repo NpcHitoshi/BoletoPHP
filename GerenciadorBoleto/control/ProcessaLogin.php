@@ -1,7 +1,7 @@
 <?php
 
 require_once "../dao/Database.php";
-require "../dao/UsuarioDAO.php";
+require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
 
 $db = new Database();
 $pdo = $db->conexao();
@@ -19,7 +19,7 @@ switch ($action) {
 
             if ($usuario->getCodigoUsuario() != null) {
                 $_SESSION["usuario"] = $usuario;
-                
+
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
                 exit;
             } else {
@@ -32,10 +32,8 @@ switch ($action) {
         }
         break;
 
-    case "logout":  
-        if ($usuario != null) {
-            session_destroy();
-        }
+    case "logout":
+        session_destroy();
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
         exit;
         break;
