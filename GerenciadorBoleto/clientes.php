@@ -8,6 +8,7 @@
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/filtro.js"></script>
+        <script src="assets/js/modalExcluir.js"></script>
         <link rel="stylesheet" href="assets/css/padrao.css">
     </head>
     <body>
@@ -76,7 +77,7 @@
                                         <button class='btn btn-edit' > 
                                             <span class='glyphicon glyphicon-edit'></span> Editar
                                         </button>
-                                        <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                        <button id="btexcluir" name="control/UsuarioControl?action=desativar&codigo=<?php echo $obj->getCodigoUsuario()?>" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
                                             <span class="glyphicon glyphicon-remove"></span> Excluir
                                         </button>
                                     </td>
@@ -110,7 +111,7 @@
                                         <button class='btn btn-edit' > 
                                             <span class='glyphicon glyphicon-edit'></span> Editar
                                         </button>
-                                        <button id="btexcluir" name="control/UsuarioControl?action=desativar&codigo=<?php echo $obj->getCodigoUsuario()?>" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                        <button class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
                                             <span class="glyphicon glyphicon-remove"></span> Excluir
                                         </button>
                                     </td>
@@ -137,7 +138,7 @@
                     <p>Tem certeza que deseja excluir este registro?</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="Excsim" type="button" class="btn btn-yes" data-dismiss="modal" action="">Sim</button>
+                    <a href="" id="Excsim"><button type="button" class="btn btn-yes">Sim</button></a>
                     <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
                 </div>
             </div>

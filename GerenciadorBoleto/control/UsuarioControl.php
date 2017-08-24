@@ -5,11 +5,13 @@ require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
 
 $db = new Database();
 $pdo = $db->conexao();
+session_start();
 $action = $_GET["action"];
-$_SESSION["usuario"] = $usuario;
+var_dump($action);
 $uDAO = new UsuarioDAO();
 $usuario = new Usuario();
-switch (action) {
+
+switch ($action) {
     case "buscar":
         break;
 
@@ -24,8 +26,9 @@ switch (action) {
         break;
 
     case "desativar":
-        
-        $uDAO->desativarUsuario($usuario);
+        $codigo = $_GET["codigo"];
+        $uDAO->desativarUsuario($codigo);
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
         break;
 
     case "ativar":

@@ -33,10 +33,7 @@ class UsuarioDAO {
             $stmt->execute();
             return $this->populaUsuario($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
@@ -82,10 +79,7 @@ class UsuarioDAO {
             $stmt->execute();
             return $this->populaUsuario($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
@@ -103,25 +97,19 @@ class UsuarioDAO {
 
             return $stmt->execute();
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " .
-                    $e->getCode() . " Mensagem: " . $e->getMessage());
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
-    public function desativarUsuario(Usuario $codigo) {
+    public function desativarUsuario($codigo) {
         try {
             $sql = "UPDATE usuario SET ativo = (0) WHERE id_usuario = :codigo";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":codigo_usuario", $codigo);
+            $stmt->bindValue(":codigo", $codigo);
 
             return $stmt->execute();
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
@@ -133,10 +121,7 @@ class UsuarioDAO {
 
             return $stmt->execute();
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
