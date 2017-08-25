@@ -221,13 +221,6 @@ function parseHtmlCNPJ($html)
 		$resultado[] = trim(pega_o_que_interessa(utf8_decode($campos[$i]).'<b>','<br>',$html2));
 		$html=$html2;
 	}
-	// extrai os CNAEs secundarios , quando forem mais de um
-	if(strstr($resultado[5],'<b>'))
-	{
-		$cnae_secundarios = explode('<b>',$resultado[5]);
-		$resultado[5] = $cnae_secundarios;
-		unset($cnae_secundarios);
-	}
 	// devolve STATUS da consulta correto
 	if(!$resultado[0])
 	{
@@ -241,44 +234,3 @@ function parseHtmlCNPJ($html)
 	
 	return $resultado;
 }
-// Função para extrair o que interessa da HTML e colocar em array
-function parseHtmlCPF($html)
-{
-	// respostas que interessam
-	$campos = array(
-	'N&ordm; do CPF: <span class="clBold">',
-	'Nome: <span class="clBold">',
-	'Data Nascimento: <span class="clBold">',
-	'Situa&ccedil;&atilde;o Cadastral: <span class="clBold">',
-	'Data de Inscri&ccedil;&atilde;o no CPF: <span class="clBold">'
-	);
-
-	// para utilizar na hora de devolver o status da consulta
-	$html3 = $html;
-	// faz a extração
-	for($i=0;$i<count($campos);$i++)
-	{		
-		$html2 = strstr($html,utf8_decode($campos[$i]));
-		$resultado[] = trim(pega_o_que_interessa(utf8_decode($campos[$i]),'</span>',$html2));
-		$html=$html2;
-	}
-	
-	// devolve STATUS da consulta correto
-	if(!$resultado[0])
-	{
-		if(strstr($html3,'CPF incorreto'))
-		{$resultado['status'] = 'CPF incorreto';}		
-		else if(strstr($html3,'n&atilde;o existe em nossa base de dados'))
-		{$resultado['status'] = 'CPF não existe';}
-		else if(strstr($html3,'Os caracteres da imagem n&atilde;o foram preenchidos corretamente'))
-		{$resultado['status'] = 'Imagem digitada incorretamente';}
-		else if(strstr($html3,'Data de nascimento informada'))
-		{$resultado['status'] = 'Data de Nascimento divergente';}
-		else
-		{$resultado['status'] = 'Receita não responde';}
-	}
-	else
-	{$resultado['status'] = 'OK';}
-	return $resultado;
-}
-?>
