@@ -5,12 +5,6 @@ $(document).ready(function(){
 		var ccnpj = $("#cnpj").val();
 		var ccaptcha_cnpj = $("#captcha").val();
 		var form_method = "POST";
-		//Monta requisição AJAX;
-		$.ajax({
-			url: "http://localhost/BoletoPHP/GerenciadorBoleto/processa.php",
-			type: "post",
-			data: { 'cnpj': ccnpj, 'captcha_cnpj': ccaptcha_cnpj }
-		});
 		//Muda os placeholders
 		setaplaceholder(1);
 		//Envia via AJAX GET
