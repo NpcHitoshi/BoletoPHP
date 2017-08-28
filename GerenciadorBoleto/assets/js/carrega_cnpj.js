@@ -14,6 +14,9 @@ $(document).ready(function(){
 				var vetor = viravet(returnedData);
 				//Verifica se achou dados.
 				if(vetor[vetor.length-1].indexOf("OK") < 0){
+					setTimeout(
+						function(){}, 5000);
+					window.location.reload();
 					setaplaceholder(3);
 				} else{
 					setaCampos(vetor);

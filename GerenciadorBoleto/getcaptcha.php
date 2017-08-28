@@ -127,7 +127,6 @@ foreach ($url as $key => $value)
 			$token_cpf = $token_captcha[0];
 			$imagem_cpf = 'data:image/png;base64,'.$token_captcha[1];	// esta imagem do captcha de CPF já está encodada base 64
 		}
-			print_r($imagem_cnpj);
 			
 	}
 
