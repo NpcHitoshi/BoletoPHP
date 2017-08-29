@@ -1,17 +1,29 @@
 <?php
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(__FILE__) . DS);
+}
+require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
+session_start();
+if (($_SESSION["usuario"]) == null) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+}
 include("getcaptcha.php");
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Gerenciador de Boletos | Novo Cliente</title>
-        <link rel="stylesheet" href="assets/css/main.css">
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/filtro.js"></script>
-        <script src="assets/js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Boletos | Novo Cliente</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/filtro.js"></script>
+    <script src="assets/js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
     <script src="assets/js/novo_cliente.js" type="text/javascript"></script>
     <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
     <link rel="stylesheet" href="assets/css/padrao.css">
@@ -19,6 +31,7 @@ include("getcaptcha.php");
 
 </head>
 <body>
+
     <nav class="navbar navbar">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -74,7 +87,7 @@ include("getcaptcha.php");
                 </div>
                 <div class="form-group col-md-6">
                     <label for="uf">Estado:</label>
-                    <input id="uf" type="text" name="uf" class="form-control" placeholder="Estado"/>
+                    <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado"/>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="cidade">Cidade:</label>

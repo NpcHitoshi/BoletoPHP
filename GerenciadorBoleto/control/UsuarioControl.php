@@ -35,7 +35,7 @@ switch ($action) {
         $usuario->setEndereco($e);
   
         $uDao->inserirUsuario($usuario);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
         break;
 
     case "alterar":
@@ -44,13 +44,13 @@ switch ($action) {
     case "desativar":
         $codigo = $_GET["codigo"];
         $uDao->desativarUsuario($codigo);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
         break;
 
     case "ativar":
         $codigo = $_GET["codigo"];
         $uDao->ativarUsuario($codigo);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
         break;
 
     default:

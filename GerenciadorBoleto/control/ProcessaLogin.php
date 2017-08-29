@@ -20,11 +20,11 @@ switch ($action) {
             if ($usuario->getCodigoUsuario() != null) {
                 $_SESSION["usuario"] = $usuario;
 
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
                 exit;
             } else {
                 $_SESSION["erro"] = "Senha ou CNPJ incorreto";
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
                 exit;
             }
         } catch (Exception $e) {
@@ -34,10 +34,10 @@ switch ($action) {
 
     case "logout":
         session_destroy();
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
         exit;
         break;
     default:
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
         exit;
 }

@@ -8,7 +8,7 @@ $(document).ready(function(){
 		//Muda os placeholders
 		setaplaceholder(1);
 		//Envia via AJAX GET
-		$.get("http://localhost:8080/GerenciadorBoleto/processa.php", { 'cnpj': ccnpj, 'captcha_cnpj': ccaptcha_cnpj}, 
+		$.get("http://localhost:8080/BoletoPHP/GerenciadorBoleto/processa.php", { 'cnpj': ccnpj, 'captcha_cnpj': ccaptcha_cnpj}, 
 			function(returnedData){
 				returnedData = tratamento(returnedData);
 				var vetor = viravet(returnedData);

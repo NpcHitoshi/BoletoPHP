@@ -23,7 +23,7 @@
         require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
         session_start();
         if (($_SESSION["usuario"]) == null) {
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/index.php");
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
         }
         ?>
         <nav class="navbar navbar">
