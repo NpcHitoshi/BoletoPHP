@@ -21,7 +21,7 @@
                 <p class="message">Lembrou sua senha? <a href="#">Login</a></p>
             </form>
 
-            <form class="login-form" action="control/ProcessaLogin?action=login" method="POST">
+            <form class="login-form" action="control/ProcessaLogin.php?action=login" method="POST">
                 <input id="cnpj" type="text" name="cnpj" placeholder="CNPJ" required/>
                 <input id="senha" type="password" name="senha" placeholder="Senha" required/>
                 <button type="submit">login</button>

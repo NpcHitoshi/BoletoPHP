@@ -24,9 +24,9 @@ class Database {
     function __construct() {
         # Informações sobre o banco de dados:
         $db_host = "localhost";
-        $db_nome = "gerenciadorDeBoleto";
-        $db_usuario = "root";
-        $db_senha = "";
+        $db_nome = "gerenciadordeboleto";
+        $db_usuario = "npc42";
+        $db_senha = "npc42";
         $db_driver = "mysql";
         # Informações sobre o sistema:
         try {
