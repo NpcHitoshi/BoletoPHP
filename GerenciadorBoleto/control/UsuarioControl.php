@@ -27,14 +27,15 @@ switch ($action) {
         $c = new Cidade();
         $c->setNomeCidade(trim($_POST["cidade"]));
         $c = $eDao->buscaCidadeNome($c->getNomeCidade());
-        $e->setCidade($c);
         
+        $e->setCidade($c);      
         $e->setComplemento(trim($_POST["complemento"]));
         $e->setNumero(trim($_POST["numero"]));
         $e->setRua(trim($_POST["rua"]));
         $usuario->setEndereco($e);
-        var_dump($usuario);
+  
         $uDao->inserirUsuario($usuario);
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
         break;
 
     case "alterar":

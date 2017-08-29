@@ -89,11 +89,11 @@ class UsuarioDAO {
                     . "UPPER(:razaoSocial), :cnpj, UPPER(:email), :senha, 0, 1)";
             $stmt = Database::conexao()->prepare($sql);
             $eDao = new EnderecoDAO();
-
-            $stmt->bindValue(":razao_social", $usuario->getRazaoSocial());
-            $stmt->bindValue(":cnpj", $usuario->getCnpj());
+            $cnpj = preg_replace("/(\/|-|\.)/", "", $usuario->getCnpj());
+            $stmt->bindValue(":razaoSocial", $usuario->getRazaoSocial());
+            $stmt->bindValue(":cnpj", $cnpj);
             $stmt->bindValue(":email", $usuario->getEmail());
-            $stmt->bindValue(":senha", $usuario->getSenha());
+            $stmt->bindValue(":senha", $cnpj);
             $codigoEndereco = $eDao->inserirEndereco($usuario->getEndereco());
             $stmt->bindValue(":endereco", $codigoEndereco);
             return $stmt->execute();

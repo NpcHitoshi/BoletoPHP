@@ -75,38 +75,32 @@ class EnderecoDAO {
         }
     }
 
-        public function buscaCidadeNome($nome) {
+    public function buscaCidadeNome($nomeCidade) {
         try {
-            $sql = "SELECT * FROM nomeCidade WHERE nome like UPPER(':nome')";
+            $sql = "SELECT * FROM cidade WHERE nome LIKE UPPER(:nomeCidade)";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":nome", $nome);
+            $stmt->bindValue(":nomeCidade", $nomeCidade);
             $stmt->execute();
-            $cidade = $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
-            return $cidade->getCodigoCidade();
+            return $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
             print $e->getCode() . " Mensagem: " . $e->getMessage();
         }
     }
-    
-    public function lerIdEndereco($stmt) {
-        
-    }
-
+     
     public function inserirEndereco($endereco) {
         try {
             $sql = "INSERT INTO endereco(id_cidade, cep, rua, numero, bairro, complemento) VALUES (:id_cidade, :cep,"
                     . "UPPER(:rua), :numero, UPPER(:bairro), UPPER(:complemento))";
             $stmt = Database::conexao()->prepare($sql);
-
-            $stmt->bindValue(":cep", $endereco->getCep());
+            $cep = preg_replace("/(\.|-)/", "", $endereco->getCep());
+            $stmt->bindValue(":cep", $cep);
             $stmt->bindValue(":rua", $endereco->getRua());
             $stmt->bindValue(":numero", $endereco->getNumero());
             $stmt->bindValue(":bairro", $endereco->getBairro());
             $stmt->bindValue(":complemento", $endereco->getComplemento());
-            $stmt->bindValue(":id_cidade", $endereco->getCidade()); 
+            $stmt->bindValue(":id_cidade", $endereco->getCidade()->getCodigoCidade()); 
             $stmt->execute();
-            $codigo_endereco = lerIdEndereco($stmt);
-            return $codigo_endereco;
+            return (Database::conexao()->lastInsertId());
         } catch (Exception $e) {
             print $e->getCode() . " Mensagem: " . $e->getMessage();
         }

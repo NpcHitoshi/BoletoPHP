@@ -73,8 +73,8 @@ include("getcaptcha.php");
                     <input id="num" type="text" name="numero" class="form-control" placeholder="Número"/>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="estado">Estado:</label>
-                    <input id="estado" type="text" name="estado" class="form-control" placeholder="Estado"/>
+                    <label for="uf">Estado:</label>
+                    <input id="uf" type="text" name="uf" class="form-control" placeholder="Estado"/>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="cidade">Cidade:</label>
