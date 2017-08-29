@@ -28,7 +28,7 @@ class EnderecoDAO {
         $cidade = new Cidade();
         $cidade->setCodigoCidade($row["id_cidade"]);
         $cidade->setEstado($this->buscaEstado($row["id_estado"]));
-        $cidade->setNomeCidade($row["nome"]);
+        $cidade->setNomeCidade($row["nomeCidade"]);
         return $cidade;
     }
 
@@ -77,7 +77,7 @@ class EnderecoDAO {
 
     public function buscaCidadeNome($nomeCidade) {
         try {
-            $sql = "SELECT * FROM cidade WHERE nome LIKE UPPER(:nomeCidade)";
+            $sql = "SELECT * FROM cidade WHERE nomeCidade LIKE UPPER(:nomeCidade)";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":nomeCidade", $nomeCidade);
             $stmt->execute();

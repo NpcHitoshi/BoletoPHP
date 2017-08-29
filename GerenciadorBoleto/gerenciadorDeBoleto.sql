@@ -61,8 +61,3 @@ PRIMARY KEY (id_boleto),
 FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
 FOREIGN KEY (id_banco) REFERENCES Banco (id_banco)
 )engine=InnoDB;
-
-
-select * from usuario;
-
-update usuario set cnpj = 'admin' where id_usuario = 1;

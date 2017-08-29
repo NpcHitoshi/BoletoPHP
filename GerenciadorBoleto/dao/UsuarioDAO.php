@@ -39,7 +39,7 @@ class UsuarioDAO {
 
     public function listarUsuariosAtivos() {
         try {
-            $sql = "SELECT * FROM usuario WHERE ativo = (1) ORDER BY razao_social";
+            $sql = "SELECT * FROM usuario WHERE ativo = (1)  AND tipo_conta = (0) ORDER BY razao_social";
             $result = Database::conexao()->query($sql);
             $lista = $result->fetchAll(PDO::FETCH_ASSOC);
             $usuarios = array();
@@ -56,7 +56,7 @@ class UsuarioDAO {
 
     public function listarUsuariosDesativados() {
         try {
-            $sql = "SELECT * FROM usuario WHERE ativo = (0) ORDER BY razao_social";
+            $sql = "SELECT * FROM usuario WHERE ativo = (0)  AND tipo_conta = (0) ORDER BY razao_social";
             $result = Database::conexao()->query($sql);
             $lista = $result->fetchAll(PDO::FETCH_ASSOC);
             $usuarios = array();

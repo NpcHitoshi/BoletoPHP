@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/GerenciadorBoleto/control/UsuarioControl.php</file>
-            <file>file:/C:/wamp64/www/GerenciadorBoleto/model/Endereco.php</file>
             <file>file:/C:/wamp64/www/GerenciadorBoleto/novo_cliente.php</file>
-            <file>file:/C:/wamp64/www/GerenciadorBoleto/dao/UsuarioDAO.php</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/assets/js/index.js</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/control/ProcessaLogin.php</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/clientes.php</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/control/UsuarioControl.php</file>
             <file>file:/C:/wamp64/www/GerenciadorBoleto/dao/EnderecoDAO.php</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/index.php</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/assets/css/padrao.css</file>
+            <file>file:/C:/wamp64/www/GerenciadorBoleto/dao/UsuarioDAO.php</file>
         </group>
     </open-files>
 </project-private>

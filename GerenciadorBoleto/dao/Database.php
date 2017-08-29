@@ -25,8 +25,8 @@ class Database {
         # Informações sobre o banco de dados:
         $db_host = "localhost";
         $db_nome = "gerenciadordeboleto";
-        $db_usuario = "npc42";
-        $db_senha = "npc42";
+        $db_usuario = "boletophp";
+        $db_senha = "boletophp";
         $db_driver = "mysql";
         # Informações sobre o sistema:
         try {
