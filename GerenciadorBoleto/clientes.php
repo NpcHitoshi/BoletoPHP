@@ -33,11 +33,11 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class=""><a href="#">Boletos</a></li>
-                    <li class="active"><a href="#">Clientes</a></li>
+                    <li class="active"><a href="clientes.php">Clientes</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Usuário</a></li>
-                    <li><a href="control/ProcessaLogin?action=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
+                    <li><a href="control/ProcessaLogin.php?action=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
                 </ul>
             </div>
         </nav>
@@ -77,7 +77,7 @@
                                         <button class='btn btn-edit' > 
                                             <span class='glyphicon glyphicon-edit'></span> Editar
                                         </button>
-                                        <button id="btexcluir" name="control/UsuarioControl?action=desativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                        <button id="btexcluir" name="control/UsuarioControl.php?action=desativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
                                             <span class="glyphicon glyphicon-trash"></span> Excluir
                                         </button>
                                     </td>
@@ -111,7 +111,7 @@
                                         <button class='btn btn-edit' > 
                                             <span class='glyphicon glyphicon-edit'></span> Editar
                                         </button>
-                                        <button id="btativar" name="control/UsuarioControl?action=ativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-yes" data-toggle="modal" data-target="#modalAtivar">
+                                        <button id="btativar" name="control/UsuarioControl.php?action=ativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-yes" data-toggle="modal" data-target="#modalAtivar">
                                             <span class="glyphicon glyphicon-ok-circle"></span> Ativar
                                         </button>
                                     </td>

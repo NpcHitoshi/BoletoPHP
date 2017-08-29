@@ -26,7 +26,7 @@ include("getcaptcha.php");
             </div>
             <ul class="nav navbar-nav">
                 <li class=""><a href="#">Boletos</a></li>
-                <li class="active"><a href="#">Clientes</a></li>
+                <li class="active"><a href="clientes.php">Clientes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Usuário</a></li>
@@ -34,7 +34,7 @@ include("getcaptcha.php");
             </ul>
         </div>
     </nav>
-    <form action="control/UsuarioControl?action=inserir" method="POST">
+    <form action="control/UsuarioControl.php?action=inserir" method="POST">
         <div class="col-md-10 col-md-offset-1">
             <h1 class="title">Novo Cliente</h1>
             <div class="col-md-6">
