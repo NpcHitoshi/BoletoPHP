@@ -88,13 +88,14 @@ class UsuarioDAO {
             $sql = "INSERT INTO usuario(id_endereco, razao_social, cnpj , email, senha, tipo_conta, ativo) VALUES (:endereco,"
                     . "UPPER(:razaoSocial), :cnpj, UPPER(:email), :senha, 0, 1)";
             $stmt = Database::conexao()->prepare($sql);
+            $eDao = new EnderecoDAO();
 
-            $stmt->bindValue(":id_endereco", $usuario->getCodigoEndereco());
             $stmt->bindValue(":razao_social", $usuario->getRazaoSocial());
             $stmt->bindValue(":cnpj", $usuario->getCnpj());
             $stmt->bindValue(":email", $usuario->getEmail());
             $stmt->bindValue(":senha", $usuario->getSenha());
-
+            $codigoEndereco = $eDao->inserirEndereco($usuario->getEndereco());
+            $stmt->bindValue(":endereco", $codigoEndereco);
             return $stmt->execute();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
@@ -113,11 +114,11 @@ class UsuarioDAO {
         }
     }
 
-    public function ativarUsuario(Usuario $codigo) {
+    public function ativarUsuario($codigo) {
         try {
             $sql = "UPDATE usuario SET ativo = (1) WHERE id_usuario = :codigo";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":codigo_usuario", $codigo);
+            $stmt->bindValue(":codigo", $codigo);
 
             return $stmt->execute();
         } catch (Exception $e) {

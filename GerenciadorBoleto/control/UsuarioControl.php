@@ -8,7 +8,7 @@ $pdo = $db->conexao();
 session_start();
 $action = $_GET["action"];
 var_dump($action);
-$uDAO = new UsuarioDAO();
+$uDao = new UsuarioDAO();
 $usuario = new Usuario();
 
 switch ($action) {
@@ -19,7 +19,22 @@ switch ($action) {
         $usuario->setRazaoSocial(trim($_POST["razao_social"]));
         $usuario->setCnpj(trim($_POST["cnpj"]));
         $usuario->setEmail(trim($_POST["email"]));
-        $numero = (trim($_POST["numero"]));
+        $e = new Endereco();
+        $eDao = new EnderecoDao();
+        $e->setBairro(trim($_POST["bairro"]));
+        $e->setCep(trim($_POST["cep"]));
+        
+        $c = new Cidade();
+        $c->setNomeCidade(trim($_POST["cidade"]));
+        $c = $eDao->buscaCidadeNome($c->getNomeCidade());
+        $e->setCidade($c);
+        
+        $e->setComplemento(trim($_POST["complemento"]));
+        $e->setNumero(trim($_POST["numero"]));
+        $e->setRua(trim($_POST["rua"]));
+        $usuario->setEndereco($e);
+        var_dump($usuario);
+        $uDao->inserirUsuario($usuario);
         break;
 
     case "alterar":
@@ -27,11 +42,14 @@ switch ($action) {
 
     case "desativar":
         $codigo = $_GET["codigo"];
-        $uDAO->desativarUsuario($codigo);
+        $uDao->desativarUsuario($codigo);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
         break;
 
     case "ativar":
+        $codigo = $_GET["codigo"];
+        $uDao->ativarUsuario($codigo);
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/GerenciadorBoleto/clientes.php");
         break;
 
     default:

@@ -7,6 +7,8 @@ require_once BASE_DIR . "model" . DS . "Cidade.php";
 
 $db = new Database();
 $pdo = $db->conexao();
+$endereco = new Endereco();
+$cidade = new Cidade();
 
 class EnderecoDAO {
 
@@ -34,6 +36,7 @@ class EnderecoDAO {
         $estado = new Estado();
         $estado->setCodigoEstado($row["id_estado"]);
         $estado->setUf($row["uf"]);
+        return $estado;
     }
 
     public function buscaEndereco($codigo) {
@@ -44,10 +47,7 @@ class EnderecoDAO {
             $stmt->execute();
             return $this->populaEndereco($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print $e->getCode() . " Mensagem: " . $e->getMessage();
         }
     }
 
@@ -59,10 +59,7 @@ class EnderecoDAO {
             $stmt->execute();
             return $this->populaEstado($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print $e->getCode() . " Mensagem: " . $e->getMessage();
         }
     }
 
@@ -74,31 +71,44 @@ class EnderecoDAO {
             $stmt->execute();
             return $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-                            getCode() . " Mensagem: " . $e->getMessage());
+            print $e->getCode() . " Mensagem: " . $e->getMessage();
         }
     }
 
-    public function inserirEndereco(Endereco $endereco) {
+        public function buscaCidadeNome($nome) {
+        try {
+            $sql = "SELECT * FROM nomeCidade WHERE nome like UPPER(':nome')";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":nome", $nome);
+            $stmt->execute();
+            $cidade = $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
+            return $cidade->getCodigoCidade();
+        } catch (Exception $e) {
+            print $e->getCode() . " Mensagem: " . $e->getMessage();
+        }
+    }
+    
+    public function lerIdEndereco($stmt) {
+        
+    }
+
+    public function inserirEndereco($endereco) {
         try {
             $sql = "INSERT INTO endereco(id_cidade, cep, rua, numero, bairro, complemento) VALUES (:id_cidade, :cep,"
                     . "UPPER(:rua), :numero, UPPER(:bairro), UPPER(:complemento))";
             $stmt = Database::conexao()->prepare($sql);
 
-            $stmt->bindValue(":id_cidade", $endereco->getCidade());
             $stmt->bindValue(":cep", $endereco->getCep());
             $stmt->bindValue(":rua", $endereco->getRua());
             $stmt->bindValue(":numero", $endereco->getNumero());
             $stmt->bindValue(":bairro", $endereco->getBairro());
             $stmt->bindValue(":complemento", $endereco->getComplemento());
-            return $stmt->execute();
+            $stmt->bindValue(":id_cidade", $endereco->getCidade()); 
+            $stmt->execute();
+            $codigo_endereco = lerIdEndereco($stmt);
+            return $codigo_endereco;
         } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " .
-                    $e->getCode() . " Mensagem: " . $e->getMessage());
+            print $e->getCode() . " Mensagem: " . $e->getMessage();
         }
     }
 
