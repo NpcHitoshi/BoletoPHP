@@ -122,50 +122,49 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Excluir -->
-    <div id="modalDelete" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <!-- Modal Excluir -->
+        <div id="modalDelete" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Excluir Registro</h4>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Excluir Registro</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir este registro?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" id="Excsime"><button type="button" class="btn btn-yes">Sim</button></a>
+                        <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Tem certeza que deseja excluir este registro?</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="" id="Excsime"><button type="button" class="btn btn-yes">Sim</button></a>
-                    <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
-                </div>
+
             </div>
-
         </div>
-    </div>
-    
-    <!-- Modal Ativar -->
-    <div id="modalAtivar" class="modal fade" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ativar Registro</h4>
+        <!-- Modal Ativar -->
+        <div id="modalAtivar" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Ativar Registro</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja ativar este registro?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" id="Excsima"><button type="button" class="btn btn-yes">Sim</button></a>
+                        <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Tem certeza que deseja ativar este registro?</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="" id="Excsima"><button type="button" class="btn btn-yes">Sim</button></a>
-                    <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
-                </div>
+
             </div>
-
         </div>
-    </div>
-</body>
+    </body>
 </html>

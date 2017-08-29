@@ -23,7 +23,7 @@
 
             <form class="login-form" action="control/ProcessaLogin?action=login" method="POST">
                 <input id="cnpj" type="text" name="cnpj" placeholder="CNPJ" required/>
-                <input type="password" name="senha" placeholder="Senha" required/>
+                <input id="senha" type="password" name="senha" placeholder="Senha" required/>
                 <button type="submit">login</button>
                 <p class="message">Esqueceu sua senha? <a href="#">Enviar E-mail</a></p>
             </form>
