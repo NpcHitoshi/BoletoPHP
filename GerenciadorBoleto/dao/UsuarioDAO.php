@@ -102,6 +102,11 @@ class UsuarioDAO {
         }
     }
 
+        public function validaCampos($usuario) {
+            return $usuario->getCNPJ()!=null && $usuario->getRazaoSocial()!=null && $usuario->getEmail()
+                    && $usuario->getEndereco()->getCep()!= null;
+    }
+
     public function desativarUsuario($codigo) {
         try {
             $sql = "UPDATE usuario SET ativo = (0) WHERE id_usuario = :codigo";

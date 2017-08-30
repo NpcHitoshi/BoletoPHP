@@ -1,3 +1,4 @@
 vendor/
 bin/
 GerenciadorBoleto/cookies/*
+/GerenciadorBoleto/nbproject/private/
