@@ -96,9 +96,9 @@ body {
 }
 
 /*Tabelas*/
-table{
-    height: 0px;
-    overflow: scroll;
+.tab-content{
+    height: 400px;
+    overflow: auto;
 }
 
 /*Modal*/
@@ -114,4 +114,8 @@ table{
 /*Geral*/
 .gasparzinho{
   visibility: hidden;
+}
+
+a{
+  color: #333;
 }

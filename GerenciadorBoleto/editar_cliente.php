@@ -18,21 +18,16 @@ require_once 'menu.html';
 ?>
 <form action="control/UsuarioControl.php?action=inserir" method="POST">
     <div class="col-md-10 col-md-offset-1">
-        <h1 class="title">Novo Cliente</h1>
+        <h1 class="title">Editar Cliente</h1>
         <div class="col-md-6">
             <h4 class="title">Dados Básicos</h4>
             <div class="form-group col-md-12">
                 <label for="cnpj">CNPJ:</label>
-                <input id="cnpj" type="text" name="cnpj" class="form-control" placeholder="CNPJ"/>
-            </div>
-            <div class="form-group col-md-12">
-                <label for="cnpj">Captcha:</label>
-                <img id="captcha_cnpj" class="" src="<?php echo $imagem_cnpj; ?>"></br>
-                <input id="captcha" type="text" maxlength="6" name="captcha_cnpj" class="form-control" placeholder="O que está escrito na imagem acima?"/>
+                <input id="cnpj" type="text" name="cnpj" class="form-control" placeholder="CNPJ" disabled="true" />
             </div>
             <div class="form-group col-md-12">
                 <label for="cnpj">Nome Empresarial:</label>
-                <input id="nome" type="text" name="razao_social" class="form-control" placeholder="Nome Empresarial"/>
+                <input id="nome" type="text" name="razao_social" class="form-control" placeholder="Nome Empresarial" disabled="true"/>
             </div>
             <div class="form-group col-md-12">
                 <label for="email">E-mail:</label>
@@ -72,7 +67,7 @@ require_once 'menu.html';
             </div>
         </div>
         <div id="cadastrar" class="col-md-12">
-            <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Cadastrar</button>
+            <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
         </div>
 
     </div>
