@@ -14,7 +14,7 @@ if (($_SESSION["usuario"]) == null) {
 include("getcaptcha.php");
 ?>
 <?php
-require_once 'menu.html';
+require_once 'menu.php';
 ?>
 <form action="control/UsuarioControl.php?action=inserir" method="POST">
     <div class="col-md-10 col-md-offset-1">

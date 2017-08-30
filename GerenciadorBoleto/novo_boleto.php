@@ -14,12 +14,12 @@ if (($_SESSION["usuario"]) == null) {
 include("getcaptcha.php");
 ?>
 <?php
-$clientes_active = "active";
+$boletos_active = "active";
 require_once 'menu.php';
 ?>
 <form action="control/UsuarioControl.php?action=inserir" method="POST">
     <div class="col-md-10 col-md-offset-1">
-        <h1 class="title">Novo Cliente</h1>
+        <h1 class="title">Novo Boleto</h1>
         <div class="col-md-6">
             <h4 class="title">Dados Básicos</h4>
             <div class="form-group col-md-12">

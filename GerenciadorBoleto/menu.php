@@ -13,15 +13,15 @@
 <nav class="navbar navbar">
     <div class="container-fluid">
         <div class="navbar-header">
-            <span class="navbar-brand" href="">GPHP</span>
+            <span class="navbar-brand" href="">GeBo</span>
         </div>
         <ul class="nav navbar-nav">
-            <li class=""><a href="#">Boletos</a></li>
-            <li class="active"><a href="clientes.php">Clientes</a></li>
+            <li class="<?php if(isset($boletos_active)) echo $boletos_active;?>"><a href="boletos.php">Boletos</a></li>
+            <li class="<?php if(isset($clientes_active)) echo $clientes_active;?>"><a href="clientes.php">Clientes</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <div class="navbar-header">
-            <span class="navbar-brand" href=""><span class="glyphicon glyphicon-user"></span> Usuário</span>
+            <span class="navbar-brand" href=""><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["usuario"]->getRazaoSocial()?></span>
         </div>
             <li><a href="control/ProcessaLogin.php?action=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
         </ul>

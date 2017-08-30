@@ -1,0 +1,31 @@
+#legenda{
+	border: 1px solid #bbbcbf;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	background-color: #f9f9f9;
+	font-family: 'Passion One', cursive;
+	font-size: medium;
+}
+
+.color{
+	height: 20px;
+	width: 20px;
+}
+
+.c-pago{
+	background-color: #73ed6f;
+}
+
+.c-aberto{
+	background-color: #ed6f6f;
+}
+
+.c-2via{
+	background-color: #6fcfed;
+}
+
+td span{
+	margin-right: 2%;
+}
