@@ -49,7 +49,6 @@ require_once 'menu.html';
                 <label for="rua">Rua:</label>
                 <input id="rua" type="text" name="rua" class="form-control" placeholder="Rua"/>
             </div>
-            
             <div class="form-group col-md-4">
                 <label for="numero">Número:</label>
                 <input id="num" type="text" name="numero" class="form-control" placeholder="Número"/>
@@ -74,7 +73,6 @@ require_once 'menu.html';
         <div id="cadastrar" class="col-md-12">
             <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Cadastrar</button>
         </div>
-
     </div>
 </form>
 </body>

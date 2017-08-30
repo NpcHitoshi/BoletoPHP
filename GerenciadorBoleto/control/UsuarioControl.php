@@ -11,9 +11,6 @@ $uDao = new UsuarioDAO();
 $usuario = new Usuario();
 
 switch ($action) {
-    case "buscar":
-        break;
-
     case "inserir":
         try {
             $usuario->setRazaoSocial(trim($_POST["razao_social"]));
@@ -42,7 +39,27 @@ switch ($action) {
         }
         break;
 
-    case "alterar":
+    case "carrega_editar":
+        $codigo = $_GET["codigo"];
+        $usuario = $uDao->buscarUsuario($codigo);
+        $_SESSION["usuarioCliente"] = $usuario;
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/editar_cliente.php");
+        break;
+
+    case "editar":
+        $usuario = $_SESSION["usuarioCliente"];
+        
+        $usuario->setRazaoSocial(trim($_POST["razao_social"]));
+        $usuario->setEmail(trim($_POST["email"]));
+        $usuario->getEndereco()->setBairro(trim($_POST["bairro"]));
+        $usuario->getEndereco()->setCep(trim($_POST["cep"]));
+        $usuario->getEndereco()->setRua(trim($_POST["rua"]));
+        $usuario->getEndereco()->setNumero(trim($_POST["numero"]));
+        $usuario->getEndereco()->setComplemento(trim($_POST["complemento"]));
+        $usuario->getEndereco()->getCidade()->setNomeCidade(trim($_POST["cidade"]));
+        $usuario->getEndereco()->getCidade()->getEstado()->setUf(trim($_POST["uf"]));
+        $uDao->editaUsuario($usuario);
+        //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
         break;
 
     case "desativar":
