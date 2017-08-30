@@ -13,7 +13,8 @@ if (($_SESSION["usuario"]) == null) {
 }
 ?>
 <?php
-require_once 'menu.html';
+$clientes_active = "active";
+require_once 'menu.php';
 ?>
 <div class="col-md-10 col-md-offset-1">
     <h1 class="title">Clientes</h1>
@@ -44,7 +45,7 @@ require_once 'menu.html';
                         foreach ($retorno as $obj) {
                             ?>
                             <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getCnpj() ?></td>
+                            <td class="col-md-2"><?php echo substr($obj->getCnpj(), 0, 2) . "." .  substr($obj->getCnpj(), 2, 3) . "." . substr($obj->getCnpj(), 5, 3)  . "/" . substr($obj->getCnpj(), 8, 4) . "-" . substr($obj->getCnpj(), 12, 2) ?></td>
                             <td class="col-md-3"><?php echo $obj->getEmail() ?></td>
                             <td class="col-md-3">
                                 <a class='btn btn-edit' href="control/UsuarioControl.php?action=carrega_editar&codigo=<?php echo $obj->getCodigoUsuario()?>">
@@ -78,7 +79,7 @@ require_once 'menu.html';
                             foreach ($retorno as $obj) {
                                 ?>
                                 <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
-                                <td class="col-md-2"><?php echo $obj->getCnpj() ?></td>
+                                <td class="col-md-2"><?php echo substr($obj->getCnpj(), 0, 2) . "." .  substr($obj->getCnpj(), 2, 3) . "." . substr($obj->getCnpj(), 5, 3)  . "/" . substr($obj->getCnpj(), 8, 4) . "-" . substr($obj->getCnpj(), 12, 2) ?></td>
                                 <td class="col-md-3"><?php echo $obj->getEmail() ?></td>
                                 <td class="col-md-3">
                                     <button class='btn btn-edit' > 

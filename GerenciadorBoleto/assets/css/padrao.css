@@ -8,6 +8,7 @@ html{
 body {
     height: 100%;
     background: linear-gradient(#ffffff, #d6d1d1);
+    background-size: auto 100%;
 }
 
 /*Menu*/
@@ -16,6 +17,7 @@ body {
   background-image: none;
   border: none;
   font-family: 'Roboto', sans-serif;
+  border-radius: 0px !important;
 }
 
 .navbar a{
@@ -99,6 +101,11 @@ body {
 .tab-content{
     height: 400px;
     overflow: auto;
+}
+
+td{
+  vertical-align: middle !important;
+  border-bottom: 1px solid #bbbcbf;
 }
 
 /*Modal*/
