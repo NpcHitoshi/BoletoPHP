@@ -125,7 +125,8 @@ class UsuarioDAO {
 
     public function validaCampos($usuario) {
         return $usuario->getCNPJ() != null && $usuario->getRazaoSocial() != null && $usuario->getEmail() && 
-                $usuario->getEndereco()->getCep() != null;
+                $usuario->getEndereco()->getCep() != null && $usuario->getEndereco()->getCidade()->getNomeCidade() != null
+                && $usuario->getEndereco()->getCidade()->getEstado()->getUf() != null;
     }
 
     public function desativarUsuario($codigo) {

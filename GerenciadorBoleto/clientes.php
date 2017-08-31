@@ -40,9 +40,9 @@ require_once 'menu.php';
                 <tbody>
                     <tr><?php
                         $uDao = new UsuarioDao();
-                        $retorno[] = new Usuario();
-                        $retorno = $uDao->listarUsuariosAtivos();
-                        foreach ($retorno as $obj) {
+                        $ativos[] = new Usuario();
+                        $ativos = $uDao->listarUsuariosAtivos();
+                        foreach ($ativos as $obj) {
                             ?>
                             <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
                             <td class="col-md-2"><?php echo substr($obj->getCnpj(), 0, 2) . "." .  substr($obj->getCnpj(), 2, 3) . "." . substr($obj->getCnpj(), 5, 3)  . "/" . substr($obj->getCnpj(), 8, 4) . "-" . substr($obj->getCnpj(), 12, 2) ?></td>
@@ -73,10 +73,9 @@ require_once 'menu.php';
                     </thead>
                     <tbody>
                         <tr><?php
-                            $uDao = new UsuarioDao();
-                            $retorno[] = new Usuario();
-                            $retorno = $uDao->listarUsuariosDesativados();
-                            foreach ($retorno as $obj) {
+                            $desativados[] = new Usuario();
+                            $desativados = $uDao->listarUsuariosDesativados();
+                            foreach ($desativados as $obj) {
                                 ?>
                                 <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
                                 <td class="col-md-2"><?php echo substr($obj->getCnpj(), 0, 2) . "." .  substr($obj->getCnpj(), 2, 3) . "." . substr($obj->getCnpj(), 5, 3)  . "/" . substr($obj->getCnpj(), 8, 4) . "-" . substr($obj->getCnpj(), 12, 2) ?></td>

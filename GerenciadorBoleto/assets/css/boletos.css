@@ -13,16 +13,17 @@
 	height: 20px;
 	width: 20px;
 }
-
-.c-pago{
+/*Boletos Abertos*/
+.c-1{
+    background-color: #ed6f6f;
+	
+}
+/*Boletos Pagos*/
+.c-2{
 	background-color: #73ed6f;
 }
-
-.c-aberto{
-	background-color: #ed6f6f;
-}
-
-.c-2via{
+/*Boletos 2 via*/
+.c-3{
 	background-color: #6fcfed;
 }
 

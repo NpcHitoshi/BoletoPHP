@@ -10,12 +10,11 @@ class Boleto {
     private $numeroDocumento;
     private $nossoNumero;
     private $dataEmissao;
-    private $status;
+    private $situacao;
 
     function __construct() {
         
     }
-
     function getCodigoBoleto() {
         return $this->codigoBoleto;
     }
@@ -48,8 +47,8 @@ class Boleto {
         return $this->dataEmissao;
     }
 
-    function getStatus() {
-        return $this->status;
+    function getSituacao() {
+        return $this->situacao;
     }
 
     function setCodigoBoleto($codigoBoleto) {
@@ -84,8 +83,8 @@ class Boleto {
         $this->dataEmissao = $dataEmissao;
     }
 
-    function setStatus($status) {
-        $this->status = $status;
+    function setSituacao($situacao) {
+        $this->situacao = $situacao;
     }
 
 }

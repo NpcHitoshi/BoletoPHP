@@ -16,8 +16,14 @@
             <span class="navbar-brand" href="">GeBo</span>
         </div>
         <ul class="nav navbar-nav">
-            <li class="<?php if(isset($boletos_active)) echo $boletos_active;?>"><a href="boletos.php">Boletos</a></li>
-            <li class="<?php if(isset($clientes_active)) echo $clientes_active;?>"><a href="clientes.php">Clientes</a></li>
+            <li class="<?php if (isset($boletos_active)) {
+                echo $boletos_active;
+            }
+            ?>"><a href="boletos.php">Boletos</a></li>
+            <li class="<?php if (isset($clientes_active)) {
+                echo $clientes_active;
+            }
+            ?>"><a href="clientes.php">Clientes</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <div class="navbar-header">

@@ -47,15 +47,15 @@ require_once 'menu.php';
             </div>
             <div class="form-group col-md-4">
                 <label for="numero">Número:</label>
-                <input id="num" type="text" name="numero" class="form-control" placeholder="Número" pattern="[0-9]+$" value=" <?php echo $usuario->getEndereco()->getNumero() ?>"/>
+                <input id="num" type="text" name="numero" class="form-control" placeholder="Número" value=" <?php echo $usuario->getEndereco()->getNumero() ?>"/>
             </div>
             <div class="form-group col-md-6">
                 <label for="uf">Estado:</label>
-                <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado" value="<?php echo $usuario->getEndereco()->getCidade()->getEstado()->getUf() ?>"/>
+                <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado" disabled="true" value="<?php echo $usuario->getEndereco()->getCidade()->getEstado()->getUf() ?>"/>
             </div>
             <div class="form-group col-md-6">
                 <label for="cidade">Cidade:</label>
-                <input id="cidade" type="text" name="cidade" class="form-control" placeholder="Cidade"value=" <?php echo $usuario->getEndereco()->getCidade()->getNomeCidade() ?>"/>
+                <input id="cidade" type="text" name="cidade" class="form-control" placeholder="Cidade" disabled="true" value=" <?php echo $usuario->getEndereco()->getCidade()->getNomeCidade() ?>"/>
             </div>
             <div class="form-group col-md-6">
                 <label for="bairro">Bairro:</label>

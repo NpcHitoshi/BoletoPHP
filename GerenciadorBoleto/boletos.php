@@ -7,6 +7,8 @@ if (!defined("BASE_DIR")) {
 }
 require_once BASE_DIR . "model" . DS . "Usuario.php";
 require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
+require_once BASE_DIR . "model" . DS . "Boleto.php";
+require_once BASE_DIR . "dao" . DS . "BoletoDao.php";
 session_start();
 if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
@@ -16,21 +18,24 @@ if (($_SESSION["usuario"]) == null) {
 $boletos_active = "active";
 require_once 'menu.php';
 ?>
+<script src="assets/js/filtro.js"></script>
+<script src="assets/js/manterModal.js"></script>
+<link rel="stylesheet" href="assets/css/boletos.css">
 <div class="col-md-10 col-md-offset-1">
     <h1 class="title">Boletos</h1>
     <a href="./novo_boleto.php"><button class="btn btn-default col-md-offset-10 col-md-2" >Novo Boleto</button></a>
     <div id="legenda" class="col-md-12">
-        <div id="" class="color col-md-1 c-pago"></div>
-        <div class="col-md-2">- Pago</div>
-        <div id="" class="color col-md-1 c-aberto"></div>
+        <div id="" class="color col-md-1 c-1"></div>
         <div class="col-md-2">- Aberto</div>
-        <div id="" class="color col-md-1 c-2via"></div>
+        <div id="" class="color col-md-1 c-2"></div>
+        <div class="col-md-2">- Pago</div>
+        <div id="" class="color col-md-1 c-3"></div>
         <div class="col-md-2">- 2ª+ Via</div>
     </div>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#todos">Todos</a></li>
-        <li><a data-toggle="tab" href="#pagos">Pagos</a></li>
         <li><a data-toggle="tab" href="#abertos">Abertos</a></li>
+        <li><a data-toggle="tab" href="#pagos">Pagos</a></li>
         <li><a data-toggle="tab" href="#2vias">2ª Vias</a></li>
     </ul>
 
@@ -47,54 +52,28 @@ require_once 'menu.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="busca col-md-4"><span class="color col-md-1 c-pago"></span>MHJ AJSAKSHAKJSHKJASHKJASH</td>
-                        <td class="col-md-2">1937398427983749823</td>
-                        <td class="col-md-2">14/01/1997</td>
-                        <td class="col-md-4">
-                            <a class='btn btn-edit' href="">
-                                <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                            </a>
-                            <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                            </button>
-                            <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="busca col-md-4"><span class="color col-md-1 c-aberto"></span>MHJ AJSAKSHAKJSHKJASHKJASH</td>
-                        <td class="col-md-2">1937398427983749823</td>
-                        <td class="col-md-2">14/01/1997</td>
-                        <td class="col-md-4">
-                            <a class='btn btn-edit' href="">
-                                <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                            </a>
-                            <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                            </button>
-                            <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="busca col-md-4"><span class="color col-md-1 c-2via"></span>MHJ AJSAKSHAKJSHKJASHKJASH</td>
-                        <td class="col-md-2">1937398427983749823</td>
-                        <td class="col-md-2">14/01/1997</td>
-                        <td class="col-md-4">
-                            <a class='btn btn-edit' href="">
-                                <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                            </a>
-                            <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                            </button>
-                            <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                            </button>
-                        </td>
-                    </tr>
+                    <tr><?php
+                        $bDao = new BoletoDAO();
+                        $boletos[] = new Boleto();
+                        $boletos = $bDao->listarBoletos();
+                        foreach ($boletos as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-4">
+                                <a class='btn btn-edit' href="">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -111,22 +90,26 @@ require_once 'menu.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td class="busca col-md-4"><span class="color col-md-1 c-pago"></span>MHJ AJSAKSHAKJSHKJASHKJASH</td>
-                        <td class="col-md-2">1937398427983749823</td>
-                        <td class="col-md-2">14/01/1997</td>
-                        <td class="col-md-4">
-                            <a class='btn btn-edit' href="">
-                                <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                            </a>
-                            <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                            </button>
-                            <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                            </button>
-                        </td>
-                    </tr>
+                    <tr><?php
+                        $boletosPagos = $bDao->listarBoletosPagos();
+                        foreach ($boletosPagos as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-4">
+                                <a class='btn btn-edit' href="">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -143,22 +126,26 @@ require_once 'menu.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="busca col-md-4"><span class="color col-md-1 c-aberto"></span>MHJ AJSAKSHAKJSHKJASHKJASH</td>
-                        <td class="col-md-2">1937398427983749823</td>
-                        <td class="col-md-2">14/01/1997</td>
-                        <td class="col-md-4">
-                            <a class='btn btn-edit' href="">
-                                <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                            </a>
-                            <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                            </button>
-                            <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                            </button>
-                        </td>
-                    </tr>
+                    <tr><?php
+                        $boletosAbertos = $bDao->listarBoletosAbertos();
+                        foreach ($boletosAbertos as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-4">
+                                <a class='btn btn-edit' href="">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -175,22 +162,26 @@ require_once 'menu.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="busca col-md-4"><span class="color col-md-1 c-2via"></span>MHJ AJSAKSHAKJSHKJASHKJASH</td>
-                        <td class="col-md-2">1937398427983749823</td>
-                        <td class="col-md-2">14/01/1997</td>
-                        <td class="col-md-4">
-                            <a class='btn btn-edit' href="">
-                                <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                            </a>
-                            <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                            </button>
-                            <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                            </button>
-                        </td>
-                    </tr>
+                    <tr><?php
+                        $boletos2via = $bDao->listarBoletos2via();
+                        foreach ($boletos2via as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-4">
+                                <a class='btn btn-edit' href="">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -243,7 +234,5 @@ require_once 'menu.php';
     </div>
 </div>
 </body>
-<script src="assets/js/filtro.js"></script>
-<script src="assets/js/manterModal.js"></script>
-<link rel="stylesheet" href="assets/css/boletos.css">
+
 </html>

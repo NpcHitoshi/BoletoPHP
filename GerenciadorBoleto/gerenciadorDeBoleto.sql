@@ -43,7 +43,7 @@ CONSTRAINT FK_ENDERECO FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco
 
 CREATE TABLE IF NOT EXISTS Banco (
 id_banco INT NOT NULL,
-nome VARCHAR(50) NOT NULL,
+nomeBanco VARCHAR(50) NOT NULL,
 PRIMARY KEY (id_banco)
 )engine=InnoDB;
 
