@@ -36,6 +36,7 @@ class EnderecoDAO {
         $estado = new Estado();
         $estado->setCodigoEstado($row["id_estado"]);
         $estado->setUf($row["uf"]);
+        $estado->setNomeEstado($row["nomeEstado"]);
         return $estado;
     }
 

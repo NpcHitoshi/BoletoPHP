@@ -4,8 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/control/UsuarioControl.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/novo_cliente.php</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/editar_cliente.php</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/dao/EnderecoDAO.php</file>
             <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/index.php</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/model/Usuario.php</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/processa.php</file>
             <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/dao/UsuarioDAO.php</file>
         </group>
     </open-files>

@@ -51,7 +51,7 @@ require_once 'menu.php';
                                 <a class='btn btn-edit' href="control/UsuarioControl.php?action=carrega_editar&codigo=<?php echo $obj->getCodigoUsuario()?>">
                                     <span class='glyphicon glyphicon-edit'></span> Editar
                                 </a>
-                                <button id="btexcluir" name="control/UsuarioControl.php?action=desativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                <button name="control/UsuarioControl.php?action=desativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-delete btexcluir " data-toggle="modal" data-target="#modalDelete">
                                     <span class="glyphicon glyphicon-trash"></span> Excluir
                                 </button>
                             </td>
@@ -85,7 +85,7 @@ require_once 'menu.php';
                                     <button class='btn btn-edit' > 
                                         <span class='glyphicon glyphicon-edit'></span> Editar
                                     </button>
-                                    <button id="btativar" name="control/UsuarioControl.php?action=ativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-yes" data-toggle="modal" data-target="#modalAtivar">
+                                    <button name="control/UsuarioControl.php?action=ativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-yes btativar" data-toggle="modal" data-target="#modalAtivar">
                                         <span class="glyphicon glyphicon-ok-circle"></span> Ativar
                                     </button>
                                 </td>

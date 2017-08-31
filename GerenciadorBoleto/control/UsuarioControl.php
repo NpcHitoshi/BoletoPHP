@@ -34,6 +34,9 @@ switch ($action) {
                 $uDao->inserirUsuario($usuario);
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
             }
+            else{
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
+            }
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
@@ -59,7 +62,8 @@ switch ($action) {
         $usuario->getEndereco()->getCidade()->setNomeCidade(trim($_POST["cidade"]));
         $usuario->getEndereco()->getCidade()->getEstado()->setUf(trim($_POST["uf"]));
         $uDao->editaUsuario($usuario);
-        //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+        unset( $_SESSION["usuarioCliente"] );
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
         break;
 
     case "desativar":

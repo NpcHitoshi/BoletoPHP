@@ -39,7 +39,7 @@ require_once 'menu.php';
             <h4 class="title">Endereço</h4>
             <div class="form-group col-md-12">
                 <label for="cep">CEP:</label>
-                <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP" value="<?php echo $usuario->getEndereco()->getCep() ?>"/>
+                <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP" maxlength="8" value="<?php echo $usuario->getEndereco()->getCep() ?>"/>
             </div>
             <div class="form-group col-md-8">
                 <label for="rua">Rua:</label>
@@ -47,7 +47,7 @@ require_once 'menu.php';
             </div>
             <div class="form-group col-md-4">
                 <label for="numero">Número:</label>
-                <input id="num" type="text" name="numero" class="form-control" placeholder="Número"value=" <?php echo $usuario->getEndereco()->getNumero() ?>"/>
+                <input id="num" type="text" name="numero" class="form-control" placeholder="Número" pattern="[0-9]+$" value=" <?php echo $usuario->getEndereco()->getNumero() ?>"/>
             </div>
             <div class="form-group col-md-6">
                 <label for="uf">Estado:</label>
