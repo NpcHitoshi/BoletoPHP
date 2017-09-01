@@ -43,7 +43,7 @@ require_once 'menu.php';
     </div>
     <div class="form-group col-md-6">
         <label for="valor">Valor:</label>
-        <input id="valor" type="text" name="multa" class="form-control" placeholder="Multa"/>
+        <input id="valor" type="text" name="multa" class="form-control" placeholder="Valor"/>
     </div>
 
 </div>
