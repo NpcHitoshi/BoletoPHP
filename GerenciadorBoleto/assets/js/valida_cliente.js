@@ -2,7 +2,6 @@ $(document).ready(function(){
 	//Validações ao tentar Submit
 	$("form").submit(function(e){
 		//Valida CPF
-		console.log("asasa");
 		if($("#cnpj").val().length < 1)
 			estaVazio($("#cnpj"));
 		else if(valida_cnpj($("#cnpj").val()))
