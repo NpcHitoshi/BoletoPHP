@@ -123,9 +123,6 @@ td{
   visibility: hidden;
 }
 
-.alert{
-  margin-top: 2px !important;
-  margin-bottom: 0px !important;
-  padding: 5px;
-  border-radius: 0px;
+a{
+  color: #333;
 }
