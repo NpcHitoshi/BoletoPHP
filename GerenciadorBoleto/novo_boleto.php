@@ -79,8 +79,7 @@ require_once 'menu.php';
     </div>
 </form>
 </body>
-<script src="assets/js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
-<script src="assets/js/novo_cliente.js" type="text/javascript"></script>
+<script src="assets/js/mascara_cliente.js" type="text/javascript" /></script>
 <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
 <link rel="stylesheet" href="assets/css/novo_cliente.css">
 </html>

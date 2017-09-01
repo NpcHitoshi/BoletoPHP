@@ -129,7 +129,7 @@ function estaVazio(campo){
 	pai.attr("class", pai.attr("class")+" has-error");
 	var erro = $(campo).next();
 	erro.attr("class", "alert alert-danger");
-	erro.html("Campo vazio! Este campo é obrigatório!");
+	erro.html("Preencha este campo!");
 	flag_error = true;
 }
 
