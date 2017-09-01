@@ -123,6 +123,9 @@ td{
   visibility: hidden;
 }
 
-a{
-  color: #333;
+.alert{
+  margin-top: 2px !important;
+  margin-bottom: 0px !important;
+  padding: 5px;
+  border-radius: 0px;
 }
