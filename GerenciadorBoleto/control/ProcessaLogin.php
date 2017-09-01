@@ -8,7 +8,6 @@ $pdo = $db->conexao();
 session_start();
 $action = $_GET["action"];
 
-
 switch ($action) {
     case "login":
         try {
