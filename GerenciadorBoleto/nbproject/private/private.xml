@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/control/UsuarioControl.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/editar_cliente.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/dao/EnderecoDAO.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/index.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/model/Usuario.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/processa.php</file>
-            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/dao/UsuarioDAO.php</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/assets/js/jquery-1.2.6.pack.js</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/assets/js/valida_cliente.js</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/assets/js/mascara_cliente.js</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/assets/css/padrao.css</file>
+            <file>file:/C:/wamp64/www/BoletoPHP/GerenciadorBoleto/assets/css/novo_cliente.css</file>
         </group>
     </open-files>
 </project-private>
