@@ -62,7 +62,7 @@ require_once 'menu.php';
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
                             <td class="col-md-4">
-                                <a class='btn btn-edit' href="">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
                                 <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">

@@ -1,7 +1,14 @@
 <?php
 
-require_once "Database.php";
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+}
+
 require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "EnderecoDAO.php";
 
 $db = new Database();

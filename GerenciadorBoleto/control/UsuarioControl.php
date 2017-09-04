@@ -1,6 +1,13 @@
 <?php
 
-require "../dao/Database.php";
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+}
+
+require_once BASE_DIR . "dao" . DS . "DataBase.php";
 require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
 
 $db = new Database();
@@ -33,9 +40,10 @@ switch ($action) {
             if ($uDao->validaCampos($usuario)) {
                 $uDao->inserirUsuario($usuario);
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
-            }
-            else{
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
+                exit();
+            } else {
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
+                exit();
             }
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
@@ -47,11 +55,12 @@ switch ($action) {
         $usuario = $uDao->buscarUsuario($codigo);
         $_SESSION["usuarioCliente"] = $usuario;
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/editar_cliente.php");
+        exit();
         break;
 
     case "editar":
         $usuario = $_SESSION["usuarioCliente"];
-        
+
         $usuario->setRazaoSocial(trim($_POST["razao_social"]));
         $usuario->setEmail(trim($_POST["email"]));
         $usuario->getEndereco()->setBairro(trim($_POST["bairro"]));
@@ -62,20 +71,23 @@ switch ($action) {
         $usuario->getEndereco()->getCidade()->setNomeCidade(trim($_POST["cidade"]));
         $usuario->getEndereco()->getCidade()->getEstado()->setUf(trim($_POST["uf"]));
         $uDao->editaUsuario($usuario);
-        unset( $_SESSION["usuarioCliente"] );
+        unset($_SESSION["usuarioCliente"]);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+        exit();
         break;
 
     case "desativar":
         $codigo = $_GET["codigo"];
         $uDao->desativarUsuario($codigo);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+        exit();
         break;
 
     case "ativar":
         $codigo = $_GET["codigo"];
         $uDao->ativarUsuario($codigo);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+        exit();
         break;
 
     default:

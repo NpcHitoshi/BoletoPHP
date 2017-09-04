@@ -1,7 +1,14 @@
 <?php
 
-require_once "../dao/Database.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+}
+
+require_once BASE_DIR . "dao" . DS . "DataBase.php";
+require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
 
 $db = new Database();
 $pdo = $db->conexao();

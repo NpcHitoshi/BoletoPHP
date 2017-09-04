@@ -1,8 +1,15 @@
 <?php
 
-require_once "Database.php";
-require_once BASE_DIR . "model" . DS . "Usuario.php";
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+}
+
 require_once BASE_DIR . "model" . DS . "Banco.php";
+require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
 
 class BoletoDAO {
@@ -27,6 +34,21 @@ class BoletoDAO {
         $banco->setCodigoBanco($row["id_banco"]);
         $banco->setNomeBanco($row["nomeBanco"]);
         return $banco;
+    }
+
+    public function listarBancos() {
+        try {
+            $sql = "SELECT * FROM banco ORDER BY nomeBanco";
+            $result = Database::conexao()->query($sql);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $bancos = array();
+            foreach ($lista as $l) {
+                $bancos[] = $this->populaBanco($l);
+            }
+            return $bancos;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
     }
 
     public function listarBoletos() {
@@ -98,6 +120,18 @@ class BoletoDAO {
         }
     }
 
+        public function buscarBancoNome($nome) {
+        try {
+            $sql = "SELECT * FROM banco WHERE nomeBanco LIKE UPPER (:nome)";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":nome", $nome);
+            $stmt->execute();
+            return $this->populaBanco($stmt->fetch(PDO::FETCH_ASSOC));
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+    
     public function inserirBoleto($boleto) {
         try {
             $sql = "INSERT INTO ";

@@ -1,9 +1,16 @@
 <?php
 
-require_once "Database.php";
+if (!defined("DS")) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+if (!defined("BASE_DIR")) {
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+}
+
+require_once BASE_DIR . "model" . DS . "Cidade.php";
 require_once BASE_DIR . "model" . DS . "Endereco.php";
 require_once BASE_DIR . "model" . DS . "Estado.php";
-require_once BASE_DIR . "model" . DS . "Cidade.php";
+require_once BASE_DIR . "dao" . DS . "Database.php";
 
 $db = new Database();
 $pdo = $db->conexao();

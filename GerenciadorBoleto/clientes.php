@@ -21,7 +21,7 @@ require_once 'menu.php';
     <a href="./novo_cliente.php"><button class="btn btn-default col-md-offset-10 col-md-2" >Novo Cliente</button></a>
 
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#ativado">Ativados</a></li>
+        <li class="active"><a data-toggle="tab" href="#ativado">Ativos</a></li>
         <li><a data-toggle="tab" href="#desativado">Desativados</a></li>
     </ul>
 

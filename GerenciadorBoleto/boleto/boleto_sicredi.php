@@ -4,12 +4,14 @@ if (!defined("DS")) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 if (!defined("BASE_DIR")) {
-    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
+    define('BASE_DIR', (dirname(__FILE__)) . DS);
 }
+
 require_once BASE_DIR . "model" . DS . "Boleto.php";
 require_once BASE_DIR . "model" . DS . "Usuario.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
 require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
+
 session_start();
 if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
