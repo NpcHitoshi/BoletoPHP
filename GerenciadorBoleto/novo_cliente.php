@@ -91,6 +91,6 @@ require_once 'menu.php';
 </body>
 <script src="assets/js/mascara_cliente.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
-<script src="assets/js/valida_cliente.js" type="text/javascript"></script>
+<!--<script src="assets/js/valida_cliente.js" type="text/javascript"></script>!-->
 <link rel="stylesheet" href="assets/css/novo_cliente.css">
 </html>

@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: text/html; charset=ISO-8859-1");
 
 if (!defined("DS")) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -48,9 +49,8 @@ $boleto = ($_SESSION["boleto"]);
 // Os valores abaixo podem ser colocados manualmente ou ajustados p/ formulário c/ POST, GET ou de BD (MySql,Postgre,etc)	//
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
-$data_venc = date("d/m/Y", time() + ($dias_de_prazo_para_pagamento * 86400));  // Prazo de X dias OU informe data: "13/04/2006"; 
-$valor_boleto = $boleto->getValor(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
-$valor_boleto = str_replace("R$", "R$ ", $valor_boleto);
+$data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006"; 
+$valor_boleto = str_replace("R$", "", $boleto->getValor()); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
 $dadosboleto["nosso_numero"] = "13871";     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
@@ -58,18 +58,18 @@ $dadosboleto["numero_documento"] = "27.030195.10"; // Num do pedido ou do docume
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
 $dadosboleto["data_documento"] = date("d/m/Y"); // Data de emissão do Boleto
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
-$dadosboleto["valor_boleto"] = $valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
+$dadosboleto["valor_boleto"] = "R$ ".$valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 // DADOS DO SEU CLIENTE
 $dadosboleto["sacado"] = $boleto->getUsuario()->getRazaoSocial();
 $dadosboleto["endereco1"] = $boleto->getUsuario()->getEndereco()->getRua() .", ".$boleto->getUsuario()->getEndereco()->getNumero();
 $dadosboleto["endereco2"] = $boleto->getUsuario()->getEndereco()->getCidade()->getNomeCidade()." - ".
 $boleto->getUsuario()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $boleto->getUsuario()->getEndereco()->getCep();
 // INFORMACOES PARA O CLIENTE
-$dadosboleto["demonstrativo1"] = "Pagamento de Compra na Loja Nonononono";
-$dadosboleto["demonstrativo2"] = "Mensalidade referente a nonon nonooon nononon<br>Taxa bancária - R$ " ;
-$dadosboleto["demonstrativo3"] = "BoletoPhp - http://www.boletophp.com.br";
+$dadosboleto["demonstrativo1"] = "Recebimento através do cheque Nº";
+$dadosboleto["demonstrativo2"] = "Esta quitação só terá validade após o pagamento do cheque pelo banco pagador." ;
+$dadosboleto["demonstrativo3"] = "Até o vencimento pagável em qualquer agência bancária.";
 // INSTRUÇÕES PARA O CAIXA
-$dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRA NO SITE: ";
+$dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRA NO SITE: WWW.MICROVIL.COM.BR";
 $dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE ".$boleto->getMulta()."%.";
 $dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ".$boleto->getJuros();
 $dadosboleto["instrucoes4"] = "";
@@ -92,9 +92,9 @@ $dadosboleto["byte_idt"] = "2";   // Byte de identificação do cedente do bloqu
 $dadosboleto["carteira"] = "A";   // Código da Carteira: A (Simples) 
 // SEUS DADOS
 $dadosboleto["identificacao"] = "BoletoPhp - Código Aberto de Sistema de Boletos";
-$dadosboleto["cpf_cnpj"] = "";
+$dadosboleto["cpf_cnpj"] = "03.919.470/0001-41";
 $dadosboleto["endereco"] = "Coloque o endereço da sua empresa aqui";
-$dadosboleto["cidade_uf"] = "Cidade / Estado";
+$dadosboleto["cidade_uf"] = "Piraquara / PR";
 $dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
 // NÃO ALTERAR!
 include("include/funcoes_sicredi.php");
