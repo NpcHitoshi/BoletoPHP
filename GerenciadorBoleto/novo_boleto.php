@@ -33,7 +33,7 @@ require_once 'menu.php';
                 $bancos = $bDao->listarBancos();
                 foreach ($bancos as $objBanco) {
                     ?>
-                    <option value="<? echo $objBanco->getCodigoBanco?>"?>><?php echo $objBanco->getNomeBanco() ?></option>
+                    <option value="<? echo $objBanco->getCodigoBanco?>"?><?php echo $objBanco->getNomeBanco() ?></option>
                     <?php } ?>
                 </select>
                 <div class="erro"></div>
@@ -48,7 +48,7 @@ require_once 'menu.php';
                     $ativos = $uDao->listarUsuariosAtivos();
                     foreach ($ativos as $objUsuario) {
                         ?>
-                        <option value="<?php echo objUsuario->getCodigoUsuario() ?>"><?php echo $objUsuario->getRazaoSocial() ?></option>
+                        <option value="<?php echo $objUsuario->getCodigoUsuario() ?>"><?php echo $objUsuario->getRazaoSocial() ?></option>
                         <?php } ?>
                     </select>
                     <div class="erro"></div>

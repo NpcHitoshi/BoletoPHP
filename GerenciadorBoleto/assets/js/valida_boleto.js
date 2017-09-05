@@ -3,31 +3,50 @@ $(document).ready(function(){
 	$("form").submit(function(e){
 		//Valida Banco
 		//Valida Numero Documento
-		if(($("#numDoc")).val().length < 1)
+		if(($("#numDoc")).val().length < 1){
+			flag1 = true;
 			estaVazio($("#numDoc"));
-		else 
+		}
+		else {
+			flag1 = false;
 			retiraErro($("#numDoc"));
+		}
 		//Valida Multa
-		if(($("#multa")).val().length < 1)
+		if(($("#multa")).val().length < 1){
+			flag2 = true;
 			estaVazio($("#multa"));
-		else 
+		}
+		else {
+			flag2 = false;
 			retiraErro($("#multa"));	
+		}
 		// Valida Juros
-		if(($("#juros")).val().length < 1)
+		if(($("#juros")).val().length < 1){
+			flag3 = true;
 			estaVazio($("#juros"));
-		else 
+		}
+		else {
+			flag3 = false;
 			retiraErro($("#juros"));	
+		}
 		//Valida Valor
-		if(($("#valor")).val().length < 1)
+		if(($("#valor")).val().length < 1){
+			flag4 = true;
 			estaVazio($("#valor"));
-		else 
+		}
+		else {
+			flag4 = false;
 			retiraErro($("#valor"));
-		if(!Date.parse($("#vencimento").val()))
+		}
+		if(!Date.parse($("#vencimento").val())){
+			flag5= true;
 			estaVazio($("#vencimento"));
-		else
+		}
+		else{
+			flag5 = false;
 			retiraErro($("#vencimento"));		
-		console.log("jkasdjkasn");
-		if(true){
+		}
+		if(flag1 || flag2 || flag3 || flag4 || flag5){
 			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
 			$("#erro-submit").html("Não é possível gerar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();
