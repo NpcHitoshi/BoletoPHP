@@ -51,43 +51,59 @@ switch ($action) {
         break;
 
     case "carrega_editar":
-        $codigo = $_GET["codigo"];
-        $usuario = $uDao->buscarUsuario($codigo);
-        $_SESSION["usuarioCliente"] = $usuario;
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/editar_cliente.php");
-        exit();
+        try {
+            $codigo = $_GET["codigo"];
+            $usuario = $uDao->buscarUsuario($codigo);
+            $_SESSION["usuarioCliente"] = $usuario;
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/editar_cliente.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
         break;
 
     case "editar":
-        $usuario = $_SESSION["usuarioCliente"];
+        try {
+            $usuario = $_SESSION["usuarioCliente"];
 
-        $usuario->setRazaoSocial(trim($_POST["razao_social"]));
-        $usuario->setEmail(trim($_POST["email"]));
-        $usuario->getEndereco()->setBairro(trim($_POST["bairro"]));
-        $usuario->getEndereco()->setCep(trim($_POST["cep"]));
-        $usuario->getEndereco()->setRua(trim($_POST["rua"]));
-        $usuario->getEndereco()->setNumero(trim($_POST["numero"]));
-        $usuario->getEndereco()->setComplemento(trim($_POST["complemento"]));
-        $usuario->getEndereco()->getCidade()->setNomeCidade(trim($_POST["cidade"]));
-        $usuario->getEndereco()->getCidade()->getEstado()->setUf(trim($_POST["uf"]));
-        $uDao->editaUsuario($usuario);
-        unset($_SESSION["usuarioCliente"]);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
-        exit();
+            $usuario->setRazaoSocial(trim($_POST["razao_social"]));
+            $usuario->setEmail(trim($_POST["email"]));
+            $usuario->getEndereco()->setBairro(trim($_POST["bairro"]));
+            $usuario->getEndereco()->setCep(trim($_POST["cep"]));
+            $usuario->getEndereco()->setRua(trim($_POST["rua"]));
+            $usuario->getEndereco()->setNumero(trim($_POST["numero"]));
+            $usuario->getEndereco()->setComplemento(trim($_POST["complemento"]));
+            $usuario->getEndereco()->getCidade()->setNomeCidade(trim($_POST["cidade"]));
+            $usuario->getEndereco()->getCidade()->getEstado()->setUf(trim($_POST["uf"]));
+            $uDao->editaUsuario($usuario);
+            unset($_SESSION["usuarioCliente"]);
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
         break;
 
     case "desativar":
-        $codigo = $_GET["codigo"];
-        $uDao->desativarUsuario($codigo);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
-        exit();
+        try {
+            $codigo = $_GET["codigo"];
+            $uDao->desativarUsuario($codigo);
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
         break;
 
     case "ativar":
-        $codigo = $_GET["codigo"];
-        $uDao->ativarUsuario($codigo);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
-        exit();
+        try {
+            $codigo = $_GET["codigo"];
+            $uDao->ativarUsuario($codigo);
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
         break;
 
     default:

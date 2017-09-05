@@ -4,7 +4,7 @@ if (!defined("DS")) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 if (!defined("BASE_DIR")) {
-    define('BASE_DIR', (dirname(__FILE__)) . DS);
+    define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
 }
 
 require_once BASE_DIR . "model" . DS . "Boleto.php";
@@ -16,6 +16,7 @@ session_start();
 if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
+$boleto = ($_SESSION["boleto"]);
 // +----------------------------------------------------------------------+
 // | BoletoPhp - Versão Beta                                              |
 // +----------------------------------------------------------------------+
@@ -47,11 +48,10 @@ if (($_SESSION["usuario"]) == null) {
 // Os valores abaixo podem ser colocados manualmente ou ajustados p/ formulário c/ POST, GET ou de BD (MySql,Postgre,etc)	//
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
-$taxa_boleto = 2.95;
 $data_venc = date("d/m/Y", time() + ($dias_de_prazo_para_pagamento * 86400));  // Prazo de X dias OU informe data: "13/04/2006"; 
-$valor_cobrado = "2950,00"; // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
-$valor_cobrado = str_replace(",", ".", $valor_cobrado);
-$valor_boleto = number_format($valor_cobrado + $taxa_boleto, 2, ',', '');
+$valor_boleto = $boleto->getValor(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+$valor_boleto = str_replace("R$", "R$ ", $valor_boleto);
+
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
 $dadosboleto["nosso_numero"] = "13871";     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
 $dadosboleto["numero_documento"] = "27.030195.10"; // Num do pedido ou do documento
@@ -60,17 +60,18 @@ $dadosboleto["data_documento"] = date("d/m/Y"); // Data de emissão do Boleto
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
 $dadosboleto["valor_boleto"] = $valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 // DADOS DO SEU CLIENTE
-$dadosboleto["sacado"] = "Nome do seu Cliente";
-$dadosboleto["endereco1"] = "Endereço do seu Cliente";
-$dadosboleto["endereco2"] = "Cidade - Estado -  CEP: 00000-000";
+$dadosboleto["sacado"] = $boleto->getUsuario()->getRazaoSocial();
+$dadosboleto["endereco1"] = $boleto->getUsuario()->getEndereco()->getRua() .", ".$boleto->getUsuario()->getEndereco()->getNumero();
+$dadosboleto["endereco2"] = $boleto->getUsuario()->getEndereco()->getCidade()->getNomeCidade()." - ".
+$boleto->getUsuario()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $boleto->getUsuario()->getEndereco()->getCep();
 // INFORMACOES PARA O CLIENTE
 $dadosboleto["demonstrativo1"] = "Pagamento de Compra na Loja Nonononono";
-$dadosboleto["demonstrativo2"] = "Mensalidade referente a nonon nonooon nononon<br>Taxa bancária - R$ " . number_format($taxa_boleto, 2, ',', '');
+$dadosboleto["demonstrativo2"] = "Mensalidade referente a nonon nonooon nononon<br>Taxa bancária - R$ " ;
 $dadosboleto["demonstrativo3"] = "BoletoPhp - http://www.boletophp.com.br";
 // INSTRUÇÕES PARA O CAIXA
 $dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRA NO SITE: ";
-$dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE ";
-$dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ";
+$dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE ".$boleto->getMulta()."%.";
+$dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ".$boleto->getJuros();
 $dadosboleto["instrucoes4"] = "";
 // DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
 $dadosboleto["quantidade"] = "";
