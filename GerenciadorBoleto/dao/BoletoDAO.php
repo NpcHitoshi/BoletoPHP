@@ -134,13 +134,16 @@ class BoletoDAO {
     
     public function inserirBoleto($boleto) {
         try {
-            $sql = "INSERT INTO ";
+            $sql = "INSERT INTO boleto(id_usuario, id_banco, data_vencimento, valor, numero_documento, nosso_numero, data_emissao, "
+                    . "situacao) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, 1, :dataEmissao, 1)";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":data_vencimento", $boleto->getDataVencimento());
+            $stmt->bindValue(":codigoCliente", $boleto->getUsuario()->getCodigoUsuario());
+            $stmt->bindValue(":codigoBanco", $boleto->getBanco()->getCodigoBanco());
+            $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());
             $stmt->bindValue(":valor", $boleto->getValor());
-            $stmt->bindValue(":numero_documento", $boleto->getNumeroDocumento());
-            $stmt->bindValue(":nosso_numero", $boleto->getNossoNumero());
-            $stmt->bindValue(":data_emissao", $boleto->getDataEmissao());
+            $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento());
+            //$stmt->bindValue(":nosso_numero", $boleto->getNossoNumero());
+            $stmt->bindValue(":dataEmissao", $boleto->getDataEmissao());
             return $stmt->execute();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();

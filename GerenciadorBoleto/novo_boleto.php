@@ -55,7 +55,7 @@ require_once 'menu.php';
                 </div>
                 <div class="form-group col-md-6">
                     <label for="numDoc">Nº Documento</label>
-                    <input id="numDoc" type="text" name="numeroDocumento" class="form-control" placeholder="Nº Documento"/>
+                    <input id="numDoc" type="text" name="numeroDocumento" value="" class="form-control" placeholder="Nº Documento"/>
                     <div class="erro"></div>
                 </div>
                 <div class="form-group col-md-6">
@@ -63,16 +63,12 @@ require_once 'menu.php';
                     <input id="vencimento" type="date" name="dataVencimento" class="form-control" placeholder="Vencimento"/>
                     <div class="erro"></div>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-6">
                     <label for="multa">Multa (%):</label>
-                    <input id="multa" type="number" name="multa" class="form-control" placeholder="Multa"/>
+                    <input id="multa" type="number" name="multa" value="3" class="form-control" placeholder="Multa"/>
                     <div class="erro"></div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="juros">Juros (P/Dia):</label>
-                    <input id="juros" type="text" name="juros" class="form-control" placeholder="Juros"/>
-                    <div class="erro"></div>
-                </div>
+
                 <div class="form-group col-md-6">
                     <label for="valor">Valor:</label>
                     <input id="valor" type="text" name="valor" class="form-control" placeholder="Valor"/>
@@ -91,5 +87,5 @@ require_once 'menu.php';
 <script src="assets/dist/js/select2.min.js"></script>
 <script src="assets/js/combo_boleto.js"></script>
 <script src="assets/js/mascara_valor.js"></script>
-<script src="assets/js/valida_boleto.js"></script>
+<!--<script src="assets/js/valida_boleto.js"></script>!-->
 </html>

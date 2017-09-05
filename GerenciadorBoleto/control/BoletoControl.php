@@ -21,14 +21,18 @@ $boleto = new Boleto();
 switch ($action) {
 
     case "gerar":
-        $boleto->setValor(trim($_POST["valor"]));
+        //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
+        $valor = (str_replace("R$", "", ($_POST["valor"])));
+        $valor = (str_replace(",", ".", $valor));
+        $boleto->setValor($valor);
         $boleto->setNumeroDocumento(trim($_POST["numeroDocumento"]));
         $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
         $boleto->setMulta(trim($_POST["multa"]));
-        $boleto->setJuros(trim($_POST["juros"]));
         $boleto->setBanco($bDao->buscarBanco(trim($_POST["codigoBanco"])));
         $boleto->setUsuario($uDao->buscarUsuario(trim($_POST["codigoUsuario"])));
+        $boleto->setDataEmissao(date("Y-m-d"));
         $_SESSION["boleto"] = $boleto;
+        $bDao->inserirBoleto($boleto);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;

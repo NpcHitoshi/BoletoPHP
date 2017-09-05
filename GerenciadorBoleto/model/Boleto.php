@@ -7,7 +7,6 @@ class Boleto {
     private $banco;
     private $dataVencimento;
     private $valor;
-    private $juros;
     private $multa;
     private $numeroDocumento;
     private $nossoNumero;
@@ -17,24 +16,16 @@ class Boleto {
     function __construct() {
         
     }
-    
-    function getJuros() {
-        return $this->juros;
-    }
 
     function getMulta() {
         return $this->multa;
-    }
-
-    function setJuros($juros) {
-        $this->juros = $juros;
     }
 
     function setMulta($multa) {
         $this->multa = $multa;
     }
 
-        function getCodigoBoleto() {
+    function getCodigoBoleto() {
         return $this->codigoBoleto;
     }
 

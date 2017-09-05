@@ -49,14 +49,15 @@ $boleto = ($_SESSION["boleto"]);
 // Os valores abaixo podem ser colocados manualmente ou ajustados p/ formulário c/ POST, GET ou de BD (MySql,Postgre,etc)	//
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
-$data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006"; 
-$valor_boleto = str_replace("R$", "", $boleto->getValor()); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+$data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006";
+$valor_boleto = str_replace(".", ",", $boleto->getValor()); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+$juros = number_format((($valor_boleto * $boleto->getMulta())/1000),2,",",".");
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
 $dadosboleto["nosso_numero"] = "13871";     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
-$dadosboleto["numero_documento"] = "27.030195.10"; // Num do pedido ou do documento
+$dadosboleto["numero_documento"] = $boleto->getNumeroDocumento(); // Num do pedido ou do documento
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
-$dadosboleto["data_documento"] = date("d/m/Y"); // Data de emissão do Boleto
+$dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao())); // Data de emissão do Boleto
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
 $dadosboleto["valor_boleto"] = "R$ ".$valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 // DADOS DO SEU CLIENTE
@@ -71,7 +72,7 @@ $dadosboleto["demonstrativo3"] = "Até o vencimento pagável em qualquer agênci
 // INSTRUÇÕES PARA O CAIXA
 $dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRA NO SITE: WWW.MICROVIL.COM.BR";
 $dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE ".$boleto->getMulta()."%.";
-$dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ".$boleto->getJuros();
+$dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ".$juros.".";
 $dadosboleto["instrucoes4"] = "";
 // DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
 $dadosboleto["quantidade"] = "";
