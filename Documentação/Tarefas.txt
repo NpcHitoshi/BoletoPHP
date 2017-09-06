@@ -1,0 +1,7 @@
+- Fazer criptografia da senha. - PRONTO
+- Validações Javascript. - Eu - PRONTO
+- E-mail com senha e redefinir senha. - Quem chegar primeiro.
+- Adaptar CRUD para CPF. - Hitoshi.
+- CRUD Boleto SR. - Hitoshi. - FAZENDO
+- Tela Novo Boleto - Vinicius - PRONTO
+- Aprender arquivos de Remessa e Retorno. - Juntos.

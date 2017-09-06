@@ -2,56 +2,96 @@ $(document).ready(function(){
 	//Validações ao tentar Submit
 	$("form").submit(function(e){
 		//Valida CPF
-		if($("#cnpj").val().length < 1)
+		if($("#cnpj").val().length < 1){
+			flag1 = true;
 			estaVazio($("#cnpj"));
-		else if(valida_cnpj($("#cnpj").val()))
+		}
+		else if(valida_cnpj($("#cnpj").val())){
+			flag1 = false;
 			retiraErro($("#cnpj"));	
+		}
 		//Valida Captcha
-		if($("#captcha").val().length < 1)
+		if($("#captcha").val().length < 1){
+			flag2 = true;
 			estaVazio($("#captcha"));
-		else 
+		}
+		else {
+			flag2 = false;
 			retiraErro($("#captcha"));
+		}
 		//Valida Nome	
-		if(($("#nome")).val().length < 1)
+		if(($("#nome")).val().length < 1){
+			flag3 = true;
 			estaVazio($("#nome"));
-		else 
+		}
+		else {
+			flag3 = false;
 			retiraErro($("#nome"));
+		}
 		//Valida E-mail	
-		if(($("#email")).val().length < 1)
+		if(($("#email")).val().length < 1){
+			flag4 = true;
 			estaVazio($("#email"));
-		else 
+		}
+		else {
+			flag4 = false;
 			retiraErro($("#email"));	
+		}
 		// Valida CEP
-		if(($("#cep")).val().length < 1)
+		if(($("#cep")).val().length < 1){
+			flag5 = true;
 			estaVazio($("#cep"));
-		else 
+		}
+		else {
+			flag5 = false;
 			retiraErro($("#cep"));	
+		}
 		//Valida Rua
-		if(($("#rua")).val().length < 1)
+		if(($("#rua")).val().length < 1){
+			flag6 = true;
 			estaVazio($("#rua"));
-		else 
+		}
+		else {
+			flag6 = false;
 			retiraErro($("#rua"));	
+		}
 		//Valida Numero
-		if(($("#num")).val().length < 1)
+		if(($("#num")).val().length < 1){
+			flag7 = true;
 			estaVazio($("#num"));
-		else 
+		}
+		else {
+			flag7 = false;
 			retiraErro($("#num"));	
+		}
 		//Valida Estado
-		if(($("#estado")).val().length < 1)
+		if(($("#estado")).val().length < 1){
+			flag8 = true;
 			estaVazio($("#estado"));
-		else 
+		}
+		else {
+			flag8 = false;
 			retiraErro($("#estado"));	
+		}
 		//Valida Cidade
-		if(($("#cidade")).val().length < 1)
+		if(($("#cidade")).val().length < 1){
+			flag9 = true;
 			estaVazio($("#cidade"));
-		else 
+		}
+		else {
+			flag9 = false;
 			retiraErro($("#cidade"));	
+		}
 		//Valida Bairro
-		if(($("#bairro")).val().length < 1)
+		if(($("#bairro")).val().length < 1){
+			flag10 = true;
 			estaVazio($("#bairro"));
-		else 
+		}
+		else {
+			flag10 = false;
 			retiraErro($("#bairro"));
-		if(flag_error){
+		}
+		if(flag1 || flag2 || flag3 || flag4 || flag5 || flag6 || flag7 || flag8 || flag9 || flag10){
 			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
 			$("#erro-submit").html("Não é possível cadastrar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();
