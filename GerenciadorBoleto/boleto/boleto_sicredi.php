@@ -54,7 +54,7 @@ $valor_boleto = str_replace(".", ",", $boleto->getValor()); // Valor - REGRA: Se
 $juros = number_format((($valor_boleto * $boleto->getMulta())/1000),2,",",".");
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
-$dadosboleto["nosso_numero"] = "13871";     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
+$dadosboleto["nosso_numero"] = $boleto->getNossoNumero();     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
 $dadosboleto["numero_documento"] = $boleto->getNumeroDocumento(); // Num do pedido ou do documento
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
 $dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao())); // Data de emissão do Boleto
@@ -70,7 +70,7 @@ $dadosboleto["demonstrativo1"] = "Recebimento através do cheque Nº";
 $dadosboleto["demonstrativo2"] = "Esta quitação só terá validade após o pagamento do cheque pelo banco pagador." ;
 $dadosboleto["demonstrativo3"] = "Até o vencimento pagável em qualquer agência bancária.";
 // INSTRUÇÕES PARA O CAIXA
-$dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRA NO SITE: WWW.MICROVIL.COM.BR";
+$dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRE NO SITE: WWW.MICROVIL.COM.BR";
 $dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE ".$boleto->getMulta()."%.";
 $dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ".$juros.".";
 $dadosboleto["instrucoes4"] = "";
@@ -92,9 +92,9 @@ $dadosboleto["byte_idt"] = "2";   // Byte de identificação do cedente do bloqu
 // 1 - Idtf emitente: Cooperativa | 2 a 9 - Idtf emitente: Cedente
 $dadosboleto["carteira"] = "A";   // Código da Carteira: A (Simples) 
 // SEUS DADOS
-$dadosboleto["identificacao"] = "BoletoPhp - Código Aberto de Sistema de Boletos";
+$dadosboleto["identificacao"] = "MICROVIL AUTOMACAO COMERCIAL LTDA";
 $dadosboleto["cpf_cnpj"] = "03.919.470/0001-41";
-$dadosboleto["endereco"] = "Coloque o endereço da sua empresa aqui";
+$dadosboleto["endereco"] = "Rua Laranjeira, 469 - Jardim Primavera";
 $dadosboleto["cidade_uf"] = "Piraquara / PR";
 $dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
 // NÃO ALTERAR!

@@ -19,7 +19,7 @@ include("getcaptcha.php");
 $boletos_active = "active";
 require_once 'menu.php';
 ?>
-<form action="control/BoletoControl.php?action=gerar" method="POST">
+<form action="control/BoletoControl.php?action=gerar" method="POST" target="_blank">
     <div class="col-md-10 col-md-offset-1">
         <h1 class="title">Novo Boleto</h1>
         <div id="erro-submit" class="col-md-12"></div>
@@ -87,5 +87,6 @@ require_once 'menu.php';
 <script src="assets/dist/js/select2.min.js"></script>
 <script src="assets/js/combo_boleto.js"></script>
 <script src="assets/js/mascara_valor.js"></script>
-<!--<script src="assets/js/valida_boleto.js"></script>!-->
+<script src="assets/js/valida_boleto.js"></script>
+<script src="assets/js/carrega_num_doc.js"></script>
 </html>

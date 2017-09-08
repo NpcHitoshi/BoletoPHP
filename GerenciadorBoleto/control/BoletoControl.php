@@ -20,12 +20,21 @@ $boleto = new Boleto();
 
 switch ($action) {
 
+    case "carregaNumDocumento":
+        $obj = new \stdClass();
+        $obj->num = $bDao->numDocumento($_GET["cod"]);
+        $objJSON = json_encode($obj);
+        echo $objJSON;
+        break;
+
+
     case "gerar":
         //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
         $valor = (str_replace("R$", "", ($_POST["valor"])));
         $valor = (str_replace(",", ".", $valor));
         $boleto->setValor($valor);
         $boleto->setNumeroDocumento(trim($_POST["numeroDocumento"]));
+        $boleto->setNossoNumero($bDao->nossoNumero());
         $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
         $boleto->setMulta(trim($_POST["multa"]));
         $boleto->setBanco($bDao->buscarBanco(trim($_POST["codigoBanco"])));

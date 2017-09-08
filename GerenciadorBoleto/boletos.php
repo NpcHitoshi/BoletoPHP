@@ -60,7 +60,7 @@ require_once 'menu.php';
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
@@ -96,7 +96,7 @@ require_once 'menu.php';
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
                                 <a class='btn btn-edit' href="">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
@@ -132,7 +132,7 @@ require_once 'menu.php';
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
                                 <a class='btn btn-edit' href="">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
@@ -168,7 +168,7 @@ require_once 'menu.php';
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getDataVencimento() ?></td>
+                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
                                 <a class='btn btn-edit' href="">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar

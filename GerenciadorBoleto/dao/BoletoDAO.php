@@ -53,7 +53,7 @@ class BoletoDAO {
 
     public function listarBoletos() {
         try {
-            $sql = "SELECT * FROM boleto ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto ORDER BY nosso_Numero";
             $result = Database::conexao()->query($sql);
             $lista = $result->fetchAll(PDO::FETCH_ASSOC);
             $boletos = array();
@@ -135,17 +135,46 @@ class BoletoDAO {
     public function inserirBoleto($boleto) {
         try {
             $sql = "INSERT INTO boleto(id_usuario, id_banco, data_vencimento, valor, numero_documento, nosso_numero, data_emissao, "
-                    . "situacao) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, 1, :dataEmissao, 1)";
+                    . "situacao) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, :nossoNumero, :dataEmissao, 1)";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoCliente", $boleto->getUsuario()->getCodigoUsuario());
             $stmt->bindValue(":codigoBanco", $boleto->getBanco()->getCodigoBanco());
             $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());
             $stmt->bindValue(":valor", $boleto->getValor());
-            $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento());
-            //$stmt->bindValue(":nosso_numero", $boleto->getNossoNumero());
+            $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento()); 
+            $stmt->bindValue(":nossoNumero", $boleto->getNossoNumero());
             $stmt->bindValue(":dataEmissao", $boleto->getDataEmissao());
-            return $stmt->execute();
+            return $stmt->execute(); 
         } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function nossoNumero(){
+        try{
+            $sql = "SELECT AUTO_INCREMENT FROM   information_schema.tables WHERE  table_name = 'boleto' AND    table_schema = 'gerenciadordeboleto'";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->execute();
+            $nossoNumero = $stmt->fetch(PDO::FETCH_ASSOC);
+            while(strlen($nossoNumero['AUTO_INCREMENT']) < 5)
+                $nossoNumero['AUTO_INCREMENT'] = "0".$nossoNumero['AUTO_INCREMENT'];
+            return $nossoNumero['AUTO_INCREMENT'];
+        }catch (Exception $e){
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function numDocumento($codigo){
+        try{
+            $sql = "SELECT u.id_usuario as codigo, COUNT(b.id_boleto) as quant FROM usuario u INNER JOIN boleto b ON u.id_usuario = b.id_usuario WHERE u.id_usuario = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $codigo);
+            $stmt->execute();
+            $retorno = $stmt->fetch(PDO::FETCH_ASSOC);
+            while(strlen($retorno['codigo']) < 5)
+                $retorno['codigo'] = "0".$retorno['codigo'];
+            return $retorno['codigo'] . "/" . ($retorno['quant']+1); 
+        }catch (Exception $e){
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }

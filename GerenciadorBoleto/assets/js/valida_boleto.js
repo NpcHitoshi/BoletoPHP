@@ -1,7 +1,6 @@
 $(document).ready(function(){ 
 	//Validações ao tentar Submit
 	$("form").submit(function(e){
-		//Valida Banco
 		//Valida Numero Documento
 		if(($("#numDoc")).val().length < 1){
 			flag1 = true;
@@ -20,15 +19,6 @@ $(document).ready(function(){
 			flag2 = false;
 			retiraErro($("#multa"));	
 		}
-		// Valida Juros
-		if(($("#juros")).val().length < 1){
-			flag3 = true;
-			estaVazio($("#juros"));
-		}
-		else {
-			flag3 = false;
-			retiraErro($("#juros"));	
-		}
 		//Valida Valor
 		if(($("#valor")).val().length < 1){
 			flag4 = true;
@@ -46,10 +36,17 @@ $(document).ready(function(){
 			flag5 = false;
 			retiraErro($("#vencimento"));		
 		}
-		if(flag1 || flag2 || flag3 || flag4 || flag5){
+		//Cancela submit caso haja erros.
+		if(flag1 || flag2 || flag4 || flag5){
 			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
 			$("#erro-submit").html("Não é possível gerar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();
+		}
+		else{
+			//Recarrega página após gerar boleto
+			console.log("Foooi");
+			window.location.replace("https://stackoverflow.com/questions/503093/how-to-redirect-to-another-webpage");
+			console.log("Foooi2");
 		}	
 	});
 

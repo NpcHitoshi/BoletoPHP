@@ -10,7 +10,6 @@ if (!defined("BASE_DIR")) {
 require_once BASE_DIR . "model" . DS . "Usuario.php";
 require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "EnderecoDAO.php";
-require_once BASE_DIR . "dao" . DS . "Bcrypt.php";
 
 $db = new Database();
 $pdo = $db->conexao();
