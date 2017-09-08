@@ -15,7 +15,7 @@ $pdo = $db->conexao();
 session_start();
 $action = $_GET["action"];
 $bDao = new BoletoDAO();
-$uDao = new UsuarioDAO();
+$cDao = new ClienteoDAO();
 $boleto = new Boleto();
 
 switch ($action) {
@@ -38,23 +38,26 @@ switch ($action) {
         $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
         $boleto->setMulta(trim($_POST["multa"]));
         $boleto->setBanco($bDao->buscarBanco(trim($_POST["codigoBanco"])));
-        $boleto->setUsuario($uDao->buscarUsuario(trim($_POST["codigoUsuario"])));
+        $boleto->setCliente($cDao->buscarCliente(trim($_POST["codigoCliente"])));
         $boleto->setDataEmissao(date("Y-m-d"));
         $_SESSION["boleto"] = $boleto;
         $bDao->inserirBoleto($boleto);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
-    
+
     case "atualizar":
-        
+
         break;
-    
+
     case "vizualizar":
         $codigo = $_GET["codigo"];
         $boleto = $bDao->buscarBoleto($codigo);
+        $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
+        var_dump($boleto);
         $_SESSION["boleto"] = $boleto;
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
+    
 }

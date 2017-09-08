@@ -22,7 +22,7 @@
             </form>
 
             <form class="login-form" action="control/ProcessaLogin.php?action=login" method="POST">
-                <input id="cnpj" type="text" name="cnpj" placeholder="CNPJ" required/>
+                <input id="documento" type="text" name="documento" placeholder="Nº de Documento" required/>
                 <input id="senha" type="password" name="senha" placeholder="Senha" required/>
                 <button type="submit">login</button>
                 <p class="message">Esqueceu sua senha? <a href="#">Enviar E-mail</a></p>

@@ -3,7 +3,7 @@
 class Boleto {
 
     private $codigoBoleto;
-    private $usuario;
+    private $cliente;
     private $banco;
     private $dataVencimento;
     private $valor;
@@ -17,6 +17,14 @@ class Boleto {
         
     }
 
+    function getCliente() {
+        return $this->cliente;
+    }
+
+    function setCliente($cliente) {
+        $this->cliente = $cliente;
+    }
+
     function getMulta() {
         return $this->multa;
     }
@@ -27,10 +35,6 @@ class Boleto {
 
     function getCodigoBoleto() {
         return $this->codigoBoleto;
-    }
-
-    function getUsuario() {
-        return $this->usuario;
     }
 
     function getBanco() {
@@ -63,10 +67,6 @@ class Boleto {
 
     function setCodigoBoleto($codigoBoleto) {
         $this->codigoBoleto = $codigoBoleto;
-    }
-
-    function setUsuario($usuario) {
-        $this->usuario = $usuario;
     }
 
     function setBanco($banco) {

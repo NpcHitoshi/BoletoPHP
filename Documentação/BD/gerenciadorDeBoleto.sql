@@ -29,15 +29,15 @@ FOREIGN KEY (id_cidade) REFERENCES Cidade (id_cidade)
 )engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Usuario (
-id_usuario INT NOT NULL AUTO_INCREMENT,
+id_cliente INT NOT NULL AUTO_INCREMENT,
 id_endereco INT,
-razao_social VARCHAR(50) NOT NULL,
-cnpj VARCHAR(14) NOT NULL,
+nomeCliente VARCHAR(50) NOT NULL,
+documento VARCHAR(14) NOT NULL,
 email VARCHAR(50) NOT NULL,
 senha VARCHAR(60) NOT NULL,
 tipo_conta BIT NOT NULL,
 ativo BIT NOT NULL,
-PRIMARY KEY (id_usuario),
+PRIMARY KEY (id_cliente),
 CONSTRAINT FK_ENDERECO FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco) ON DELETE CASCADE
 )engine=InnoDB;
 
@@ -49,7 +49,7 @@ PRIMARY KEY (id_banco)
 
 CREATE TABLE IF NOT EXISTS Boleto (
 id_boleto INT NOT NULL AUTO_INCREMENT,
-id_usuario INT,
+id_cliente INT,
 id_banco INT,
 data_vencimento DATE NOT NULL,
 valor DOUBLE NOT NULL,
@@ -58,6 +58,6 @@ nosso_numero VARCHAR(20),
 data_emissao DATE NOT NULL,
 situacao SMALLINT NOT NULL,
 PRIMARY KEY (id_boleto),
-FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
+FOREIGN KEY (id_cliente) REFERENCES Usuario (id_cliente),
 FOREIGN KEY (id_banco) REFERENCES Banco (id_banco)
 )engine=InnoDB;

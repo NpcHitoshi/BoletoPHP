@@ -5,12 +5,12 @@ if (!defined("DS")) {
 if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(__FILE__) . DS);
 }
-require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "model" . DS . "Banco.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
 session_start();
-if (($_SESSION["usuario"]) == null) {
+if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 include("getcaptcha.php");
@@ -41,14 +41,14 @@ require_once 'menu.php';
 
             <div class="form-group col-md-12">
                 <label for="cliente">Cliente:</label>
-                <select id="cliente" name="codigoUsuario" class="js-example-basic-single form-control">
+                <select id="cliente" name="codigoCliente" class="js-example-basic-single form-control">
                     <?php
-                    $uDao = new UsuarioDAO();
-                    $ativos[] = new Usuario();
-                    $ativos = $uDao->listarUsuariosAtivos();
-                    foreach ($ativos as $objUsuario) {
+                    $uDao = new ClienteDAO();
+                    $ativos[] = new Cliente();
+                    $ativos = $uDao->listarClientesAtivos();
+                    foreach ($ativos as $objCliente) {
                         ?>
-                        <option value="<?php echo $objUsuario->getCodigoUsuario() ?>"><?php echo $objUsuario->getRazaoSocial() ?></option>
+                        <option value="<?php echo $objCliente->getCodigoCliente() ?>"><?php echo $objCliente->getNomeCliente() ?></option>
                         <?php } ?>
                     </select>
                     <div class="erro"></div>

@@ -8,9 +8,9 @@ if (!defined("BASE_DIR")) {
 }
 
 require_once BASE_DIR . "model" . DS . "Banco.php";
-require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "dao" . DS . "Database.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
 class BoletoDAO {
 
@@ -24,8 +24,8 @@ class BoletoDAO {
         $boleto->setNumeroDocumento($row['numero_documento']);
         $boleto->setSituacao($row['situacao']);
         $boleto->setBanco($this->buscarBanco($row['id_banco']));
-        $uDao = new UsuarioDAO();
-        $boleto->setUsuario($uDao->buscarUsuario($row['id_usuario']));
+        $uDao = new ClienteDAO();
+        $boleto->setCliente($uDao->buscarCliente($row['id_cliente']));
         return $boleto;
     }
 
@@ -134,10 +134,10 @@ class BoletoDAO {
     
     public function inserirBoleto($boleto) {
         try {
-            $sql = "INSERT INTO boleto(id_usuario, id_banco, data_vencimento, valor, numero_documento, nosso_numero, data_emissao, "
+            $sql = "INSERT INTO boleto(id_cliente, id_banco, data_vencimento, valor, numero_documento, nosso_numero, data_emissao, "
                     . "situacao) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, :nossoNumero, :dataEmissao, 1)";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":codigoCliente", $boleto->getUsuario()->getCodigoUsuario());
+            $stmt->bindValue(":codigoCliente", $boleto->getCliente()->getCodigoCliente());
             $stmt->bindValue(":codigoBanco", $boleto->getBanco()->getCodigoBanco());
             $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());
             $stmt->bindValue(":valor", $boleto->getValor());
@@ -166,7 +166,8 @@ class BoletoDAO {
 
     public function numDocumento($codigo){
         try{
-            $sql = "SELECT u.id_usuario as codigo, COUNT(b.id_boleto) as quant FROM usuario u INNER JOIN boleto b ON u.id_usuario = b.id_usuario WHERE u.id_usuario = :codigo";
+            $sql = "SELECT u.id_cliente AS codigo, COUNT(b.id_boleto) as quant FROM cliente u INNER JOIN boleto b ON "
+                    . "u.id_cliente = b.id_cliente WHERE u.id_cliente = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();

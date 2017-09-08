@@ -5,12 +5,12 @@ if (!defined("DS")) {
 if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(__FILE__) . DS);
 }
-require_once BASE_DIR . "model" . DS . "Usuario.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "model" . DS . "Boleto.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDao.php";
 session_start();
-if (($_SESSION["usuario"]) == null) {
+if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 ?>
@@ -58,7 +58,7 @@ require_once 'menu.php';
                         $boletos = $bDao->listarBoletos();
                         foreach ($boletos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
@@ -94,7 +94,7 @@ require_once 'menu.php';
                         $boletosPagos = $bDao->listarBoletosPagos();
                         foreach ($boletosPagos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
@@ -130,7 +130,7 @@ require_once 'menu.php';
                         $boletosAbertos = $bDao->listarBoletosAbertos();
                         foreach ($boletosAbertos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
@@ -166,7 +166,7 @@ require_once 'menu.php';
                         $boletos2via = $bDao->listarBoletos2via();
                         foreach ($boletos2via as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getUsuario()->getRazaoSocial() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">

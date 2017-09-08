@@ -27,7 +27,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <div class="navbar-header">
-            <span class="navbar-brand" href=""><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["usuario"]->getRazaoSocial()?></span>
+            <span class="navbar-brand" href=""><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["cliente"]->getNomeCliente()?></span>
         </div>
             <li><a href="control/ProcessaLogin.php?action=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
         </ul>

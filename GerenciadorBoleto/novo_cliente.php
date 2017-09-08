@@ -5,10 +5,10 @@ if (!defined("DS")) {
 if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(__FILE__) . DS);
 }
-require_once BASE_DIR . "model" . DS . "Usuario.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 session_start();
-if (($_SESSION["usuario"]) == null) {
+if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 include("getcaptcha.php");
@@ -17,15 +17,15 @@ include("getcaptcha.php");
 $clientes_active="active";
 require_once 'menu.php';
 ?>
-<form action="control/UsuarioControl.php?action=inserir" method="POST">
+<form action="control/ClienteControl.php?action=inserir" method="POST">
     <div class="col-md-10 col-md-offset-1">
         <h1 class="title">Novo Cliente</h1>
         <div id="erro-submit" class="col-md-12"></div>
         <div class="col-md-6">
             <h4 class="title">Dados Básicos</h4>
             <div class="form-group col-md-12">
-                <label for="cnpj">CNPJ:</label>
-                <input id="cnpj" type="text" name="cnpj" class="form-control" placeholder="CNPJ"/>
+                <label for="documento">Nº do documento:</label>
+                <input id="documento" type="text" name="documento" class="form-control" placeholder="Nº do documento"/>
                 <div class="erro"></div>
             </div>
             <div class="form-group col-md-12">
@@ -35,8 +35,8 @@ require_once 'menu.php';
                 <div class="erro"></div>
             </div>
             <div class="form-group col-md-12">
-                <label for="cnpj">Nome Empresarial:</label>
-                <input id="nome" type="text" name="razao_social" class="form-control" placeholder="Nome Empresarial"/>
+                <label for="documento">Nome / Razão Social:</label>
+                <input id="nome" type="text" name="nomeCliente" class="form-control" placeholder="Nome / Razão Social"/>
                 <div class="erro"></div>
             </div>
             <div class="form-group col-md-12">

@@ -8,7 +8,7 @@ if (!defined("BASE_DIR")) {
 }
 
 require_once BASE_DIR . "dao" . DS . "DataBase.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
 $db = new Database();
 $pdo = $db->conexao();
@@ -18,18 +18,18 @@ $action = $_GET["action"];
 switch ($action) {
     case "login":
         try {
-            $cnpj = trim($_POST['cnpj']);
+            $documento = trim($_POST['documento']);
             $senha = trim($_POST['senha']);
-            $usuarioDAO = new UsuarioDAO();
-            $usuario = $usuarioDAO->autenticaUsuario($cnpj, $senha);
+            $clienteDAO = new ClienteDAO();
+            $cliente = $clienteDAO->autenticaCliente($documento, $senha);
 
-            if ($usuario->getCodigoUsuario() != null) {
-                $_SESSION["usuario"] = $usuario;
+            if ($cliente->getCodigoCliente() != null) {
+                $_SESSION["cliente"] = $cliente;
 
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
                 exit;
             } else {
-                $_SESSION["erro"] = "Senha ou CNPJ incorreto";
+                $_SESSION["erro"] = "Senha ou Nº de Documento Incorreto";
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
                 exit;
             }

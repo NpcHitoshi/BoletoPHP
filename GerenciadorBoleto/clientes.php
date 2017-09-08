@@ -5,10 +5,10 @@ if (!defined("DS")) {
 if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(__FILE__) . DS);
 }
-require_once BASE_DIR . "model" . DS . "Usuario.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDao.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDao.php";
 session_start();
-if (($_SESSION["usuario"]) == null) {
+if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 ?>
@@ -31,27 +31,27 @@ require_once 'menu.php';
             <table class="table1 table table-hover table-inverse">
                 <thead>
                     <tr>
-                        <th class="col-md-5">Nome Empresarial</th>
-                        <th class="col-md-2">CNPJ</th>
+                        <th class="col-md-5">Nome / Razão Social</th>
+                        <th class="col-md-2">Nº de Documento</th>
                         <th class="col-md-3">E-mail</th>
                         <th class="col-md-2" colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr><?php
-                        $uDao = new UsuarioDao();
-                        $ativos[] = new Usuario();
-                        $ativos = $uDao->listarUsuariosAtivos();
+                        $uDao = new ClienteDao();
+                        $ativos[] = new Cliente();
+                        $ativos = $uDao->listarClientesAtivos();
                         foreach ($ativos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
-                            <td class="col-md-2"><?php echo substr($obj->getCnpj(), 0, 2) . "." .  substr($obj->getCnpj(), 2, 3) . "." . substr($obj->getCnpj(), 5, 3)  . "/" . substr($obj->getCnpj(), 8, 4) . "-" . substr($obj->getCnpj(), 12, 2) ?></td>
+                            <td class="busca col-md-4"><?php echo $obj->getNomeCliente() ?></td>
+                            <td class="col-md-2"><?php echo substr($obj->getDocumento(), 0, 2) . "." .  substr($obj->getDocumento(), 2, 3) . "." . substr($obj->getDocumento(), 5, 3)  . "/" . substr($obj->getDocumento(), 8, 4) . "-" . substr($obj->getDocumento(), 12, 2) ?></td>
                             <td class="col-md-3"><?php echo $obj->getEmail() ?></td>
                             <td class="col-md-3">
-                                <a class='btn btn-edit' href="control/UsuarioControl.php?action=carrega_editar&codigo=<?php echo $obj->getCodigoUsuario()?>">
+                                <a class='btn btn-edit' href="control/ClienteControl.php?action=carrega_editar&codigo=<?php echo $obj->getCodigoCliente()?>">
                                     <span class='glyphicon glyphicon-edit'></span> Editar
                                 </a>
-                                <button name="control/UsuarioControl.php?action=desativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-delete btexcluir " data-toggle="modal" data-target="#modalDelete">
+                                <button name="control/ClienteControl.php?action=desativar&codigo=<?php echo $obj->getCodigoCliente() ?>" class="btn btn-delete btexcluir " data-toggle="modal" data-target="#modalDelete">
                                     <span class="glyphicon glyphicon-trash"></span> Excluir
                                 </button>
                             </td>
@@ -65,26 +65,26 @@ require_once 'menu.php';
                 <table class="table2 table table-hover table-inverse">
                     <thead>
                         <tr>
-                            <th class="col-md-5">Nome Empresarial</th>
-                            <th class="col-md-2">CNPJ</th>
+                            <th class="col-md-5">Nome / Razão Social</th>
+                            <th class="col-md-2">Nº de Documento</th>
                             <th class="col-md-3">E-mail</th>
                             <th class="col-md-2" colspan="2"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr><?php
-                            $desativados[] = new Usuario();
-                            $desativados = $uDao->listarUsuariosDesativados();
+                            $desativados[] = new Cliente();
+                            $desativados = $uDao->listarClientesDesativados();
                             foreach ($desativados as $obj) {
                                 ?>
-                                <td class="busca col-md-4"><?php echo $obj->getRazaoSocial() ?></td>
-                                <td class="col-md-2"><?php echo substr($obj->getCnpj(), 0, 2) . "." .  substr($obj->getCnpj(), 2, 3) . "." . substr($obj->getCnpj(), 5, 3)  . "/" . substr($obj->getCnpj(), 8, 4) . "-" . substr($obj->getCnpj(), 12, 2) ?></td>
+                                <td class="busca col-md-4"><?php echo $obj->getNomeCliente() ?></td>
+                                <td class="col-md-2"><?php echo substr($obj->getDocumento(), 0, 2) . "." .  substr($obj->getDocumento(), 2, 3) . "." . substr($obj->getDocumento(), 5, 3)  . "/" . substr($obj->getDocumento(), 8, 4) . "-" . substr($obj->getDocumento(), 12, 2) ?></td>
                                 <td class="col-md-3"><?php echo $obj->getEmail() ?></td>
                                 <td class="col-md-3">
                                     <button class='btn btn-edit' > 
                                         <span class='glyphicon glyphicon-edit'></span> Editar
                                     </button>
-                                    <button name="control/UsuarioControl.php?action=ativar&codigo=<?php echo $obj->getCodigoUsuario() ?>" class="btn btn-yes btativar" data-toggle="modal" data-target="#modalAtivar">
+                                    <button name="control/ClienteControl.php?action=ativar&codigo=<?php echo $obj->getCodigoCliente() ?>" class="btn btn-yes btativar" data-toggle="modal" data-target="#modalAtivar">
                                         <span class="glyphicon glyphicon-ok-circle"></span> Ativar
                                     </button>
                                 </td>
