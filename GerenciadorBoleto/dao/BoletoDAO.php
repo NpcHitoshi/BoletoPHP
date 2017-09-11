@@ -24,8 +24,8 @@ class BoletoDAO {
         $boleto->setNumeroDocumento($row['numero_documento']);
         $boleto->setSituacao($row['situacao']);
         $boleto->setBanco($this->buscarBanco($row['id_banco']));
-        $uDao = new ClienteDAO();
-        $boleto->setCliente($uDao->buscarCliente($row['id_cliente']));
+        $cDao = new ClienteDAO();
+        $boleto->setCliente($cDao->buscarCliente($row['id_cliente']));
         return $boleto;
     }
 

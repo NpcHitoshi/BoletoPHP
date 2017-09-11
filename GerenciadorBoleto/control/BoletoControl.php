@@ -15,7 +15,7 @@ $pdo = $db->conexao();
 session_start();
 $action = $_GET["action"];
 $bDao = new BoletoDAO();
-$cDao = new ClienteoDAO();
+$cDao = new ClienteDAO();
 $boleto = new Boleto();
 
 switch ($action) {

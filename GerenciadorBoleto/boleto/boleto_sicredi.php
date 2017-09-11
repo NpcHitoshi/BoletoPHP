@@ -9,12 +9,12 @@ if (!defined("BASE_DIR")) {
 }
 
 require_once BASE_DIR . "model" . DS . "Boleto.php";
-require_once BASE_DIR . "model" . DS . "Usuario.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
-require_once BASE_DIR . "dao" . DS . "UsuarioDAO.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
 session_start();
-if (($_SESSION["usuario"]) == null) {
+if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 $boleto = ($_SESSION["boleto"]);
@@ -61,10 +61,10 @@ $dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
 $dadosboleto["valor_boleto"] = "R$ ".$valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 // DADOS DO SEU CLIENTE
-$dadosboleto["sacado"] = $boleto->getUsuario()->getRazaoSocial();
-$dadosboleto["endereco1"] = $boleto->getUsuario()->getEndereco()->getRua() .", ".$boleto->getUsuario()->getEndereco()->getNumero();
-$dadosboleto["endereco2"] = $boleto->getUsuario()->getEndereco()->getCidade()->getNomeCidade()." - ".
-$boleto->getUsuario()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $boleto->getUsuario()->getEndereco()->getCep();
+$dadosboleto["sacado"] = $boleto->getCliente()->getNomeCliente();
+$dadosboleto["endereco1"] = $boleto->getCliente()->getEndereco()->getRua() .", ".$boleto->getCliente()->getEndereco()->getNumero();
+$dadosboleto["endereco2"] = $boleto->getCliente()->getEndereco()->getCidade()->getNomeCidade()." - ".
+$boleto->getCliente()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $boleto->getCliente()->getEndereco()->getCep();
 // INFORMACOES PARA O CLIENTE
 $dadosboleto["demonstrativo1"] = "Recebimento através do cheque Nº";
 $dadosboleto["demonstrativo2"] = "Esta quitação só terá validade após o pagamento do cheque pelo banco pagador." ;
