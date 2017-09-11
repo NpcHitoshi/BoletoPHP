@@ -11,3 +11,10 @@ $(document).ready(function(){
 		$("#Excsima").attr("href", link);
 	})
 })
+
+$(document).ready(function(){
+	$(".bt2via").click(function(){
+		link = $(this).attr("name");
+		$("#form-2via").attr("action", link);
+	})
+})

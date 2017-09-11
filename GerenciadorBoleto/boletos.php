@@ -20,6 +20,40 @@ require_once 'menu.php';
 ?>
 <script src="assets/js/filtro.js"></script>
 <script src="assets/js/manterModal.js"></script>
+<script src="assets/js/mascara_valor.js"></script>
+<script src="assets/js/valida_2via.js"></script>
+<!-- Modal Ativar -->
+<div id="modal2via" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">2ª Via Boleto</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form-2via" action="control/BoletoControl.php?action=2via&codigo=" method="POST" target="_blank">
+                    <div class="form-group col-md-6">
+                        <label for="vencimento">Vencimento:</label>
+                        <input id="vencimento" type="date" name="dataVencimento" class="form-control" placeholder="Vencimento"/>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="valor">Valor:</label>
+                        <input id="valor" type="text" name="valor" class="form-control" placeholder="Valor"/>
+                        <div class="erro"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="" id="Gerar2via"><button type="submit" class="btn btn-yes">Gerar</button></a>
+                </form>
+                <button type="button" class="btn btn-delete" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link rel="stylesheet" href="assets/css/boletos.css">
 <div class="col-md-10 col-md-offset-1">
     <h1 class="title">Boletos</h1>
@@ -65,23 +99,23 @@ require_once 'menu.php';
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
+                                <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                <button id="btemail" name="" class="btn btn-delete">
                                     <span class="glyphicon glyphicon-send"></span> Enviar E-mail
                                 </button>
                             </td>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="pagos" class="tab-pane fade">
-            <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
-            <table class="table2 table table-hover table-inverse">
-                <thead>
+            <div id="pagos" class="tab-pane fade">
+                <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
+                <table class="table2 table table-hover table-inverse">
+                   <thead>
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
@@ -101,138 +135,93 @@ require_once 'menu.php';
                                 <a class='btn btn-edit' href="">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
+                                <button id="bt2via" name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
+                                <button id="btemail" name="" class="btn btn-delete">
                                     <span class="glyphicon glyphicon-send"></span> Enviar E-mail
                                 </button>
                             </td>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="abertos" class="tab-pane fade">
-            <input class="form-control input-lg" id="buscar2" alt="table3" placeholder="Pesquisar..." type="text">
-            <table class="table3 table table-hover table-inverse">
-                <thead>
-                    <tr>
-                        <th class="col-md-3">Pagador</th>
-                        <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><?php
-                        $boletosAbertos = $bDao->listarBoletosAbertos();
-                        foreach ($boletosAbertos as $obj) {
-                            ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
-                                <a class='btn btn-edit' href="">
-                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                                </a>
-                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                                </button>
-                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                                </button>
-                            </td>
+            <div id="abertos" class="tab-pane fade">
+                <input class="form-control input-lg" id="buscar2" alt="table3" placeholder="Pesquisar..." type="text">
+                <table class="table3 table table-hover table-inverse">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3">Pagador</th>
+                            <th class="col-md-2">Nosso Número</th>
+                            <th class="col-md-2">Data de Vencimento</th>
+                            <th class="col-md-4" colspan="4"></th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        <tr><?php
+                            $boletosAbertos = $bDao->listarBoletosAbertos();
+                            foreach ($boletosAbertos as $obj) {
+                                ?>
+                                <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                                <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                                <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                                <td class="col-md-4">
+                                    <a class='btn btn-edit' href="">
+                                        <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                    </a>
+                                    <button id="bt2via" name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes" data-toggle="modal" data-target="#modal2via">
+                                        <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                    </button>
+                                    <button id="btemail" name="" class="btn btn-delete">
+                                        <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
 
-        <div id="2vias" class="tab-pane fade">
-            <input class="form-control input-lg" id="buscar3" alt="table4" placeholder="Pesquisar..." type="text">
-            <table class="table4 table table-hover table-inverse">
-                <thead>
-                    <tr>
-                        <th class="col-md-3">Pagador</th>
-                        <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><?php
-                        $boletos2via = $bDao->listarBoletos2via();
-                        foreach ($boletos2via as $obj) {
-                            ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
-                                <a class='btn btn-edit' href="">
-                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                                </a>
-                                <button id="bt2via" name="" class="btn btn-yes" data-toggle="modal" data-target="#modalDelete">
-                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                                </button>
-                                <button id="btemail" name="" class="btn btn-delete" data-toggle="modal" data-target="#modalDelete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                                </button>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Excluir -->
-<div id="modalDelete" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Excluir Registro</h4>
+                <div id="2vias" class="tab-pane fade">
+                    <input class="form-control input-lg" id="buscar3" alt="table4" placeholder="Pesquisar..." type="text">
+                    <table class="table4 table table-hover table-inverse">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">Pagador</th>
+                                <th class="col-md-2">Nosso Número</th>
+                                <th class="col-md-2">Data de Vencimento</th>
+                                <th class="col-md-4" colspan="4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><?php
+                                $boletos2via = $bDao->listarBoletos2via();
+                                foreach ($boletos2via as $obj) {
+                                    ?>
+                                    <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                                    <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                                    <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                                    <td class="col-md-4">
+                                        <a class='btn btn-edit' href="">
+                                            <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                        </a>
+                                        <button id="bt2via" name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes" data-toggle="modal" data-target="#modal2via">
+                                            <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                        </button>
+                                        <button id="btemail" name="" class="btn btn-delete">
+                                            <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Tem certeza que deseja excluir este registro?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="" id="Excsime"><button type="button" class="btn btn-yes">Sim</button></a>
-                <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
-            </div>
-        </div>
 
-    </div>
-</div>
+        </body>
 
-
-
-<!-- Modal Ativar -->
-<div id="modalAtivar" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Ativar Registro</h4>
-            </div>
-            <div class="modal-body">
-                <p>Tem certeza que deseja ativar este registro?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="" id="Excsima"><button type="button" class="btn btn-yes">Sim</button></a>
-                <button type="button" class="btn btn-delete" data-dismiss="modal">Não</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-</body>
-
-</html>
+        </html>

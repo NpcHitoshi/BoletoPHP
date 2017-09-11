@@ -2,13 +2,13 @@ $(document).ready(function(){
 	//Validações ao tentar Submit
 	$("form").submit(function(e){
 		//Valida CPF
-		if($("#cnpj").val().length < 1){
+		if($("#documento").val().length < 1){
 			flag1 = true;
-			estaVazio($("#cnpj"));
+			estaVazio($("#documento"));
 		}
-		else if(valida_cnpj($("#cnpj").val())){
+		else if(valida_cnpj($("#documento").val())){
 			flag1 = false;
-			retiraErro($("#cnpj"));	
+			retiraErro($("#documento"));	
 		}
 		//Valida Captcha
 		if($("#captcha").val().length < 1){
@@ -101,10 +101,10 @@ $(document).ready(function(){
 	
 });
 
-$("#cnpj").focusout(function(){
+$("#documento").focusout(function(){
 	if($(this).val().length < 1)
 		estaVazio(this);
-	else if(valida_cnpj($("#cnpj").val()))
+	else if(valida_cnpj($("#documento").val()))
 		retiraErro(this);	
 });
 $("#captcha").focusout(function(){
