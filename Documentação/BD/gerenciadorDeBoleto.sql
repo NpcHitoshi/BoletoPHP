@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS gerenciadorDeBoleto;
-USE gerenciadorDeBoleto;
 
 CREATE TABLE IF NOT EXISTS Estado (
 id_estado INT NOT NULL,
@@ -57,6 +55,7 @@ numero_documento VARCHAR(10) NOT NULL,
 nosso_numero VARCHAR(20),
 data_emissao DATE NOT NULL,
 situacao SMALLINT NOT NULL,
+multa DOUBLE,
 PRIMARY KEY (id_boleto),
 FOREIGN KEY (id_cliente) REFERENCES Usuario (id_cliente),
 FOREIGN KEY (id_banco) REFERENCES Banco (id_banco)

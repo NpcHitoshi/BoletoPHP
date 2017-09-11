@@ -14,19 +14,28 @@ $db = new Database();
 $pdo = $db->conexao();
 session_start();
 $action = $_GET["action"];
-$bDao = new BoletoDAO();
-$cDao = new ClienteDAO();
+$boletoDao = new BoletoDAO();
+$clienteDao = new ClienteDAO();
+$bancoDao = new BancoDAO();
 $boleto = new Boleto();
 
 switch ($action) {
 
     case "carregaNumDocumento":
         $obj = new \stdClass();
-        $obj->num = $bDao->numDocumento($_GET["cod"]);
+        $obj->num = $boletoDao->numDocumento($_GET["cod"]);
         $objJSON = json_encode($obj);
         echo $objJSON;
         break;
 
+    case "carregaAtualizar":
+        $dataVencimento = new DateTime($boleto->getDataVencimento());
+        $dataHoje = new DateTime(date("Y-m-d"));
+        $diasCorridos = $dataVencimento->diff($dataHoje);
+        $boleto->setValor(number_format(((($boleto->getValor() * $boleto->getMulta()) / 1000) * $diasCorridos), 2, ",", "."));
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/atualiza_boleto.php");
+        exit();
+        break;
 
     case "gerar":
         //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
@@ -34,30 +43,38 @@ switch ($action) {
         $valor = (str_replace(",", ".", $valor));
         $boleto->setValor($valor);
         $boleto->setNumeroDocumento(trim($_POST["numeroDocumento"]));
-        $boleto->setNossoNumero($bDao->nossoNumero());
+        $boleto->setNossoNumero($boletoDao->nossoNumero());
         $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
         $boleto->setMulta(trim($_POST["multa"]));
-        $boleto->setBanco($bDao->buscarBanco(trim($_POST["codigoBanco"])));
-        $boleto->setCliente($cDao->buscarCliente(trim($_POST["codigoCliente"])));
+        $boleto->setBanco($bancoDao->buscarBanco(trim($_POST["codigoBanco"])));
+        $boleto->setCliente($clienteDao->buscarCliente(trim($_POST["codigoCliente"])));
         $boleto->setDataEmissao(date("Y-m-d"));
         $_SESSION["boleto"] = $boleto;
-        $bDao->inserirBoleto($boleto);
+        $boletoDao->inserirBoleto($boleto);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
 
     case "atualizar":
-
+        $valor = (str_replace("R$", "", ($_POST["valor"])));
+        $valor = (str_replace(",", ".", $valor));
+        $boleto->setValor($valor);
+        $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
+        $_SESSION["boleto"] = $boleto;
+        $boletoDao->atualizaBoleto($boleto);
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+        exit();
         break;
 
     case "vizualizar":
         $codigo = $_GET["codigo"];
-        $boleto = $bDao->buscarBoleto($codigo);
+        $boleto = $boletoDao->buscarBoleto($codigo);
         $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
-        var_dump($boleto);
         $_SESSION["boleto"] = $boleto;
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
-    
+
+    default:
+        break;
 }

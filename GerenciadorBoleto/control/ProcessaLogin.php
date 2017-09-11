@@ -34,7 +34,7 @@ switch ($action) {
                 exit;
             }
         } catch (Exception $e) {
-            
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
 

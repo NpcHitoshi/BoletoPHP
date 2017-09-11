@@ -28,6 +28,13 @@ class Database {
         $db_usuario = "boletophp";
         $db_senha = "boletophp";
         $db_driver = "mysql";
+        /*
+        $db_host = "mysql.hostinger.com.br";
+        $db_nome = "u103291521_gb";
+        $db_usuario = "u103291521_bphp";
+        $db_senha = "boletophp";
+        $db_driver = "mysql";
+         */
         # Informações sobre o sistema:
         try {
             # Atribui o objeto PDO à variável $db.

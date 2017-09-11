@@ -15,17 +15,17 @@ INSERT INTO `Estado` VALUES (13, 'MT', 'Mato Grosso');
 INSERT INTO `Estado` VALUES (14, 'PA', 'Pará');
 INSERT INTO `Estado` VALUES (15, 'PB', 'Paraíba');
 INSERT INTO `Estado` VALUES (16, 'PE', 'Pernambuco');
-INSERT INTO `Estado` VALUES (17, 'Piauí');
-INSERT INTO `Estado` VALUES (18, 'Paraná');
-INSERT INTO `Estado` VALUES (19, 'Rio de Janeiro');
-INSERT INTO `Estado` VALUES (20, 'Rio Grande do Norte');
-INSERT INTO `Estado` VALUES (21, 'Rondônia');
-INSERT INTO `Estado` VALUES (22, 'Roraima');
-INSERT INTO `Estado` VALUES (23, 'Rio Grande do Sul');
-INSERT INTO `Estado` VALUES (24, 'Santa Catarina');
-INSERT INTO `Estado` VALUES (25, 'Sergipe');
-INSERT INTO `Estado` VALUES (26, 'São Paulo');
-INSERT INTO `Estado` VALUES (27, 'Tocantins');
+INSERT INTO `Estado` VALUES (17, 'PI', 'Piauí');
+INSERT INTO `Estado` VALUES (18, 'PR', 'Paraná');
+INSERT INTO `Estado` VALUES (19, 'RJ', 'Rio de Janeiro');
+INSERT INTO `Estado` VALUES (20, 'RN', 'Rio Grande do Norte');
+INSERT INTO `Estado` VALUES (21, 'RO', 'Rondônia');
+INSERT INTO `Estado` VALUES (22, 'RR', 'Roraima');
+INSERT INTO `Estado` VALUES (23, 'RS', 'Rio Grande do Sul');
+INSERT INTO `Estado` VALUES (24, 'SC', 'Santa Catarina');
+INSERT INTO `Estado` VALUES (25, 'SE', 'Sergipe');
+INSERT INTO `Estado` VALUES (26, 'SP', 'São Paulo');
+INSERT INTO `Estado` VALUES (27, 'TO', 'Tocantins');
 
 ##Inicia Cidades
 INSERT INTO `Cidade` VALUES (0001, 01, 'Acrelandia');

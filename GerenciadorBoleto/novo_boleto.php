@@ -9,6 +9,7 @@ require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "model" . DS . "Banco.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
+require_once BASE_DIR . "dao" . DS . "BancoDAO.php";
 session_start();
 if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
@@ -28,12 +29,12 @@ require_once 'menu.php';
             <label for="banco">Banco:</label>
             <select id="banco" name="codigoBanco" class="js-example-basic-single form-control">
                 <?php
-                $bDao = new BoletoDAO();
+                $bancoDao = new BancoDAO();
                 $bancos[] = new Banco();
-                $bancos = $bDao->listarBancos();
+                $bancos = $bancoDao->listarBancos();
                 foreach ($bancos as $objBanco) {
                     ?>
-                    <option value="<? echo $objBanco->getCodigoBanco?>"?><?php echo $objBanco->getNomeBanco() ?></option>
+                    <option value="<?php echo $objBanco->getCodigoBanco() ?>"><?php echo $objBanco->getNomeBanco() ?></option>
                     <?php } ?>
                 </select>
                 <div class="erro"></div>

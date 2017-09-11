@@ -98,6 +98,6 @@ $dadosboleto["endereco"] = "Rua Laranjeira, 469 - Jardim Primavera";
 $dadosboleto["cidade_uf"] = "Piraquara / PR";
 $dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
 // NÃO ALTERAR!
+unset($_SESSION['boleto']);
 include("include/funcoes_sicredi.php");
 include("include/layout_sicredi.php");
-?>

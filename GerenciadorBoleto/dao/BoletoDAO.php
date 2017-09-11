@@ -9,6 +9,7 @@ if (!defined("BASE_DIR")) {
 
 require_once BASE_DIR . "model" . DS . "Banco.php";
 require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "dao" . DS . "BancoDAO.php";
 require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
@@ -23,32 +24,12 @@ class BoletoDAO {
         $boleto->setNossoNumero($row['nosso_numero']);
         $boleto->setNumeroDocumento($row['numero_documento']);
         $boleto->setSituacao($row['situacao']);
-        $boleto->setBanco($this->buscarBanco($row['id_banco']));
+        $boleto->setMulta($row['multa']);
+        $bDao = new BancoDAO();
+        $boleto->setBanco($bDao->buscarBanco($row['id_banco']));
         $cDao = new ClienteDAO();
         $boleto->setCliente($cDao->buscarCliente($row['id_cliente']));
         return $boleto;
-    }
-
-    public function populaBanco($row) {
-        $banco = new Banco();
-        $banco->setCodigoBanco($row["id_banco"]);
-        $banco->setNomeBanco($row["nomeBanco"]);
-        return $banco;
-    }
-
-    public function listarBancos() {
-        try {
-            $sql = "SELECT * FROM banco ORDER BY nomeBanco";
-            $result = Database::conexao()->query($sql);
-            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
-            $bancos = array();
-            foreach ($lista as $l) {
-                $bancos[] = $this->populaBanco($l);
-            }
-            return $bancos;
-        } catch (Exception $e) {
-            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
-        }
     }
 
     public function listarBoletos() {
@@ -108,74 +89,69 @@ class BoletoDAO {
         }
     }
 
-    public function buscarBanco($codigo) {
-        try {
-            $sql = "SELECT * FROM banco WHERE id_banco = :codigo";
-            $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":codigo", $codigo);
-            $stmt->execute();
-            return $this->populaBanco($stmt->fetch(PDO::FETCH_ASSOC));
-        } catch (Exception $e) {
-            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
-        }
-    }
-
-        public function buscarBancoNome($nome) {
-        try {
-            $sql = "SELECT * FROM banco WHERE nomeBanco LIKE UPPER (:nome)";
-            $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":nome", $nome);
-            $stmt->execute();
-            return $this->populaBanco($stmt->fetch(PDO::FETCH_ASSOC));
-        } catch (Exception $e) {
-            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
-        }
-    }
-    
     public function inserirBoleto($boleto) {
         try {
             $sql = "INSERT INTO boleto(id_cliente, id_banco, data_vencimento, valor, numero_documento, nosso_numero, data_emissao, "
-                    . "situacao) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, :nossoNumero, :dataEmissao, 1)";
+                    . "situacao, multa) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, "
+                    . ":nossoNumero, :dataEmissao, 1, :multa)";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoCliente", $boleto->getCliente()->getCodigoCliente());
             $stmt->bindValue(":codigoBanco", $boleto->getBanco()->getCodigoBanco());
             $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());
             $stmt->bindValue(":valor", $boleto->getValor());
-            $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento()); 
+            $stmt->bindValue(":multa", $boleto->getMulta());
+            $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento());
             $stmt->bindValue(":nossoNumero", $boleto->getNossoNumero());
             $stmt->bindValue(":dataEmissao", $boleto->getDataEmissao());
-            return $stmt->execute(); 
+            return $stmt->execute();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
-    public function nossoNumero(){
-        try{
-            $sql = "SELECT AUTO_INCREMENT FROM   information_schema.tables WHERE  table_name = 'boleto' AND    table_schema = 'gerenciadordeboleto'";
+    public function nossoNumero() {
+        try {
+            $sql = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'boleto' AND "
+                    . "table_schema = 'gerenciadordeboleto'";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->execute();
             $nossoNumero = $stmt->fetch(PDO::FETCH_ASSOC);
-            while(strlen($nossoNumero['AUTO_INCREMENT']) < 5)
-                $nossoNumero['AUTO_INCREMENT'] = "0".$nossoNumero['AUTO_INCREMENT'];
+            while (strlen($nossoNumero['AUTO_INCREMENT']) < 5) {
+                $nossoNumero['AUTO_INCREMENT'] = "0" . $nossoNumero['AUTO_INCREMENT'];
+            }
             return $nossoNumero['AUTO_INCREMENT'];
-        }catch (Exception $e){
+        } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }
 
-    public function numDocumento($codigo){
-        try{
+    public function numDocumento($codigo) {
+        try {
             $sql = "SELECT u.id_cliente AS codigo, COUNT(b.id_boleto) as quant FROM cliente u INNER JOIN boleto b ON "
                     . "u.id_cliente = b.id_cliente WHERE u.id_cliente = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
             $retorno = $stmt->fetch(PDO::FETCH_ASSOC);
-            while(strlen($retorno['codigo']) < 5)
-                $retorno['codigo'] = "0".$retorno['codigo'];
-            return $retorno['codigo'] . "/" . ($retorno['quant']+1); 
-        }catch (Exception $e){
+            while (strlen($retorno['codigo']) < 5) {
+                $retorno['codigo'] = "0" . $retorno['codigo'];
+            }
+            return $retorno['codigo'] . "/" . ($retorno['quant'] + 1);
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function atualizaBoleto($boleto) {
+        try {
+            $sql = "UPDATE boleto SET valor = :valor AND data_vencimento = :dataVencimento WHERE id_boleto = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $boleto->getCodigoBoleto());
+            $stmt->bindValue(":codigo", $boleto->getDataVencimento());
+            $stmt->bindValue(":codigo", $boleto->getValor());
+            $stmt->execute();
+            return $stmt->execute();
+        } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
     }

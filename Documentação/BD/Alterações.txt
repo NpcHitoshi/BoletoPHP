@@ -1,11 +1,1 @@
-ALTER TABLE banco CHANGE nome nomeBanco varchar(50)
-
-ALTER TABLE usuario CHANGE razao_social nomeCliente varchar(50) not null
-
-ALTER TABLE usuario CHANGE cnpj documento varchar(14) not null
-
-ALTER TABLE usuario CHANGE id_usuario id_cliente int not null auto_increment
-
-ALTER TABLE boleto CHANGE id_usuario id_cliente int
-
-RENAME TABLE usuario TO cliente
+ALTER TABLE boleto ADD multa DOUBLE;
