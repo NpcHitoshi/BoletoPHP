@@ -29,12 +29,14 @@ switch ($action) {
         break;
 
     case "carregaAtualizar":
+        $obj = new\stdClass();
         $dataVencimento = new DateTime($boleto->getDataVencimento());
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
-        $boleto->setValor(number_format(((($boleto->getValor() * $boleto->getMulta()) / 1000) * $diasCorridos), 2, ",", "."));
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/atualiza_boleto.php");
-        exit();
+        $obj->valor = number_format(((($boleto->getValor() * $boleto->getMulta()) / 1000) * $diasCorridos), 2, ",", ".");
+        $obj->dataAtual = date("d-m-Y");
+        $objJSON = json_encode($obj);
+        echo $objJSON;
         break;
 
     case "gerar":
