@@ -1,5 +1,6 @@
 {
     "require": {
-        "jansenfelipe/cnpj-gratis": "^2.1"
+        "jansenfelipe/cnpj-gratis": "^2.1",
+        "phpmailer/phpmailer": "^6.0"
     }
 }
