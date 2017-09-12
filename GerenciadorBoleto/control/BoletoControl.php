@@ -46,8 +46,6 @@ switch ($action) {
         echo $objSON;
         break;
 
-
-
     case "gerar":
         //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
         $valor = (str_replace("R$", "", ($_POST["valor"])));
@@ -67,8 +65,11 @@ switch ($action) {
         break;
 
     case "atualizar":
-        echo $dias;
-        $boletoDao->atualizaBoleto($codigo);
+        $valor = (str_replace("R$", "", ($_POST["valor"])));
+        $valor = (str_replace(",", ".", $valor));
+        $boleto->setValor($valor);
+        $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
+        $boletoDao->atualizaBoleto($boleto);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
@@ -81,6 +82,9 @@ switch ($action) {
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
+    
+    case "email":
+        
 
     default:
         break;
