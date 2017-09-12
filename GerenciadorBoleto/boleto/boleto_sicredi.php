@@ -98,6 +98,36 @@ $dadosboleto["endereco"] = "Rua Laranjeira, 469 - Jardim Primavera";
 $dadosboleto["cidade_uf"] = "Piraquara / PR";
 $dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
 // NÃO ALTERAR!
+ob_start();
 unset($_SESSION['boleto']);
 include("include/funcoes_sicredi.php");
 include("include/layout_sicredi.php");
+
+$content = ob_get_clean();
+
+// convert
+require_once(dirname(__FILE__).'\html2pdf\html2pdf.class.php');
+try
+{
+	$html2pdf = new HTML2PDF('P','A4','fr', array(0, 0, 0, 0));
+	/* Abre a tela de impressão */
+	//$html2pdf->pdf->IncludeJS("print(true);");
+	
+	$html2pdf->pdf->SetDisplayMode('real');
+	
+	/* Parametro vuehtml = true desabilita o pdf para desenvolvimento do layout */
+	$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
+	
+	/* Abrir no navegador */
+	$html2pdf->Output('boleto' . $boleto->getNossoNumero() . '.pdf');
+	
+	/* Salva o PDF no servidor para enviar por email */
+	//$html2pdf->Output('caminho/boleto.pdf', 'F');
+	
+	/* Força o download no browser */
+	//$html2pdf->Output('boleto.pdf', 'D');
+}
+catch(HTML2PDF_exception $e) {
+	echo $e;
+	exit;
+}

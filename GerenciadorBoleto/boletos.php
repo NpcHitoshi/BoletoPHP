@@ -34,6 +34,7 @@ require_once 'menu.php';
                 <h4 class="modal-title">2ª Via Boleto</h4>
             </div>
             <div class="modal-body">
+                <div id="erro-submit"></div>
                 <form id="form-2via" action="" method="POST">
                     <div class="form-group col-md-6">
                         <label for="vencimento">Vencimento:</label>
@@ -116,7 +117,7 @@ require_once 'menu.php';
             <div id="pagos" class="tab-pane fade">
                 <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
                 <table class="table2 table table-hover table-inverse">
-                   <thead>
+                 <thead>
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
