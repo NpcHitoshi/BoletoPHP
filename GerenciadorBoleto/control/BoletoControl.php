@@ -30,14 +30,17 @@ switch ($action) {
 
     case "carrega2via":
         $obj = new \stdClass();
-        $codigo = $boleto->getCodigoBoleto($_GET["cod"]);
-        $boleto = $boletoDao->buscarBoleto($codigo);
+        $boleto = $boletoDao->buscarBoleto($_GET["cod"]);
 
         $dataVencimento = new DateTime($boleto->getDataVencimento());
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
-        $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 1000)) * $diasCorridos->days);
+        $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
+        if($diasCorridos->invert == 0)
+            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta()/1000)) * $diasCorridos->days);
+        else
+            $obj->valor = $boleto->getValor();
         $obj->data = date("d-m-Y");
         $objSON = json_encode($obj);
         echo $objSON;
@@ -75,7 +78,6 @@ switch ($action) {
         $codigo = $_GET["codigo"];
         $boleto = $boletoDao->buscarBoleto($codigo);
         $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
-        var_dump($boleto);
         $_SESSION["boleto"] = $boleto;
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
