@@ -80,7 +80,7 @@ switch ($action) {
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
-    
+
     case "email":
         
 

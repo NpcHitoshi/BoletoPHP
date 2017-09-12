@@ -39,7 +39,8 @@ switch ($action) {
             $cliente->setEndereco($e);
             if ($cDao->validaCampos($cliente)) {
                 $cDao->inserirCliente($cliente);
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/ClienteControl"
+                        . "?action=emailCadastro.php");
                 exit();
             } else {
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
@@ -106,6 +107,21 @@ switch ($action) {
         }
         break;
 
+    case "emailCadastro":
+        try {
+            $documento = $_GET["documento"];
+            $cliente = $cDao->buscarCliente($documento);
+            $_SESSION["email"] = $cliente->getEmail();
+            $_SESSION["assunto"] = "Cadastro Microvil";
+            $_SESSION["mensagem"] = "Seu cadastro foi realizado através do nosso sistema de boleto, sua senha é: " .
+                    $cliente->getDocumento();
+            $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/clientes.php";
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
     default:
         break;
 }

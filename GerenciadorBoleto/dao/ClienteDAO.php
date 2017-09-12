@@ -39,7 +39,7 @@ class ClienteDAO {
             $cliente = $this->populaCliente($stmt->fetch(PDO::FETCH_ASSOC));
             var_dump($cliente->getSenha());
             var_dump(password_verify($senha, $cliente->getSenha()));
-            if(password_verify($senha, $cliente->getSenha())){
+            if (password_verify($senha, $cliente->getSenha())) {
                 $cliente->setSenha("");
                 return $cliente;
             } else {
@@ -60,6 +60,18 @@ class ClienteDAO {
                 $clientes[] = $this->populaCliente($l);
             }
             return $clientes;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function buscarClienteDocumento($documento) {
+        try {
+            $sql = "SELECT * FROM cliente WHERE documento = :documento";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":documento", $documento);
+            $stmt->execute();
+            return $this->populaCliente($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
@@ -95,7 +107,7 @@ class ClienteDAO {
     public function inserirCliente($cliente) {
         try {
             $sql = "INSERT INTO cliente(id_endereco, nomeCliente, documento, email, senha, tipo_conta, ativo) VALUES (:endereco,"
-            . "UPPER(:nomeCliente), :documento, UPPER(:email), :senha, 0, 1)";
+                    . "UPPER(:nomeCliente), :documento, UPPER(:email), :senha, 0, 1)";
             $stmt = Database::conexao()->prepare($sql);
             $eDao = new EnderecoDAO();
             $documento = preg_replace("/(\/|-|\.)/", "", $cliente->getDocumento());
@@ -115,10 +127,10 @@ class ClienteDAO {
     public function editaCliente($cliente) {
         try {
             $sql = "UPDATE cliente u, endereco e, cidade c, estado s SET u.nomeCliente = UPPER(:nomeCliente), u.email = "
-            . "UPPER(:email), e.cep = UPPER(:cep), e.rua = UPPER(:rua), e.numero = UPPER(:numero), s.uf = UPPER(:uf), "
-            . "s.nomeEstado = UPPER(:nomeEstado), c.nomeCidade = UPPER(:nomeCidade), e.bairro = UPPER(:bairro), "
-            . "e.complemento = UPPER(:complemento) WHERE u.id_cliente = :codigoCliente AND u.id_endereco = e.id_endereco "
-            . "AND e.id_cidade = c.id_cidade AND c.id_estado = s.id_estado";
+                    . "UPPER(:email), e.cep = UPPER(:cep), e.rua = UPPER(:rua), e.numero = UPPER(:numero), s.uf = UPPER(:uf), "
+                    . "s.nomeEstado = UPPER(:nomeEstado), c.nomeCidade = UPPER(:nomeCidade), e.bairro = UPPER(:bairro), "
+                    . "e.complemento = UPPER(:complemento) WHERE u.id_cliente = :codigoCliente AND u.id_endereco = e.id_endereco "
+                    . "AND e.id_cidade = c.id_cidade AND c.id_estado = s.id_estado";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoCliente", $cliente->getCodigoCliente());
             $stmt->bindValue(":nomeCliente", $cliente->getNomeCliente());
@@ -139,9 +151,8 @@ class ClienteDAO {
     }
 
     public function validaCampos($cliente) {
-        return $cliente->getDocumento() != null && $cliente->getNomeCliente() != null && $cliente->getEmail() && 
-        $cliente->getEndereco()->getCep() != null && $cliente->getEndereco()->getCidade()->getNomeCidade() != null
-        && $cliente->getEndereco()->getCidade()->getEstado()->getUf() != null;
+        return $cliente->getDocumento() != null && $cliente->getNomeCliente() != null && $cliente->getEmail() &&
+                $cliente->getEndereco()->getCep() != null && $cliente->getEndereco()->getCidade()->getNomeCidade() != null && $cliente->getEndereco()->getCidade()->getEstado()->getUf() != null;
     }
 
     public function desativarCliente($codigo) {
