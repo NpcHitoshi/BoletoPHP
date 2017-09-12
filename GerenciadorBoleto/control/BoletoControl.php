@@ -28,16 +28,22 @@ switch ($action) {
         echo $objJSON;
         break;
 
-    case "carregaAtualizar":
-        $obj = new\stdClass();
+    case "carrega2via":
+        $obj = new \stdClass();
+        $codigo = $boleto->getCodigoBoleto($_GET["cod"]);
+        $boleto = $boletoDao->buscarBoleto($codigo);
+
         $dataVencimento = new DateTime($boleto->getDataVencimento());
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
-        $obj->valor = number_format(((($boleto->getValor() * $boleto->getMulta()) / 1000) * $diasCorridos), 2, ",", ".");
-        $obj->dataAtual = date("d-m-Y");
-        $objJSON = json_encode($obj);
-        echo $objJSON;
+        $diasCorridos->days;
+        $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta()/1000)) * $diasCorridos->days);
+        $obj->data = date("d-m-Y");
+        $objSON = json_encode($obj);
+        echo $objSON;
         break;
+
+
 
     case "gerar":
         //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
@@ -58,12 +64,8 @@ switch ($action) {
         break;
 
     case "atualizar":
-        $valor = (str_replace("R$", "", ($_POST["valor"])));
-        $valor = (str_replace(",", ".", $valor));
-        $boleto->setValor($valor);
-        $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
-        $_SESSION["boleto"] = $boleto;
-        $boletoDao->atualizaBoleto($boleto);
+        echo $dias;
+        $boletoDao->atualizaBoleto($codigo);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;
@@ -72,6 +74,7 @@ switch ($action) {
         $codigo = $_GET["codigo"];
         $boleto = $boletoDao->buscarBoleto($codigo);
         $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
+        var_dump($boleto);
         $_SESSION["boleto"] = $boleto;
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
