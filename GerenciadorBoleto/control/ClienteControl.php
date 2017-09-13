@@ -109,8 +109,8 @@ switch ($action) {
 
     case "emailCadastro":
         try {
-            $documento = $_GET["documento"];
-            $cliente = $cDao->buscarCliente($documento);
+            $documento = '15371752000135';
+            $cliente = $cDao->buscarClienteDocumento($documento);
             $_SESSION["email"] = $cliente->getEmail();
             $_SESSION["assunto"] = "Cadastro Microvil";
             $_SESSION["mensagem"] = "Seu cadastro foi realizado através do nosso sistema de boleto, sua senha é: " .
