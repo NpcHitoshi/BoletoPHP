@@ -30,7 +30,6 @@ try {
     unset($_SESSION["email"]);
     unset($_SESSION["assunto"]);
     unset($_SESSION["mensagem"]);
-    echo 'Mensagem enviada com sucesso. ';
     header("Location: http://" . $_SERVER["HTTP_HOST"] . ($_SESSION["redirecionamento"]));
     exit();
 } catch (Exception $e) {

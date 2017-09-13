@@ -69,6 +69,7 @@ class ClienteDAO {
         try {
             $sql = "SELECT * FROM cliente WHERE documento = :documento";
             $stmt = Database::conexao()->prepare($sql);
+            $documento = preg_replace("/(\/|-|\.)/", "", $documento);
             $stmt->bindValue(":documento", $documento);
             $stmt->execute();
             return $this->populaCliente($stmt->fetch(PDO::FETCH_ASSOC));
@@ -114,7 +115,8 @@ class ClienteDAO {
             $stmt->bindValue(":nomeCliente", $cliente->getNomeCliente());
             $stmt->bindValue(":documento", $documento);
             $stmt->bindValue(":email", $cliente->getEmail());
-            $hash = password_hash($documento, PASSWORD_DEFAULT);
+            $senha = substr($documento, 0, 8) . substr($documento, 12, 2) ;
+            $hash = password_hash($senha, PASSWORD_DEFAULT);
             $stmt->bindValue(":senha", $hash);
             $codigoEndereco = $eDao->inserirEndereco($cliente->getEndereco());
             $stmt->bindValue(":endereco", $codigoEndereco);
