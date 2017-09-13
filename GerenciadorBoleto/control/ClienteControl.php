@@ -40,7 +40,7 @@ switch ($action) {
             if ($cDao->validaCampos($cliente)) {
                 $cDao->inserirCliente($cliente);
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/ClienteControl"
-                        . "?action=emailCadastro.php");
+                        . "?action=emailCadastro&cod=".$cliente->getCodigoCliente());
                 exit();
             } else {
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
@@ -109,8 +109,8 @@ switch ($action) {
 
     case "emailCadastro":
         try {
-            $documento = '15371752000135';
-            $cliente = $cDao->buscarClienteDocumento($documento);
+            $codigo = $_GET["cod"];
+            $cliente = $cDao->buscarCliente($codigo);
             $_SESSION["email"] = $cliente->getEmail();
             $_SESSION["assunto"] = "Cadastro Microvil";
             $_SESSION["mensagem"] = "Seu cadastro foi realizado através do nosso sistema de boleto, sua senha é: " .
