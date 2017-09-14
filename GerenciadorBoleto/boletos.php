@@ -117,7 +117,7 @@ require_once 'menu.php';
             <div id="pagos" class="tab-pane fade">
                 <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
                 <table class="table2 table table-hover table-inverse">
-                 <thead>
+                   <thead>
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
@@ -134,7 +134,7 @@ require_once 'menu.php';
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
-                                <a class='btn btn-edit' href="">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
                                 <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
@@ -170,7 +170,7 @@ require_once 'menu.php';
                                 <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                                 <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                                 <td class="col-md-4">
-                                    <a class='btn btn-edit' href="">
+                                    <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
                                         <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                     </a>
                                     <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
@@ -206,7 +206,7 @@ require_once 'menu.php';
                                     <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                                     <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                                     <td class="col-md-4">
-                                        <a class='btn btn-edit' href="">
+                                        <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
                                             <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                         </a>
                                         <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">

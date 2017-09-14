@@ -31,16 +31,15 @@ switch ($action) {
     case "carrega2via":
         $obj = new \stdClass();
         $boleto = $boletoDao->buscarBoleto($_GET["cod"]);
-
         $dataVencimento = new DateTime($boleto->getDataVencimento());
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
-        $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
         if($diasCorridos->invert == 0)
             $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta()/1000)) * $diasCorridos->days);
         else
             $obj->valor = $boleto->getValor();
+        $obj->valor = number_format($obj->valor, 2, ",", ".");
         $obj->data = date("d-m-Y");
         $objSON = json_encode($obj);
         echo $objSON;

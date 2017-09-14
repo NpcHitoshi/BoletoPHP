@@ -2,7 +2,7 @@ $(document).ready(function(){
 	//Função acionada quando campo captcha perde foco.
 	$("#captcha").focusout(function(){
 		//Pega valores dos campos cnpj e captcha e seta junto do método POST.
-		var ccnpj = $("#cnpj").val();
+		var ccnpj = $("#documento").val();
 		var ccaptcha_cnpj = $("#captcha").val();
 		var form_method = "POST";
 		//Muda os placeholders

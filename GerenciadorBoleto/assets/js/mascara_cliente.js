@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#cnpj").keypress(function(){
+	$("#documento").keypress(function(){
 			v_obj=this;
 			v_fun=cpfCnpj;
 			setTimeout('execmascara()',1);
