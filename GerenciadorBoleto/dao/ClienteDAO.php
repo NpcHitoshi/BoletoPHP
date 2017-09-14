@@ -120,7 +120,8 @@ class ClienteDAO {
             $stmt->bindValue(":senha", $hash);
             $codigoEndereco = $eDao->inserirEndereco($cliente->getEndereco());
             $stmt->bindValue(":endereco", $codigoEndereco);
-            return $stmt->execute();
+            $stmt->execute();
+            return Database::conexao()->lastInsertId();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }

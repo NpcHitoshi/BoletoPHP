@@ -158,4 +158,9 @@ class BoletoDAO {
         }
     }
 
+    public function validaCampos($boleto) {
+        return $boleto->getNumeroDocumento() != null && $boleto->getValor() != null && $boleto->getDataVencimento() != null && 
+                $boleto->getCliente() != null && $boleto->getBanco() != null;
+    }
+
 }

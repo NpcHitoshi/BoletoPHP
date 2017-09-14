@@ -1,4 +1,5 @@
 <?php
+
 //Import PHPMailer classes into the global namespace
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -18,9 +19,14 @@ try {
     $mail->Password = 'microvil0102';                           // SMTP password
     $mail->SMTPSecure = 'tls';                          // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                    // TCP port to connect to
+    
     //Recipients
     $mail->setFrom('vilson@microvil.com.br', 'Microvil Tecnologia em Automação');
     $mail->addAddress($_SESSION["email"]);     // Add a recipient
+    
+    //Attachments
+    //$mail->addAttachment('boleto/attachments/boleto.pdf');         // Add attachments
+
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = $_SESSION["assunto"];
@@ -30,7 +36,7 @@ try {
     unset($_SESSION["email"]);
     unset($_SESSION["assunto"]);
     unset($_SESSION["mensagem"]);
-    header("Location: http://" . $_SERVER["HTTP_HOST"] . ($_SESSION["redirecionamento"]));
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SESSION["redirecionamento"]);
     exit();
 } catch (Exception $e) {
     echo 'Não foi possível enviar mensagem. ';

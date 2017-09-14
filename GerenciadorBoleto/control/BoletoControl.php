@@ -35,10 +35,11 @@ switch ($action) {
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
-        if($diasCorridos->invert == 0)
-            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta()/1000)) * $diasCorridos->days);
-        else
+        if ($diasCorridos->invert == 0) {
+            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 1000)) * $diasCorridos->days);
+        } else {
             $obj->valor = $boleto->getValor();
+        }
         $obj->valor = number_format($obj->valor, 2, ",", ".");
         $obj->data = date("d-m-Y");
         $objSON = json_encode($obj);
@@ -56,15 +57,15 @@ switch ($action) {
         $valor = str_replace(",", ".", $valor);
         $codigo = $_GET["codigo"];
         $boleto = $boletoDao->buscarBoleto($codigo);
-        if($boleto != null && $validaData->invert == 0 && $valor > 0){
+        if ($boleto != null && $validaData->invert == 0 && $valor > 0) {
             $boleto->setValor($valor);
             $boleto->setDataVencimento($vencimento);
             $retorno = $boletoDao->atualizaBoleto($boleto);
-        }else
-                $retorno = false;
-        if(retorno)
+        } else
+            $retorno = false;
+        if (retorno)
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=vizualizar&codigo=" . $boleto->getCodigoBoleto());
-        else{
+        else {
             $_SESSION["msg_retorno"] = "Falha ao gerar 2ª via!";
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
         }
@@ -74,7 +75,6 @@ switch ($action) {
     case "gerar":
         //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
         $valor = (str_replace("R$", "", ($_POST["valor"])));
-        $valor = (str_replace(".", "", $valor));
         $valor = (str_replace(",", ".", $valor));
         $boleto->setValor($valor);
         $boleto->setNumeroDocumento(trim($_POST["numeroDocumento"]));
@@ -85,9 +85,16 @@ switch ($action) {
         $boleto->setCliente($clienteDao->buscarCliente(trim($_POST["codigoCliente"])));
         $boleto->setDataEmissao(date("Y-m-d"));
         $_SESSION["boleto"] = $boleto;
-        $boletoDao->inserirBoleto($boleto);
-        $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+        if ($boletoDao->validaCampos($boleto)) {
+            $boletoDao->inserirBoleto($boleto);
+            var_dump($boleto->getCodigoBoleto());
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php"
+                    . "?action=emailCadastro&cod=" . $boleto->getCodigoBoleto());
+            exit();
+        } else {
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
+            exit();
+        }
         exit();
         break;
 
@@ -100,8 +107,23 @@ switch ($action) {
         exit();
         break;
 
-    case "email":
-        
+    case "emailCadastro":
+        try {
+            $codigo = $_GET["cod"];
+            var_dump($codigo);
+            $boleto = $boletoDao->buscarBoleto($codigo);
+            var_dump($boleto);
+            $_SESSION["email"] = $boleto->getCliente()->getEmail();
+            $_SESSION["assunto"] = "Boleto - Gerenciador de Boletos Microvil";
+            $_SESSION["mensagem"] = "Segue em anexo boleto referente ao Nº: " . $boleto->getNumeroDocumento();
+            $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
+            //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
+            //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
 
     default:
         break;

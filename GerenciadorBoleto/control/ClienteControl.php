@@ -37,8 +37,10 @@ switch ($action) {
             $e->setNumero(trim($_POST["numero"]));
             $e->setRua(trim($_POST["rua"]));
             $cliente->setEndereco($e);
+            var_dump($cliente);
             if ($cDao->validaCampos($cliente)) {
-                $cDao->inserirCliente($cliente);
+                $codigo = $cDao->inserirCliente($cliente);
+                $cliente->setCodigoCliente($codigo);
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/ClienteControl"
                         . "?action=emailCadastro&cod=" . $cliente->getCodigoCliente());
                 exit();
