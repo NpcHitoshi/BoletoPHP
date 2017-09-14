@@ -11,13 +11,13 @@ session_start();
 if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
-if (($_SESSION["redirecionamento"]) != null) {
+if (isset($_SESSION["redirecionamento"])) {
     unset($_SESSION["redirecionamento"]);
 }
 ?>
 <?php
 $clientes_active = "active";
-require_once 'menu.php';
+require_once 'menu_adm.php';
 ?>
 <div class="col-md-10 col-md-offset-1">
     <h1 class="title">Clientes</h1>

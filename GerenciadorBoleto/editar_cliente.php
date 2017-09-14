@@ -15,7 +15,7 @@ include("getcaptcha.php");
 ?>
 <?php
 $cliente = $_SESSION["usuarioCliente"];
-require_once 'menu.php';
+require_once 'menu_adm.php';
 ?>
 <form action="control/ClienteControl.php?action=editar" method="POST">
     <div class="col-md-10 col-md-offset-1">

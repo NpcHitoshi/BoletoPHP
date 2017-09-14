@@ -16,7 +16,7 @@ if (($_SESSION["cliente"]) == null) {
 ?>
 <?php
 $boletos_active = "active";
-require_once 'menu.php';
+require_once 'menu_adm.php';
 ?>
 <script src="assets/js/filtro.js"></script>
 <script src="assets/js/manterModal.js"></script>

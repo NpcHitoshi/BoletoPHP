@@ -18,7 +18,7 @@ include("getcaptcha.php");
 ?>
 <?php
 $boletos_active = "active";
-require_once 'menu.php';
+require_once 'menu_adm.php';
 ?>
 <form action="control/BoletoControl.php?action=gerar" method="POST" target="_blank">
     <div class="col-md-10 col-md-offset-1">
