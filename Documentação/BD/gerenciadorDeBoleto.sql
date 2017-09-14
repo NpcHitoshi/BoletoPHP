@@ -56,6 +56,7 @@ nosso_numero VARCHAR(20),
 data_emissao DATE NOT NULL,
 situacao SMALLINT NOT NULL,
 multa DOUBLE,
+juros DOUBLE,
 PRIMARY KEY (id_boleto),
 FOREIGN KEY (id_cliente) REFERENCES Usuario (id_cliente),
 FOREIGN KEY (id_banco) REFERENCES Banco (id_banco)

@@ -1,1 +1,1 @@
-ALTER TABLE boleto ADD multa DOUBLE;
+ALTER TABLE boleto ADD juros DOUBLE;

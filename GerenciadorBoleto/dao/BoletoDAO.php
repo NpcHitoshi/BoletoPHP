@@ -25,6 +25,7 @@ class BoletoDAO {
         $boleto->setNumeroDocumento($row['numero_documento']);
         $boleto->setSituacao($row['situacao']);
         $boleto->setMulta($row['multa']);
+        $boleto->setJuros($row['juros']);
         $bDao = new BancoDAO();
         $boleto->setBanco($bDao->buscarBanco($row['id_banco']));
         $cDao = new ClienteDAO();
@@ -92,14 +93,15 @@ class BoletoDAO {
     public function inserirBoleto($boleto) {
         try {
             $sql = "INSERT INTO boleto(id_cliente, id_banco, data_vencimento, valor, numero_documento, nosso_numero, data_emissao, "
-                    . "situacao, multa) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, "
-                    . ":nossoNumero, :dataEmissao, 1, :multa)";
+                    . "situacao, multa, juros) VALUES (:codigoCliente, :codigoBanco, :dataVencimento, :valor, :numeroDocumento, "
+                    . ":nossoNumero, :dataEmissao, 1, :multa, :juros)";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoCliente", $boleto->getCliente()->getCodigoCliente());
             $stmt->bindValue(":codigoBanco", $boleto->getBanco()->getCodigoBanco());
             $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());
             $stmt->bindValue(":valor", $boleto->getValor());
             $stmt->bindValue(":multa", $boleto->getMulta());
+            $stmt->bindValue(":juros", $boleto->getJuros());
             $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento());
             $stmt->bindValue(":nossoNumero", $boleto->getNossoNumero());
             $stmt->bindValue(":dataEmissao", $boleto->getDataEmissao());

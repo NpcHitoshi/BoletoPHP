@@ -39,7 +39,8 @@ switch ($action) {
             $cliente->setEndereco($e);
             if ($cDao->validaCampos($cliente)) {
                 $cDao->inserirCliente($cliente);
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/ClienteControl"
+                        . "?action=emailCadastro&cod=" . $cliente->getCodigoCliente());
                 exit();
             } else {
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
@@ -106,6 +107,46 @@ switch ($action) {
         }
         break;
 
+    case "emailCadastro":
+        try {
+            $codigo = $_GET["cod"];
+            $cliente = $cDao->buscarCliente($codigo);
+            $_SESSION["email"] = $cliente->getEmail();
+            $_SESSION["assunto"] = "Novo Cadastro - Gerenciador de Boletos Microvil";
+            $_SESSION["mensagem"] = "Seu cadastro foi realizado através do nosso sistema de boletos, sua senha é: " .
+                    substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2) ;
+            $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/clientes.php";
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
+            exit();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
+
+    case "emailSenha":
+        try {
+            $documento = $_POST["documento"];
+            $cliente = $cDao->buscarClienteDocumento($documento);
+            if ($cliente->getEmail() != null) {
+                $_SESSION["email"] = $cliente->getEmail();
+                $_SESSION["assunto"] = "Recuperação de senha - Gerenciador de Boletos Microvil";
+                $_SESSION["mensagem"] = "Sua senha atual é: " .
+                        substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2) ;
+                $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/index.php";
+                $_SESSION["msg_retorno"] = "E-mail de recuperação de senha enviado!";
+                    echo "<script type='javascript'>alert('Email enviado com Sucesso!');";
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
+                exit();
+            } else {
+                $_SESSION["msg_retorno"] = "Não há nenhum cliente cadastrado com este documento!";
+                echo $_SESSION["msg_retorno"];
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+                exit();
+            }
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
     default:
         break;
 }
