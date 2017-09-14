@@ -45,9 +45,36 @@ switch ($action) {
         echo $objSON;
         break;
 
+    case "gerar2Via":
+        $vencimento = trim($_POST["dataVencimento"]);
+        $dataVencimento = new DateTime($vencimento);
+        $dataHoje = new DateTime(date("Y-m-d"));
+        $validaData = $dataVencimento->diff($dataHoje);
+        $valor = trim($_POST["valor"]);
+        $valor = str_replace("R$", "", ($_POST["valor"]));
+        $valor = (str_replace(".", "", $valor));
+        $valor = str_replace(",", ".", $valor);
+        $codigo = $_GET["codigo"];
+        $boleto = $boletoDao->buscarBoleto($codigo);
+        if($boleto != null && $validaData->invert == 0 && $valor > 0){
+            $boleto->setValor($valor);
+            $boleto->setDataVencimento($vencimento);
+            $retorno = $boletoDao->atualizaBoleto($boleto);
+        }else
+                $retorno = false;
+        if(retorno)
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=vizualizar&codigo=" . $boleto->getCodigoBoleto());
+        else{
+            $_SESSION["msg_retorno"] = "Falha ao gerar 2ª via!";
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
+        }
+        exit();
+        break;
+
     case "gerar":
         //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
         $valor = (str_replace("R$", "", ($_POST["valor"])));
+        $valor = (str_replace(".", "", $valor));
         $valor = (str_replace(",", ".", $valor));
         $boleto->setValor($valor);
         $boleto->setNumeroDocumento(trim($_POST["numeroDocumento"]));
@@ -59,16 +86,7 @@ switch ($action) {
         $boleto->setDataEmissao(date("Y-m-d"));
         $_SESSION["boleto"] = $boleto;
         $boletoDao->inserirBoleto($boleto);
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
-        exit();
-        break;
-
-    case "atualizar":
-        $valor = (str_replace("R$", "", ($_POST["valor"])));
-        $valor = (str_replace(",", ".", $valor));
-        $boleto->setValor($valor);
-        $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
-        $boletoDao->atualizaBoleto($boleto);
+        $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
         header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
         exit();
         break;

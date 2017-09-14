@@ -5,10 +5,10 @@
 - CRUD Boleto SR. - Hitoshi e Vinicius - PRONTO
 - Tela Novo Boleto - Vinicius - PRONTO
 - 2 via boleto Tela - Vinicius - PRONTO
-- 2 via boleto Back - Hitoshi - FAZENDO --------------------------------------
+- 2 via boleto Back - Vinicius - PRONTO
 - PDF Boleto - Vinicius - PRONTO
 - Enviar Boleto por E-mail - Hitoshi - FAZENDO -------------------------------
 - E-mail com senha e redefinir senha. - Hitoshi - PRONTO
-- Tela do Cliente - Vinicius - FAZENDO ---------------------------------------
+- Tela do Cliente - Vinicius - PRONTO
 - Backend tela do cliente - Hitoshi - FAZENDO --------------------------------
 - Aprender arquivos de Remessa e Retorno. - Juntos. --------------------------

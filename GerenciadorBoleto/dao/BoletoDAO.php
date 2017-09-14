@@ -146,11 +146,11 @@ class BoletoDAO {
 
     public function atualizaBoleto($boleto) {
         try {
-            $sql = "UPDATE boleto SET valor = :valor AND data_vencimento = :dataVencimento WHERE id_boleto = :codigo";
+            $sql = "UPDATE boleto SET valor = :valor, data_vencimento = :dataVencimento situacao = WHERE id_boleto = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $boleto->getCodigoBoleto());
-            $stmt->bindValue(":codigo", $boleto->getDataVencimento());
-            $stmt->bindValue(":codigo", $boleto->getValor());
+            $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());
+            $stmt->bindValue(":valor", $boleto->getValor());
             $stmt->execute();
             return $stmt->execute();
         } catch (Exception $e) {

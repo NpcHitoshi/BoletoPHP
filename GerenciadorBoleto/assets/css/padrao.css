@@ -141,3 +141,11 @@ a{
   padding: 5px;
   border-radius: 0px;
   }
+
+#mensagem{
+    font-size: small;
+    padding: 5px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
