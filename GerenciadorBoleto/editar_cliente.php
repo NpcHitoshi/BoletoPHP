@@ -14,6 +14,7 @@ if (($_SESSION["cliente"]) == null) {
 include("getcaptcha.php");
 ?>
 <?php
+$clientes_active = "active";
 $cliente = $_SESSION["usuarioCliente"];
 require_once 'menu_adm.php';
 ?>
@@ -51,11 +52,11 @@ require_once 'menu_adm.php';
             </div>
             <div class="form-group col-md-6">
                 <label for="uf">Estado:</label>
-                <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado" disabled="true" value="<?php echo $cliente->getEndereco()->getCidade()->getEstado()->getUf() ?>"/>
+                <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado" value="<?php echo $cliente->getEndereco()->getCidade()->getEstado()->getUf() ?>"/>
             </div>
             <div class="form-group col-md-6">
                 <label for="cidade">Cidade:</label>
-                <input id="cidade" type="text" name="cidade" class="form-control" placeholder="Cidade" disabled="true" value=" <?php echo $cliente->getEndereco()->getCidade()->getNomeCidade() ?>"/>
+                <input id="cidade" type="text" name="cidade" class="form-control" placeholder="Cidade" value=" <?php echo $cliente->getEndereco()->getCidade()->getNomeCidade() ?>"/>
             </div>
             <div class="form-group col-md-6">
                 <label for="bairro">Bairro:</label>
@@ -75,5 +76,6 @@ require_once 'menu_adm.php';
 <script src="assets/js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript" /></script>
 <script src="assets/js/novo_cliente.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
+<script src="assets/js/carrega_cep.js" type="text/javascript"></script>
 <link rel="stylesheet" href="assets/css/novo_cliente.css">
 </html>

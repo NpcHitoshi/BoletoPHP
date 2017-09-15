@@ -83,13 +83,16 @@ class EnderecoDAO {
         }
     }
 
-    public function buscaCidadeNome($nomeCidade) {
+    public function buscaCidadeNome($nomeCidade, $uf) {
         try {
-            $sql = "SELECT * FROM cidade WHERE nomeCidade LIKE UPPER(:nomeCidade)";
+            $sql = "SELECT c.id_cidade, c.id_estado, nomeCidade FROM cidade c, estado e WHERE nomeCidade LIKE UPPER(:nomeCidade) AND uf LIKE UPPER(:uf)";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":nomeCidade", $nomeCidade);
-            $stmt->execute();
-            return $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
+            $stmt->bindValue(":uf", $uf);
+            if($stmt->execute())
+                return $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
+            else 
+                return null;
         } catch (Exception $e) {
             print $e->getCode() . " Mensagem: " . $e->getMessage();
         }

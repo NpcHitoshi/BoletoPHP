@@ -22,7 +22,13 @@ require_once 'menu_adm.php';
 <div class="col-md-10 col-md-offset-1">
     <h1 class="title">Clientes</h1>
     <a href="./novo_cliente.php"><button class="btn btn-default col-md-offset-10 col-md-2" >Novo Cliente</button></a>
-
+    <?php if (isset($_SESSION["msg_retorno"])) { ?> 
+                    <div id="mensagem col-md-12">
+                        <?php echo $_SESSION["msg_retorno"];
+                        unset($_SESSION["msg_retorno"]);
+                        ?>
+                    </div>
+                <?php } ?>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#ativado">Ativos</a></li>
         <li><a data-toggle="tab" href="#desativado">Desativados</a></li>

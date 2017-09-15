@@ -20,6 +20,13 @@ require_once 'menu_adm.php';
 <form action="control/ClienteControl.php?action=inserir" method="POST">
     <div class="col-md-10 col-md-offset-1">
         <h1 class="title">Novo Cliente</h1>
+        <?php if (isset($_SESSION["msg_retorno"])) { ?> 
+                    <div id="mensagem col-md-12">
+                        <?php echo $_SESSION["msg_retorno"];
+                        unset($_SESSION["msg_retorno"]);
+                        ?>
+                    </div>
+                <?php } ?>
         <div id="erro-submit" class="col-md-12"></div>
         <div class="col-md-6">
             <h4 class="title">Dados Básicos</h4>
