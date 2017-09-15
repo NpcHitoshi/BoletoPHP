@@ -10,15 +10,6 @@ $(document).ready(function(){
 			flag1 = false;
 			retiraErro($("#documento"));	
 		}
-		//Valida Captcha
-		if($("#captcha").val().length < 1){
-			flag2 = true;
-			estaVazio($("#captcha"));
-		}
-		else {
-			flag2 = false;
-			retiraErro($("#captcha"));
-		}
 		//Valida Nome	
 		if(($("#nome")).val().length < 1){
 			flag3 = true;
@@ -91,7 +82,7 @@ $(document).ready(function(){
 			flag10 = false;
 			retiraErro($("#bairro"));
 		}
-		if(flag1 || flag2 || flag3 || flag4 || flag5 || flag6 || flag7 || flag8 || flag9 || flag10){
+		if(flag1 || flag3 || flag4 || flag5 || flag6 || flag7 || flag8 || flag9 || flag10){
 			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
 			$("#erro-submit").html("Não é possível cadastrar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();

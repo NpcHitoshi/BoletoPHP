@@ -95,5 +95,6 @@ require_once 'menu_adm.php';
 <script src="assets/js/combo_boleto.js"></script>
 <script src="assets/js/mascara_valor.js"></script>
 <script src="assets/js/valida_boleto.js"></script>
+
 <script src="assets/js/carrega_num_doc.js"></script>
 </html>

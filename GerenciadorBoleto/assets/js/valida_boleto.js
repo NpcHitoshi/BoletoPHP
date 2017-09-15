@@ -43,10 +43,7 @@ $(document).ready(function(){
 			e.preventDefault();
 		}
 		else{
-			//Recarrega página após gerar boleto
-			console.log("Foooi");
-			window.location.replace("https://stackoverflow.com/questions/503093/how-to-redirect-to-another-webpage");
-			console.log("Foooi2");
+			email();
 		}	
 	});
 
@@ -101,4 +98,19 @@ function retiraErro(campo){
 	var erro = $(campo).next();
 	erro.attr("class", "");
 	erro.html("");
+}
+
+function email(){
+	var xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			alert("http://" + window.location.hostname + "/BoletoPHP/GerenciadorBoleto/email.php");
+			window.location.href = "http://" + window.location.hostname + ":" + window.location.port + "/BoletoPHP/GerenciadorBoleto/email.php";
+		}
+	};
+	var cod = $("#cliente").val();
+	var url = "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=enviarEmail&cod=" + cod;
+	xmlhttp.open("GET", url , true);
+	xmlhttp.send();
 }
