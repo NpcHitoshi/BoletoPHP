@@ -105,13 +105,16 @@ require_once 'menu_adm.php';
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-4">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
+                                    <?php echo $obj->getCodigoBoleto()?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                        num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button id="btemail" name="" class="btn btn-delete">
+                                <button name="control/BoletoControl.php?action=enviarEmail&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                        num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-delete">
                                     <span class="glyphicon glyphicon-send"></span> Enviar E-mail
                                 </button>
                             </td>

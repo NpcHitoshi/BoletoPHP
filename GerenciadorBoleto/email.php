@@ -19,13 +19,15 @@ try {
     $mail->Password = 'microvil0102';                           // SMTP password
     $mail->SMTPSecure = 'tls';                          // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                    // TCP port to connect to
-    
     //Recipients
     $mail->setFrom('vilson@microvil.com.br', 'Microvil Tecnologia em Automação');
     $mail->addAddress($_SESSION["email"]);     // Add a recipient
     
     //Attachments
-    //$mail->addAttachment('boleto/attachments/boleto.pdf');         // Add attachments
+    if (($_SESSION["anexo"])) {
+        $mail->addAttachment('boleto/attachments/boleto.pdf'); // Add attachments
+    }
+
 
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
@@ -33,6 +35,10 @@ try {
     $mail->Body = $_SESSION["mensagem"];
 
     $mail->send();
+    if (($_SESSION["anexo"])) {
+        unlink("boleto/attachments/boleto.pdf");
+    }
+    unset($_SESSION["anexo"]);
     unset($_SESSION["email"]);
     unset($_SESSION["assunto"]);
     unset($_SESSION["mensagem"]);

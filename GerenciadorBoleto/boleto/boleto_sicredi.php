@@ -51,7 +51,8 @@ $boleto = ($_SESSION["boleto"]);
 $dias_de_prazo_para_pagamento = 5;
 $data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006";
 $valor_boleto = $boleto->getValor(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
-$juros = number_format((($valor_boleto * $boleto->getMulta())/1000),2,",",".");
+$juros = number_format((($valor_boleto * $boleto->getMulta())/100),2,",",".");
+$multa = number_format($boleto->getMulta(),2,",",".");
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
 $dadosboleto["nosso_numero"] = $boleto->getNossoNumero();     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
@@ -122,12 +123,13 @@ try
 	$html2pdf->Output('boleto' . $boleto->getNossoNumero() . '.pdf');
 	
 	/* Salva o PDF no servidor para enviar por email */
-	//$html2pdf->Output('caminho/boleto.pdf', 'F');
-	
+	$html2pdf->Output('attachments/boleto.pdf', 'F');
 	/* Força o download no browser */
 	//$html2pdf->Output('boleto.pdf', 'D');
 }
+
 catch(HTML2PDF_exception $e) {
 	echo $e;
 	exit;
 }
+

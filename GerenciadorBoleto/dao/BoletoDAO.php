@@ -105,7 +105,8 @@ class BoletoDAO {
             $stmt->bindValue(":numeroDocumento", $boleto->getNumeroDocumento());
             $stmt->bindValue(":nossoNumero", $boleto->getNossoNumero());
             $stmt->bindValue(":dataEmissao", $boleto->getDataEmissao());
-            return $stmt->execute();
+            $stmt->execute();
+            return Database::conexao()->lastInsertId();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }

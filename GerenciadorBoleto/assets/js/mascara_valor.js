@@ -4,6 +4,12 @@ $(document).ready(function(){
 		v_fun=moeda;
 		setTimeout('execmascara()',1);
 	});
+        
+        $("#juros").keypress(function(){
+		v_obj=this;
+		v_fun=moeda;
+		setTimeout('execmascara()',1);
+	});
 });
 
 function execmascara(){

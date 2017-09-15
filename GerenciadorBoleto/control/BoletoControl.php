@@ -36,7 +36,8 @@ switch ($action) {
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
         if ($diasCorridos->invert == 0) {
-            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 1000)) * $diasCorridos->days);
+            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 100)) * $diasCorridos->days) +
+                    ($boleto->getJuros() * $diasCorridos->days);
         } else {
             $obj->valor = $boleto->getValor();
         }
@@ -73,26 +74,26 @@ switch ($action) {
         break;
 
     case "gerar":
-        //var_dump(preg_replace('/[R\$|.|]/', '', $_POST["valor"]));
         $valor = (str_replace("R$", "", ($_POST["valor"])));
         $valor = (str_replace(",", ".", $valor));
+        $juros = (str_replace("R$", "", ($_POST["juros"])));
+        $juros = (str_replace(",", ".", $juros));
         $boleto->setValor($valor);
         $boleto->setNumeroDocumento(trim($_POST["numeroDocumento"]));
         $boleto->setNossoNumero($boletoDao->nossoNumero());
         $boleto->setDataVencimento(trim($_POST["dataVencimento"]));
         $boleto->setMulta(trim($_POST["multa"]));
+        $boleto->setJuros($juros);
         $boleto->setBanco($bancoDao->buscarBanco(trim($_POST["codigoBanco"])));
         $boleto->setCliente($clienteDao->buscarCliente(trim($_POST["codigoCliente"])));
         $boleto->setDataEmissao(date("Y-m-d"));
         $_SESSION["boleto"] = $boleto;
         if ($boletoDao->validaCampos($boleto)) {
-            $boletoDao->inserirBoleto($boleto);
-            var_dump($boleto->getCodigoBoleto());
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php"
-                    . "?action=emailCadastro&cod=" . $boleto->getCodigoBoleto());
+            $codigo = $boletoDao->inserirBoleto($boleto);
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
             exit();
         } else {
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_boleto.php");
             exit();
         }
         exit();
@@ -107,18 +108,16 @@ switch ($action) {
         exit();
         break;
 
-    case "emailCadastro":
+    case "enviarEmail":
         try {
             $codigo = $_GET["cod"];
-            var_dump($codigo);
             $boleto = $boletoDao->buscarBoleto($codigo);
-            var_dump($boleto);
             $_SESSION["email"] = $boleto->getCliente()->getEmail();
             $_SESSION["assunto"] = "Boleto - Gerenciador de Boletos Microvil";
             $_SESSION["mensagem"] = "Segue em anexo boleto referente ao Nº: " . $boleto->getNumeroDocumento();
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
-            //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
-            //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+            $_SESSION["anexo"] = true;
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
             exit();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();

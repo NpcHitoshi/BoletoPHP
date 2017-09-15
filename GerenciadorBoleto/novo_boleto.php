@@ -64,12 +64,18 @@ require_once 'menu_adm.php';
                     <input id="vencimento" type="date" name="dataVencimento" class="form-control" placeholder="Vencimento"/>
                     <div class="erro"></div>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
                     <label for="multa">Multa (%):</label>
                     <input id="multa" type="number" name="multa" value="3" class="form-control" placeholder="Multa"/>
                     <div class="erro"></div>
                 </div>
-
+        
+                <div class="form-group col-md-3">
+                    <label for="juros">Juros (Diário):</label>
+                    <input id="juros" type="text" name="juros" value="" class="form-control" placeholder="Juros"/>
+                    <div class="erro"></div>
+                </div>
+        
                 <div class="form-group col-md-6">
                     <label for="valor">Valor:</label>
                     <input id="valor" type="text" name="valor" class="form-control" placeholder="Valor"/>
