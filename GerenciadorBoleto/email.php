@@ -28,7 +28,6 @@ try {
         $mail->addAttachment('boleto/attachments/boleto.pdf'); // Add attachments
     }
 
-
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = $_SESSION["assunto"];
@@ -42,8 +41,8 @@ try {
     unset($_SESSION["email"]);
     unset($_SESSION["assunto"]);
     unset($_SESSION["mensagem"]);
-    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SESSION["redirecionamento"]);
-    exit();
+    //header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SESSION["redirecionamento"]);
+    //exit();
 } catch (Exception $e) {
     echo 'Não foi possível enviar mensagem. ';
     echo 'Mailer Error: ' . $mail->ErrorInfo;

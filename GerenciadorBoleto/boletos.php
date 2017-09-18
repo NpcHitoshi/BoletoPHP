@@ -110,6 +110,7 @@ require_once 'menu_adm.php';
                                    <?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
+                                
                                 <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
                                         num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via

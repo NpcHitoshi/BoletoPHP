@@ -14,7 +14,6 @@ session_start();
 if (($_SESSION["cliente"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
-include("getcaptcha.php");
 ?>
 <?php
 $boletos_active = "active";

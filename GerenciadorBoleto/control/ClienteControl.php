@@ -23,21 +23,20 @@ switch ($action) {
             $cliente->setNomeCliente(trim($_POST["nomeCliente"]));
             $cliente->setDocumento(trim($_POST["documento"]));
             $cliente->setEmail(trim($_POST["email"]));
-            $e = new Endereco();
+            $endereco = new Endereco();
             $eDao = new EnderecoDao();
-            $e->setBairro(trim($_POST["bairro"]));
-            $e->setCep(trim($_POST["cep"]));
+            $endereco->setBairro(trim($_POST["bairro"]));
+            $endereco->setCep(trim($_POST["cep"]));
 
-            $c = new Cidade();
-            $c->setNomeCidade(trim($_POST["cidade"]));
-            $c = $eDao->buscaCidadeNome($c->getNomeCidade(), $_POST["uf"]);
+            $cidade = new Cidade();
+            $cidade->setNomeCidade(trim($_POST["cidade"]));
+            $cidade = $eDao->buscaCidadeNome($cidade->getNomeCidade(), $_POST["uf"]);
 
-            $e->setCidade($c);
-            $e->setComplemento(trim($_POST["complemento"]));
-            $e->setNumero(trim($_POST["numero"]));
-            $e->setRua(preg_replace("/[0-9|]|,|\.\d+/", "", trim($_POST["rua"])));
-            $cliente->setEndereco($e);
-            var_dump($cliente);
+            $endereco->setCidade($cidade);
+            $endereco->setComplemento(trim($_POST["complemento"]));
+            $endereco->setNumero(trim($_POST["numero"]));
+            $endereco->setRua(preg_replace("/[0-9|]|,|\.\d+/", "", trim($_POST["rua"])));
+            $cliente->setEndereco($endereco);
             if ($cDao->validaCampos($cliente)) {
                 $codigo = $cDao->inserirCliente($cliente);
                 if($codigo != null){
@@ -136,6 +135,7 @@ switch ($action) {
             $_SESSION["mensagem"] = "Seu cadastro foi realizado através do nosso sistema de boletos, sua senha é: " .
                     substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2) ;
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/clientes.php";
+            $_SESSION["anexo"] = false;
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
             exit();
         } catch (Exception $e) {

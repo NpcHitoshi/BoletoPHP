@@ -13,50 +13,52 @@ body {
 
 /*Menu*/
 .navbar{
-  background-color: #e8eaed;
-  background-image: none;
-  border: none;
-  font-family: 'Roboto', sans-serif;
-  border-radius: 0px !important;
-  -webkit-touch-callout: none; /* iOS Safari */
+    background-color: #e8eaed;
+    background-image: none;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 0px !important;
+    -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-  cursor:default
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                          supported by Chrome and Opera */
+    cursor:default
 }
 
 .navbar a{
-  color: black;
+    color: black;
+    margin-left: 1px;
+    margin-right: 1px;
 }
 
 .navbar a:hover{
-  background-color: #ff8d30 !important;
+    background-color: #ff8d30 !important;
 }
 
-.navbar .active{
-  background-color: #ff8d30;
+.navbar .active a{
+    background-color: #ff8d30;
 }
 
 /*Títulos e Botões*/
 .title{
-  font-family: "Oswald", sans-serif;
-  border-bottom: 1px solid #bbbcbf;
+    font-family: "Oswald", sans-serif;
+    border-bottom: 1px solid #bbbcbf;
 }
 
 .btn-default{
-  background-color: #ff8d30;
-  border-radius: 0px;
-  font-family: 'Passion One', cursive;
-  font-size: medium;
+    background-color: #ff8d30;
+    border-radius: 0px;
+    font-family: 'Passion One', cursive;
+    font-size: medium;
 }
 
 .btn-edit, .btn-delete, .btn-yes{
-  border-radius: 0px;
-  font-family: 'Passion One', cursive;
-  margin-left: 2px;
+    border-radius: 0px;
+    font-family: 'Passion One', cursive;
+    margin-left: 2px;
 }
 
 .btn-edit{
@@ -68,41 +70,41 @@ body {
 }
 
 .btn-delete{
-  background-color: #fc3737;
+    background-color: #fc3737;
 }
 
 .btn-delete:hover{
-  background-color: #fc7171;
+    background-color: #fc7171;
 }
 
 .btn-yes{
-  background-color: #11c401;
+    background-color: #11c401;
 }
 
 .btn-yes:hover{
-  background-color: #8fd689;
+    background-color: #8fd689;
 }
 
 /*Tabs*/
 .nav-tabs{
-  font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif; 
 }
 
 .nav-tabs li a{
-  background-color: #e8eaed;
-  color: black;
+    background-color: #e8eaed;
+    color: black;
 }
 
 .nav-tabs li a:hover{
-  background-color: #ff8d30;
+    background-color: #ff8d30;
 }
 
 /*Pesquisar*/
-#buscar, #buscar1{
-  margin-top: 6px;
-  height: 40px;
-  border-radius: 0px;
-  font-family: 'Roboto', sans-serif;
+#buscar, #buscar1, #buscar2, #buscar3{
+    margin-top: 6px;
+    height: 40px;
+    border-radius: 0px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /*Tabelas*/
@@ -112,35 +114,35 @@ body {
 }
 
 td{
-  vertical-align: middle !important;
-  border-bottom: 1px solid #bbbcbf;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #bbbcbf;
 }
 
 /*Modal*/
 .modal-content{
-  border-radius: 0px;
-  font-family: 'Roboto', sans-serif;
+    border-radius: 0px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .modal-header{
-  background-color: #ff8d30;
+    background-color: #ff8d30;
 }
 
 /*Geral*/
 .gasparzinho{
-  visibility: hidden;
+    visibility: hidden;
 }
 
 a{
-  color: #333;
+    color: #333;
 }
 
 .alert{
-  margin-top: 2px !important;
-  margin-bottom: 0px !important;
-  padding: 5px;
-  border-radius: 0px;
-  }
+    margin-top: 2px !important;
+    margin-bottom: 0px !important;
+    padding: 5px;
+    border-radius: 0px;
+}
 
 #mensagem{
     font-size: small;
