@@ -26,11 +26,11 @@ PRIMARY KEY (id_endereco),
 FOREIGN KEY (id_cidade) REFERENCES Cidade (id_cidade)
 )engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Usuario (
+CREATE TABLE IF NOT EXISTS cliente (
 id_cliente INT NOT NULL AUTO_INCREMENT,
 id_endereco INT,
 nomeCliente VARCHAR(50) NOT NULL,
-documento VARCHAR(14) NOT NULL,
+documento VARCHAR(14) UNIQUE NOT NULL,
 email VARCHAR(50) NOT NULL,
 senha VARCHAR(60) NOT NULL,
 tipo_conta BIT NOT NULL,
@@ -61,3 +61,11 @@ PRIMARY KEY (id_boleto),
 FOREIGN KEY (id_cliente) REFERENCES Usuario (id_cliente),
 FOREIGN KEY (id_banco) REFERENCES Banco (id_banco)
 )engine=InnoDB;
+
+SET GLOBAL event_scheduler = ON;
+
+SET SQL_SAFE_UPDATES = 0;
+
+CREATE EVENT boleto_vencido 
+    ON SCHEDULE EVERY 1 MINUTE
+    DO UPDATE boleto set situacao = 3 where DATE_FORMAT(data_vencimento,'%Y-%m-%d') > curdate();

@@ -111,14 +111,12 @@ switch ($action) {
     case "enviarEmail":
         try {
             $codigo = $_GET["cod"];
-            $boleto = $boletoDao->buscarBoleto($codigo);
-            $_SESSION["email"] = $boleto->getCliente()->getEmail();
+            $cliente = $clienteDao->buscarCliente($codigo);
+            $_SESSION["email"] = $cliente->getEmail();
             $_SESSION["assunto"] = "Boleto - Gerenciador de Boletos Microvil";
-            $_SESSION["mensagem"] = "Segue em anexo boleto referente ao Nº: " . $boleto->getNumeroDocumento();
+            $_SESSION["mensagem"] = "Segue em anexo boleto";
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
             $_SESSION["anexo"] = true;
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
-            exit();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }

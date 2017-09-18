@@ -78,6 +78,21 @@ class BoletoDAO {
         }
     }
 
+    public function listarBoletosVencidos() {
+        try {
+            $sql = "SELECT * FROM boleto WHERE situacao = 3 ORDER BY numero_documento";
+            $result = Database::conexao()->query($sql);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $boletos = array();
+            foreach ($lista as $l) {
+                $boletos[] = $this->populaBoleto($l);
+            }
+            return $boletos;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
     public function buscarBoleto($codigo) {
         try {
             $sql = "SELECT * FROM boleto WHERE id_boleto = :codigo";
@@ -160,7 +175,7 @@ class BoletoDAO {
     }
 
     public function validaCampos($boleto) {
-        return $boleto->getNumeroDocumento() != null && $boleto->getValor() != null && $boleto->getDataVencimento() != null && 
+        return $boleto->getNumeroDocumento() != null && $boleto->getValor() != null && $boleto->getDataVencimento() != null &&
                 $boleto->getCliente() != null && $boleto->getBanco() != null;
     }
 
