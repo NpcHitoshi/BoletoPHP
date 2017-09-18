@@ -9994,4 +9994,4 @@ INSERT INTO `Banco` VALUES (756,'756 - BANCO COOPERATIVO DO BRASIL S.A.');
 INSERT INTO `Banco` VALUES (757,'757 - BANCO KEB DO BRASIL S.A.');
 ##Inicia admin
 insert into endereco values(1, 6330, '83302020', 'R RUA LARANJEIRA', 258, 'JARDIM PRIMAVERA', '');
-insert into usuario values(1, 1, 'admin', 'admin', 'admin@admin.com.br', 'admin', 1, 1);
+insert into cliente values(1, 1, '03919470000141', '$2y$10$L31l/90hJ.3b7n6O3avEf.5mS6fzjcwZ62SVu1ghX4ri4lriCFhrO', 'admin@admin.com.br', 'admin', 1, 1);
