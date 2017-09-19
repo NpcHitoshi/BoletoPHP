@@ -18,10 +18,10 @@ $action = $_GET["action"];
 switch ($action) {
     case "login":
         try {
-            $documento = trim($_POST['documento']);
+            $email = trim($_POST['email']);
             $senha = trim($_POST['senha']);
             $clienteDAO = new ClienteDAO();
-            $cliente = $clienteDAO->autenticaCliente($documento, $senha);
+            $cliente = $clienteDAO->autenticaCliente($email, $senha);
 
             if ($cliente->getCodigoCliente() != null) {
                 $_SESSION["cliente"] = $cliente;

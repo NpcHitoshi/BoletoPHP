@@ -30,15 +30,13 @@ class ClienteDAO {
         return $cliente;
     }
 
-    public function autenticaCliente($documento, $senha) {
+    public function autenticaCliente($email, $senha) {
         try {
-            $sql = "SELECT * FROM cliente WHERE documento = :documento";
+            $sql = "SELECT * FROM cliente WHERE email = :email";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":documento", $documento);
+            $stmt->bindValue(":email", $email);
             $stmt->execute();
             $cliente = $this->populaCliente($stmt->fetch(PDO::FETCH_ASSOC));
-            var_dump($cliente->getSenha());
-            var_dump(password_verify($senha, $cliente->getSenha()));
             if (password_verify($senha, $cliente->getSenha())) {
                 $cliente->setSenha("");
                 return $cliente;

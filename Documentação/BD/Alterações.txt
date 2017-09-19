@@ -6,7 +6,7 @@ ALTER TABLE boleto ADD juros DOUBLE;
 
 CREATE EVENT boleto_vencido 
     ON SCHEDULE EVERY 1 MINUTE
-    DO UPDATE boleto set situacao = 3 where DATE_FORMAT(data_vencimento,'%Y-%m-%d') > curdate();
+    DO UPDATE boleto set situacao = 3 where DATE_FORMAT(data_vencimento,'%Y-%m-%d') < curdate();
 
 //DELETAR TODOS CLIENTES COM CNPJ DUPLICADO
 ALTER TABLE cliente MODIFY documento VARCHAR(14) NOT NULL UNIQUE

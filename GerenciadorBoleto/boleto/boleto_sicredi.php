@@ -49,13 +49,13 @@ $boleto = ($_SESSION["boleto"]);
 // Os valores abaixo podem ser colocados manualmente ou ajustados p/ formulário c/ POST, GET ou de BD (MySql,Postgre,etc)	//
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
-$data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006";
+$data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento())); // Prazo de X dias OU informe data: "13/04/2006";
 $valor_boleto = $boleto->getValor(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
 $juros = number_format($boleto->getJuros(),2,",",".");
 $multa = number_format($boleto->getMulta(),2,",",".");
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
-$dadosboleto["nosso_numero"] = $boleto->getNossoNumero();     // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
+$dadosboleto["nosso_numero"] = $boleto->getNossoNumero(); // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
 $dadosboleto["numero_documento"] = $boleto->getNumeroDocumento(); // Num do pedido ou do documento
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
 $dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao())); // Data de emissão do Boleto
@@ -78,26 +78,28 @@ $dadosboleto["instrucoes4"] = "";
 // DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
 $dadosboleto["quantidade"] = "";
 $dadosboleto["valor_unitario"] = "";
-$dadosboleto["aceite"] = "N";     // N - remeter cobrança sem aceite do sacado  (cobranças não-registradas)
+$dadosboleto["aceite"] = "N"; // N - remeter cobrança sem aceite do sacado  (cobranças não-registradas)
 // S - remeter cobrança apos aceite do sacado (cobranças registradas)
 $dadosboleto["especie"] = "REAL";
 $dadosboleto["especie_doc"] = "DMI"; // OS - Outros segundo manual para cedentes de cobrança SICREDI
 // ---------------------- DADOS FIXOS DE CONFIGURAÇÃO DO SEU BOLETO --------------- //
 // DADOS DA SUA CONTA - SICREDI
-$dadosboleto["agencia"] = "0725";  // Num da agencia (4 digitos), sem Digito Verificador
-$dadosboleto["conta"] = "24354";  // Num da conta (5 digitos), sem Digito Verificador
-$dadosboleto["conta_dv"] = "6";  // Digito Verificador do Num da conta
+$dadosboleto["agencia"] = "0725"; // Num da agencia (4 digitos), sem Digito Verificador
+$dadosboleto["conta"] = "24354"; // Num da conta (5 digitos), sem Digito Verificador
+$dadosboleto["conta_dv"] = "6"; // Digito Verificador do Num da conta
 // DADOS PERSONALIZADOS - SICREDI
-$dadosboleto["posto"] = "29";      // Código do posto da cooperativa de crédito
-$dadosboleto["byte_idt"] = "2";   // Byte de identificação do cedente do bloqueto utilizado para compor o nosso número.
+$dadosboleto["posto"] = "29"; // Código do posto da cooperativa de crédito
+$dadosboleto["byte_idt"] = "2"; // Byte de identificação do cedente do bloqueto utilizado para compor o nosso número.
 // 1 - Idtf emitente: Cooperativa | 2 a 9 - Idtf emitente: Cedente
-$dadosboleto["carteira"] = "A";   // Código da Carteira: A (Simples) 
+$dadosboleto["carteira"] = "A"; // Código da Carteira: A (Simples) 
+
 // SEUS DADOS
 $dadosboleto["identificacao"] = "MICROVIL AUTOMACAO COMERCIAL LTDA";
 $dadosboleto["cpf_cnpj"] = "03.919.470/0001-41";
 $dadosboleto["endereco"] = "Rua Laranjeira, 469 - Jardim Primavera";
 $dadosboleto["cidade_uf"] = "Piraquara / PR";
 $dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
+
 // NÃO ALTERAR!
 ob_start();
 unset($_SESSION['boleto']);

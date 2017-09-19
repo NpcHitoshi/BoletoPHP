@@ -23,13 +23,13 @@
                 <?php } ?>
                 <h2><img src="assets/images/logo.png" id="logo"></h2>
                 <form class="register-form" action="control/ClienteControl.php?action=emailSenha" method="POST">
-                    <input class="documento" type="text" name="documento" placeholder="Documento"/>
+                    <input class="documento" type="text" name="documento" placeholder="Digiete seu CNPJ ou CPF"/>
                     <button type="submit">Enviar</button>
                     <p class="message">Lembrou sua senha? <a href="#">Login</a></p>
                 </form>
 
                 <form class="login-form" action="control/ProcessaLogin.php?action=login" method="POST">
-                    <input class="documento" type="text" name="documento" placeholder="Nº de Documento" required/>
+                    <input type="text" name="email" placeholder="E-mail" required/>
                     <input id="senha" type="password" name="senha" placeholder="Senha" required/>
                     <button type="submit">login</button>
                     <p class="message">Esqueceu sua senha? <a href="#">Enviar E-mail</a></p>

@@ -71,4 +71,4 @@ SET SQL_SAFE_UPDATES = 0;
 
 CREATE EVENT boleto_vencido 
     ON SCHEDULE EVERY 1 MINUTE
-    DO UPDATE boleto set situacao = 3 where DATE_FORMAT(data_vencimento,'%Y-%m-%d') > curdate();
+    DO UPDATE boleto set situacao = 3 where DATE_FORMAT(data_vencimento,'%Y-%m-%d') < curdate();
