@@ -93,6 +93,70 @@ class BoletoDAO {
         }
     }
 
+        public function listarBoletosCliente($codigo) {
+        try {
+            $sql = "SELECT * FROM boleto WHERE id_cliente = :codigo ORDER BY nosso_numero";
+            $result = Database::conexao()->query($sql);
+            $result->bindValue(":codigo", $codigo);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $boletos = array();
+            foreach ($lista as $l) {
+                $boletos[] = $this->populaBoleto($l);
+            }
+            return $boletos;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function listarBoletosAbertosCliente($codigo) {
+        try {
+            $sql = "SELECT * FROM boleto WHERE situacao = 1 AND id_cliente = :codigo ORDER BY numero_documento";
+            $result = Database::conexao()->query($sql);
+            $result->bindValue(":codigo", $codigo);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $boletos = array();
+            foreach ($lista as $l) {
+                $boletos[] = $this->populaBoleto($l);
+            }
+            return $boletos;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function listarBoletosPagosCliente($codigo) {
+        try {
+            $sql = "SELECT * FROM boleto WHERE situacao = 2 AND id_cliente = :codigo ORDER BY numero_documento";
+            $result = Database::conexao()->query($sql);
+            $result->bindValue(":codigo", $codigo);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $boletos = array();
+            foreach ($lista as $l) {
+                $boletos[] = $this->populaBoleto($l);
+            }
+            return $boletos;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function listarBoletosVencidosCliente($codigo) {
+        try {
+            $sql = "SELECT * FROM boleto WHERE situacao = 3 AND id_cliente = :codigo ORDER BY numero_documento";
+            $result = Database::conexao()->query($sql);
+            $result->bindValue(":codigo", $codigo);
+            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $boletos = array();
+            foreach ($lista as $l) {
+                $boletos[] = $this->populaBoleto($l);
+            }
+            return $boletos;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+    
     public function buscarBoleto($codigo) {
         try {
             $sql = "SELECT * FROM boleto WHERE id_boleto = :codigo";
