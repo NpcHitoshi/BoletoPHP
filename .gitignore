@@ -2,3 +2,4 @@ vendor/
 bin/
 GerenciadorBoleto/cookies/*
 /GerenciadorBoleto/nbproject/private/
+GerenciadorBoleto/composer.lock

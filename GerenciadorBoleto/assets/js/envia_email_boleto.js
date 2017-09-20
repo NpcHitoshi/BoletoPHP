@@ -1,14 +1,23 @@
 $(document).ready(function(){
-	$("form").submit(function(){
+	$(".btn-email").click(function(){
 		var xmlhttp = new XMLHttpRequest();
+		var xmlhttp1 = new XMLHttpRequest();
+
+		xmlhttp1.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				window.location.href = "http://" + window.location.hostname + ":" + window.location.port + "/BoletoPHP/GerenciadorBoleto/boletos.php";
+			}
+		};
 
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				alert("http://" + window.location.hostname + "/BoletoPHP/GerenciadorBoleto/email.php");
+				var url1 = "/BoletoPHP/GerenciadorBoleto/email.php";
+				xmlhttp1.open("GET", url1 , true);
+				xmlhttp1.send();
 			}
 		};
-		var cod = $("#cliente").val();
-		var url = "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=enviarEmail&cod=" + cod;
+		alert($(this).attr("href"));
+		var url = $(this).attr("href");
 		xmlhttp.open("GET", url , true);
 		xmlhttp.send();
 	});

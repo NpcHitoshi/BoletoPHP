@@ -23,6 +23,7 @@ require_once 'menu_adm.php';
 <script src="assets/js/mascara_valor.js"></script>
 <script src="assets/js/valida_2via.js"></script>
 <script src="assets/js/carrega_2via.js"></script>
+<script src="assets/js/envia_email_boleto.js"></script>
 <!-- Modal Ativar -->
 <div id="modal2via" class="modal fade" role="dialog">
     <div class="modal-dialog">

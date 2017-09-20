@@ -35,7 +35,7 @@ switch ($action) {
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
-        if ($diasCorridos->invert == 0 && $diasCorridos->days > 0)) {
+        if ($diasCorridos->invert == 0 && $diasCorridos->days > 0) {
             $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 100))) +
                     ($boleto->getJuros() * $diasCorridos->days);
         } else {
@@ -167,8 +167,7 @@ switch ($action) {
             $_SESSION["mensagem"] = "Segue em anexo boleto";
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
             $_SESSION["anexo"] = true;
-            $_SESSION["flag_header"] = true;
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
+            $_SESSION["flag_header"] = false;
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
