@@ -174,6 +174,17 @@ class BoletoDAO {
         }
     }
 
+    public function baixaBoleto($boleto){
+        try {
+            $sql = "UPDATE boleto SET situacao = 2 WHERE id_boleto = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $boleto->getCodigoBoleto());
+            return $stmt->execute();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
     public function validaCampos($boleto) {
         return $boleto->getNumeroDocumento() != null && $boleto->getValor() != null && $boleto->getDataVencimento() != null &&
                 $boleto->getCliente() != null && $boleto->getBanco() != null;

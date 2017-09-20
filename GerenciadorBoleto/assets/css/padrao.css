@@ -55,7 +55,7 @@ body {
     font-size: medium;
 }
 
-.btn-edit, .btn-delete, .btn-yes{
+.btn-edit, .btn-delete, .btn-yes, .btn-email{
     border-radius: 0px;
     font-family: 'Passion One', cursive;
     margin-left: 2px;
@@ -83,6 +83,14 @@ body {
 
 .btn-yes:hover{
     background-color: #8fd689;
+}
+
+.btn-email{
+    background-color: #fcd62d;
+}
+
+.btn-email:hover{
+    background-color: #f7e7a3;
 }
 
 /*Tabs*/

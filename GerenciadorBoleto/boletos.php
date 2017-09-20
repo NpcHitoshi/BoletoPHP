@@ -66,7 +66,7 @@ require_once 'menu_adm.php';
         <div id="" class="color col-md-1 c-2"></div>
         <div class="col-md-2">- Pago</div>
         <div id="" class="color col-md-1 c-3"></div>
-        <div class="col-md-2">- Vencidos</div>
+        <div class="col-md-2">- Vencido</div>
     </div>
     <?php if (isset($_SESSION["msg_retorno"])) { ?> 
         <div id="mensagem col-md-12">
@@ -91,8 +91,8 @@ require_once 'menu_adm.php';
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,21 +104,30 @@ require_once 'menu_adm.php';
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
                                    <?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                
-                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
-                                        num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button 
+                                <?php if($obj->getSituacao() != 2){ ?>
+                                    name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    num="<?php echo $obj->getCodigoBoleto() ?>" data-toggle="modal" data-target="#modal2via"
+                                <<?php }else{?> disabled <?php } ?>        
+                                    class="btn btn-yes bt2via" >
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button name="control/BoletoControl.php?action=enviarEmail&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
-                                        num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-delete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                                </button>
+                                <a href="control/BoletoControl.php?action=enviarEmailBotao&codigo=<?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
+                                    <span class="glyphicon glyphicon-send"></span> E-mail
+                                </a>
+                                <a
+                                <?php if($obj->getSituacao() != 2){ ?> 
+                                    href="control/BoletoControl.php?action=baixarBoleto&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    <?php }else{?> disabled <?php } ?>
+                                    class="btn btn-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Baixar
+                                </a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -133,8 +142,8 @@ require_once 'menu_adm.php';
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,17 +153,22 @@ require_once 'menu_adm.php';
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
+                                   <?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button disabled class="btn btn-yes bt2via" >
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button id="btemail" name="" class="btn btn-delete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                <button name="control/BoletoControl.php?action=enviarEmailBotao&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                        num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-email">
+                                    <span class="glyphicon glyphicon-send"></span> E-mail
                                 </button>
+                                <a disabled class="btn btn-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Baixar
+                                </a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -169,8 +183,8 @@ require_once 'menu_adm.php';
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -178,19 +192,32 @@ require_once 'menu_adm.php';
                         $boletosAbertos = $bDao->listarBoletosAbertos();
                         foreach ($boletosAbertos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
+                                   <?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button 
+                                <?php if($obj->getSituacao() != 2){ ?>
+                                    name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    num="<?php echo $obj->getCodigoBoleto() ?>" data-toggle="modal" data-target="#modal2via"
+                                <<?php }else{?> disabled <?php } ?>        
+                                    class="btn btn-yes bt2via" >
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button id="btemail" name="" class="btn btn-delete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                                </button>
+                                <a href="control/BoletoControl.php?action=enviarEmailBotao&codigo=<?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
+                                    <span class="glyphicon glyphicon-send"></span> E-mail
+                                </a>
+                                <a
+                                <?php if($obj->getSituacao() != 2){ ?> 
+                                    href="control/BoletoControl.php?action=baixarBoleto&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    <?php }else{?> disabled <?php } ?>
+                                    class="btn btn-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Baixar
+                                </a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -205,8 +232,8 @@ require_once 'menu_adm.php';
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -214,19 +241,32 @@ require_once 'menu_adm.php';
                         $boletosVencidos = $bDao->listarBoletosVencidos();
                         foreach ($boletosVencidos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
+                                   <?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button 
+                                <?php if($obj->getSituacao() != 2){ ?>
+                                    name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    num="<?php echo $obj->getCodigoBoleto() ?>" data-toggle="modal" data-target="#modal2via"
+                                <<?php }else{?> disabled <?php } ?>        
+                                    class="btn btn-yes bt2via" >
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <button id="btemail" name="" class="btn btn-delete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
-                                </button>
+                                <a href="control/BoletoControl.php?action=enviarEmailBotao&codigo=<?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
+                                    <span class="glyphicon glyphicon-send"></span> E-mail
+                                </a>
+                                <a
+                                <?php if($obj->getSituacao() != 2){ ?> 
+                                    href="control/BoletoControl.php?action=baixarBoleto&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    <?php }else{?> disabled <?php } ?>
+                                    class="btn btn-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Baixar
+                                </a>
                             </td>
                         </tr>
                     <?php } ?>

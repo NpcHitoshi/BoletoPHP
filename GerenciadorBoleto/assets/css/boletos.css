@@ -24,9 +24,9 @@
 /*Boletos Vencidos*/
 .c-3{
     background-color: #ed6f6f;
-
 }
 
-td span{
-    margin-right: 2%;
+.btn-edit, .btn-delete, .btn-yes, .btn-email{
+    width: 21% !important;
 }
+

@@ -117,7 +117,41 @@ switch ($action) {
             $_SESSION["mensagem"] = "Segue em anexo boleto";
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
             $_SESSION["anexo"] = true;
+            $_SESSION["flag_header"] = false;
         } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
+
+    case "enviarEmailBotao":
+        try {
+            $codigo = $_GET["codigo"];
+            $cliente = $clienteDao->buscarCliente($codigo);
+            $_SESSION["email"] = $cliente->getEmail();
+            $_SESSION["assunto"] = "Boleto - Gerenciador de Boletos Microvil";
+            $_SESSION["mensagem"] = "Segue em anexo boleto";
+            $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
+            $_SESSION["anexo"] = true;
+            $_SESSION["flag_header"] = true;
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
+
+    case "baixarBoleto":
+        try{
+            $codigo = $_GET["codigo"];
+            $boleto = $boletoDao->buscarBoleto($codigo);
+            $retorno = $boletoDao->baixaBoleto($boleto);
+            if($retorno){
+                $_SESSION["msg_retorno"] = "Boleto baixado com sucesso!";
+            }
+            else
+                $_SESSION["msg_retorno"] = "Falha oa baixar boleto!";
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
+            exit();
+        } catch (Exception $e){
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;

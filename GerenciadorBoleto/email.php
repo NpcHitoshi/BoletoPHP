@@ -41,8 +41,11 @@ try {
     unset($_SESSION["email"]);
     unset($_SESSION["assunto"]);
     unset($_SESSION["mensagem"]);
-    //header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SESSION["redirecionamento"]);
-    //exit();
+    if($_SESSION["flag_header"]){
+        unset($_SESSION["flag_header"]);
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SESSION["redirecionamento"]);
+        exit();   
+    }
 } catch (Exception $e) {
     echo 'Não foi possível enviar mensagem. ';
     echo 'Mailer Error: ' . $mail->ErrorInfo;

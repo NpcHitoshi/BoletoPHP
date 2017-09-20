@@ -136,6 +136,7 @@ switch ($action) {
                     substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2) ;
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/clientes.php";
             $_SESSION["anexo"] = false;
+            $_SESSION["flag_header"] = true;
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
             exit();
         } catch (Exception $e) {
@@ -155,6 +156,7 @@ switch ($action) {
                 $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/index.php";
                 $_SESSION["msg_retorno"] = "E-mail de recuperação de senha enviado!";
                 $_SESSION["anexo"] = false;
+                $_SESSION["flag_header"] = true;
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/email.php");
                 exit();
             } else {

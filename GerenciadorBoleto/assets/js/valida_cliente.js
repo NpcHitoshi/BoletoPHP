@@ -86,6 +86,9 @@ $(document).ready(function(){
 			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
 			$("#erro-submit").html("Não é possível cadastrar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();
+		}
+		else{
+			cadastrar();
 		}	
 	});
 

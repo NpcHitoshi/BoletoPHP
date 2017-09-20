@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#cliente").on('ready change', function(){
+	$("#cliente").on('select2:opening change', function(){
 		var xmlhttp = new XMLHttpRequest();
 
 		xmlhttp.onreadystatechange = function() {
