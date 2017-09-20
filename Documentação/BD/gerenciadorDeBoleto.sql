@@ -1,6 +1,15 @@
+// Mandar E-mail
+// 1. Instalar composer em: https://getcomposer.org;
+// 2. Abrir prompt no caminho da pasta "gerenciadorDeBoleto";
+// 3. Executar o comando: "composer require phpmailer/phpmailer";
+
 CREATE DATABASE IF NOT EXISTS gerenciadorDeBoleto;
 
 USE gerenciadorDeBoleto;
+
+SET GLOBAL event_scheduler = ON;
+
+SET SQL_SAFE_UPDATES = 0;
 
 CREATE TABLE IF NOT EXISTS Estado (
 id_estado INT NOT NULL,
@@ -64,10 +73,6 @@ PRIMARY KEY (id_boleto),
 FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente),
 FOREIGN KEY (id_banco) REFERENCES Banco (id_banco)
 )engine=InnoDB;
-
-SET GLOBAL event_scheduler = ON;
-
-SET SQL_SAFE_UPDATES = 0;
 
 CREATE EVENT boleto_vencido 
     ON SCHEDULE EVERY 30 second
