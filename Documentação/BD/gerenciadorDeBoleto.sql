@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS gerenciadorDeBoleto
+CREATE DATABASE IF NOT EXISTS gerenciadorDeBoleto;
 
 USE gerenciadorDeBoleto;
 

@@ -15,6 +15,8 @@ if (($_SESSION["cliente"]) == null) {
 }
 ?>
 <?php
+$usuario = $_SESSION["cliente"];
+$codigo = $usuario->getCodigoCliente();
 $boletos_active = "active";
 require_once 'menu_cliente.php';
 ?>
@@ -46,9 +48,9 @@ require_once 'menu_cliente.php';
                         <input id="valor" type="text" name="valor" class="form-control" placeholder="Valor" disabled/>
                         <div class="erro"></div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="" id="Gerar2via"><button type="submit" class="btn btn-yes">Gerar</button></a>
+            </div>
+            <div class="modal-footer">
+                <a href="" id="Gerar2via"><button type="submit" class="btn btn-yes">Gerar</button></a>
                 </form>
                 <button type="button" class="btn btn-delete" data-dismiss="modal">Cancelar</button>
             </div>
@@ -64,11 +66,14 @@ require_once 'menu_cliente.php';
         <div class="col-md-2">- Aberto</div>
         <div id="" class="color col-md-1 c-2"></div>
         <div class="col-md-2">- Pago</div>
+        <div id="" class="color col-md-1 c-3"></div>
+        <div class="col-md-2">- Vencidos</div>
     </div>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#todos">Todos</a></li>
         <li><a data-toggle="tab" href="#abertos">Abertos</a></li>
         <li><a data-toggle="tab" href="#pagos">Pagos</a></li>
+        <li><a data-toggle="tab" href="#vencidos">Vencidos</a></li>
     </ul>
 
     <div class="tab-content">
@@ -87,14 +92,14 @@ require_once 'menu_cliente.php';
                     <tr><?php
                         $bDao = new BoletoDAO();
                         $boletos[] = new Boleto();
-                        $boletos = $bDao->listarBoletos();
+                        $boletos = $bDao->listarBoletosCliente($codigo);
                         foreach ($boletos as $obj) {
                             ?>
                             <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-2">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
                                 <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
@@ -102,15 +107,15 @@ require_once 'menu_cliente.php';
                                 </button>
                             </td>
                         </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
 
-            <div id="pagos" class="tab-pane fade">
-                <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
-                <table class="table2 table table-hover table-inverse">
-                   <thead>
+        <div id="pagos" class="tab-pane fade">
+            <input class="form-control input-lg" id="buscar1" alt="table2" placeholder="Pesquisar..." type="text">
+            <table class="table2 table table-hover table-inverse">
+                <thead>
                     <tr>
                         <th class="col-md-3">Pagador</th>
                         <th class="col-md-3">Nosso Número</th>
@@ -127,7 +132,7 @@ require_once 'menu_cliente.php';
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-2">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
                                 <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
@@ -135,44 +140,81 @@ require_once 'menu_cliente.php';
                                 </button>
                             </td>
                         </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
 
-            <div id="abertos" class="tab-pane fade">
-                <input class="form-control input-lg" id="buscar2" alt="table3" placeholder="Pesquisar..." type="text">
-                <table class="table3 table table-hover table-inverse">
-                    <thead>
-                        <tr>
-                            <th class="col-md-3">Pagador</th>
+        <div id="abertos" class="tab-pane fade">
+            <input class="form-control input-lg" id="buscar2" alt="table3" placeholder="Pesquisar..." type="text">
+            <table class="table3 table table-hover table-inverse">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">Pagador</th>
                         <th class="col-md-3">Nosso Número</th>
                         <th class="col-md-2">Data de Vencimento</th>
                         <th class="col-md-2" colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><?php
+                        $boletosAbertos = $bDao->listarBoletosAbertos();
+                        foreach ($boletosAbertos as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-2">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr><?php
-                            $boletosAbertos = $bDao->listarBoletosAbertos();
-                            foreach ($boletosAbertos as $obj) {
-                                ?>
-                                <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
-                                <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                                <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                                <td class="col-md-2">
-                                    <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto()?>">
-                                        <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                                    </a>
-                                    <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
-                                        <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
-    </body>
-    </html>
+
+        <div id="vencidos" class="tab-pane fade">
+            <input class="form-control input-lg" id="buscar3" alt="table4" placeholder="Pesquisar..." type="text">
+            <table class="table4 table table-hover table-inverse">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">Pagador</th>
+                        <th class="col-md-2">Nosso Número</th>
+                        <th class="col-md-2">Data de Vencimento</th>
+                        <th class="col-md-4" colspan="4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><?php
+                        $boletosVencidos = $bDao->listarBoletosVencidos();
+                        foreach ($boletosVencidos as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-4">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                                <button id="btemail" name="" class="btn btn-delete">
+                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

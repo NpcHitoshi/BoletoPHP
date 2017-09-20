@@ -36,7 +36,7 @@ switch ($action) {
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
         if ($diasCorridos->invert == 0) {
-            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 100)) * $diasCorridos->days) +
+            $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 100))) +
                     ($boleto->getJuros() * $diasCorridos->days);
         } else {
             $obj->valor = $boleto->getValor();
@@ -54,7 +54,7 @@ switch ($action) {
         $validaData = $dataVencimento->diff($dataHoje);
         $valor = trim($_POST["valor"]);
         $valor = str_replace("R$", "", ($_POST["valor"]));
-        $valor = (str_replace(".", "", $valor));
+        $valor = str_replace(".", "", $valor);
         $valor = str_replace(",", ".", $valor);
         $codigo = $_GET["codigo"];
         $boleto = $boletoDao->buscarBoleto($codigo);
@@ -62,11 +62,12 @@ switch ($action) {
             $boleto->setValor($valor);
             $boleto->setDataVencimento($vencimento);
             $retorno = $boletoDao->atualizaBoleto($boleto);
-        } else
+        } else {
             $retorno = false;
-        if (retorno)
+        }
+        if (retorno) {
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=vizualizar&codigo=" . $boleto->getCodigoBoleto());
-        else {
+        } else {
             $_SESSION["msg_retorno"] = "Falha ao gerar 2ª via!";
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
         }
