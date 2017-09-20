@@ -25,9 +25,13 @@ switch ($action) {
 
             if ($cliente->getCodigoCliente() != null) {
                 $_SESSION["cliente"] = $cliente;
-
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
-                exit;
+                if ($cliente->getTipoConta() == 1) {
+                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+                    exit;
+                } else {
+                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/meu_boletos.php");
+                    exit;
+                }
             } else {
                 $_SESSION["erro"] = "Senha ou Nº de Documento Incorreto";
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
