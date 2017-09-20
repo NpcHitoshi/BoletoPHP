@@ -230,7 +230,7 @@ class BoletoDAO {
 
     public function atualizaBoleto($boleto) {
         try {
-            $sql = "UPDATE boleto SET valor = :valor, data_vencimento = :dataVencimento situacao = WHERE id_boleto = :codigo";
+            $sql = "UPDATE boleto SET valor = :valor, data_vencimento = :dataVencimento WHERE id_boleto = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $boleto->getCodigoBoleto());
             $stmt->bindValue(":dataVencimento", $boleto->getDataVencimento());

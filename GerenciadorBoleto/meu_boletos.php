@@ -102,7 +102,7 @@ require_once 'menu_cliente.php';
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button name="control/BoletoControl.php?action=gerar2ViaCliente&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
                             </td>
@@ -135,7 +135,7 @@ require_once 'menu_cliente.php';
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button name="control/BoletoControl.php?action=gerar2ViaCliente&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
                             </td>
@@ -168,7 +168,7 @@ require_once 'menu_cliente.php';
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=2via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button name="control/BoletoControl.php?action=gerar2ViaCliente&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
                             </td>
@@ -201,11 +201,8 @@ require_once 'menu_cliente.php';
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
-                                <button name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
+                                <button name="control/BoletoControl.php?action=gerar2ViaCliente&codigo=<?php echo $obj->getCodigoBoleto() ?>" num="<?php echo $obj->getCodigoBoleto() ?>" class="btn btn-yes bt2via" data-toggle="modal" data-target="#modal2via">
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                                </button>
-                                <button id="btemail" name="" class="btn btn-delete">
-                                    <span class="glyphicon glyphicon-send"></span> Enviar E-mail
                                 </button>
                             </td>
                         </tr>

@@ -35,7 +35,7 @@ switch ($action) {
         $dataHoje = new DateTime(date("Y-m-d"));
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
-        if ($diasCorridos->invert == 0) {
+        if ($diasCorridos->invert == 0 && $diasCorridos->days > 0)) {
             $obj->valor = $boleto->getValor() + (($boleto->getValor() * ($boleto->getMulta() / 100))) +
                     ($boleto->getJuros() * $diasCorridos->days);
         } else {
@@ -74,6 +74,40 @@ switch ($action) {
         exit();
         break;
 
+    case "gerar2ViaCliente":
+        $boleto = $boletoDao->buscarBoleto($_GET["codigo"]);
+        $dataVencimento = new DateTime($boleto->getDataVencimento());
+        $dataHoje = new DateTime(date("Y-m-d"));
+        $validaData = $dataVencimento->diff($dataHoje);
+        $diasCorridos = $dataVencimento->diff($dataHoje);
+        $diasCorridos->days;
+        
+        if ($diasCorridos->invert == 0 && $diasCorridos->days > 0) {
+            $boleto->setValor($boleto->getValor()) + (($boleto->getValor() * ($boleto->getMulta() / 100))) +
+                    ($boleto->getJuros() * $diasCorridos->days);
+        } else {
+            $boleto->setValor($boleto->getValor());
+        }
+
+        $valor = str_replace("R$", "", $boleto->getValor());
+        $valor = str_replace(".", "", $valor);
+        $valor = str_replace(",", ".", $valor);
+        if ($boleto != null && $validaData->invert == 0 && $valor > 0) {
+            $boleto->setValor($valor);
+            $boleto->setDataVencimento(date("Y-m-d"));
+            $retorno = $boletoDao->atualizaBoleto($boleto);
+        } else {
+            $retorno = false;
+        }
+        if (retorno) {
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=vizualizar&codigo=" . $boleto->getCodigoBoleto());
+        } else {
+            $_SESSION["msg_retorno"] = "Falha ao gerar 2ª via!";
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
+        }
+        exit();
+        break;
+        
     case "gerar":
         $valor = (str_replace("R$", "", ($_POST["valor"])));
         $valor = (str_replace(",", ".", $valor));

@@ -70,5 +70,9 @@ SET GLOBAL event_scheduler = ON;
 SET SQL_SAFE_UPDATES = 0;
 
 CREATE EVENT boleto_vencido 
-    ON SCHEDULE EVERY 1 MINUTE
+    ON SCHEDULE EVERY 30 second
     DO UPDATE boleto set situacao = 3 where DATE_FORMAT(data_vencimento,'%Y-%m-%d') < curdate();
+
+CREATE EVENT boleto_aberto 
+    ON SCHEDULE EVERY 30 second
+    DO UPDATE boleto set situacao = 1 where situacao = 3 AND DATE_FORMAT(data_vencimento,'%Y-%m-%d') = curdate();
