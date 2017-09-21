@@ -9,13 +9,11 @@ if (!defined("BASE_DIR")) {
 
 require_once BASE_DIR . "dao" . DS . "DataBase.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 
 $db = new Database();
 $pdo = $db->conexao();
 session_start();
-if (($_SESSION["cliente"]) == null) {
-    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
-}
 $action = $_GET["action"];
 
 switch ($action) {
@@ -25,16 +23,20 @@ switch ($action) {
             $senha = trim($_POST['senha']);
             $clienteDAO = new ClienteDAO();
             $cliente = $clienteDAO->autenticaCliente($email, $senha);
-
+            
+            if ($cliente->getCodigoCliente() == null) {
+                $administradorDAO = new AdministradorDAO();
+                $administrador = $administradorDAO->autenticaAdministrador($email, $senha);
+            }
             if ($cliente->getCodigoCliente() != null) {
                 $_SESSION["cliente"] = $cliente;
-                if ($cliente->getTipoConta() == 1) {
-                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
-                    exit;
-                } else {
-                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/meu_boletos.php");
-                    exit;
-                }
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/meu_boletos.php");
+                exit;
+            }
+            if ($administrador->getCodigoAdministrador() != null) {
+                $_SESSION["cliente"] = $administrador;
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+                exit;
             } else {
                 $_SESSION["erro"] = "Senha ou Nº de Documento Incorreto";
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
