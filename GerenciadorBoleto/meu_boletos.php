@@ -10,12 +10,12 @@ require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "model" . DS . "Boleto.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDao.php";
 session_start();
-if (($_SESSION["cliente"]) == null) {
+$usuario = $_SESSION["cliente"];
+if (($_SESSION["cliente"]) == null || $usuario->getTipoConta() == 1) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 ?>
 <?php
-$usuario = $_SESSION["cliente"];
 $codigo = $usuario->getCodigoCliente();
 $boletos_active = "active";
 require_once 'menu_cliente.php';
@@ -82,10 +82,10 @@ require_once 'menu_cliente.php';
             <table class="table1 table table-hover table-inverse">
                 <thead>
                     <tr>
-                        <th class="col-md-3">Pagador</th>
-                        <th class="col-md-3">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-2" colspan="2"></th>
+                        <th class="col-md-4">Pagador</th>
+                        <th class="col-md-2">Nosso Número</th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-3"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,10 +95,11 @@ require_once 'menu_cliente.php';
                         $boletos = $bDao->listarBoletosCliente($codigo);
                         foreach ($boletos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-2">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
@@ -117,21 +118,22 @@ require_once 'menu_cliente.php';
             <table class="table2 table table-hover table-inverse">
                 <thead>
                     <tr>
-                        <th class="col-md-3">Pagador</th>
-                        <th class="col-md-3">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-2" colspan="2"></th>
+                        <th class="col-md-4">Pagador</th>
+                        <th class="col-md-2">Nosso Número</th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr><?php
-                        $boletosPagos = $bDao->listarBoletosPagos();
+                        $boletosPagos = $bDao->listarBoletosPagosCliente($codigo);
                         foreach ($boletosPagos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-3"><span class="color col-md-1 c-2"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-2">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
@@ -150,21 +152,22 @@ require_once 'menu_cliente.php';
             <table class="table3 table table-hover table-inverse">
                 <thead>
                     <tr>
-                        <th class="col-md-3">Pagador</th>
-                        <th class="col-md-3">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-2" colspan="2"></th>
+                        <th class="col-md-4">Pagador</th>
+                        <th class="col-md-2">Nosso Número</th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr><?php
-                        $boletosAbertos = $bDao->listarBoletosAbertos();
+                        $boletosAbertos = $bDao->listarBoletosAbertosCliente($codigo);
                         foreach ($boletosAbertos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-1"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-3"><span class="color col-md-1 c-1"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-2">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>
@@ -183,21 +186,22 @@ require_once 'menu_cliente.php';
             <table class="table4 table table-hover table-inverse">
                 <thead>
                     <tr>
-                        <th class="col-md-3">Pagador</th>
+                        <th class="col-md-4">Pagador</th>
                         <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-2">Data de Vencimento</th>
-                        <th class="col-md-4" colspan="4"></th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr><?php
-                        $boletosVencidos = $bDao->listarBoletosVencidos();
+                        $boletosVencidos = $bDao->listarBoletosVencidosCliente($codigo);
                         foreach ($boletosVencidos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-3"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-3"><span class="color col-md-1 c-3"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-2"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-4">
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
                                 <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=<?php echo $obj->getCodigoBoleto() ?>">
                                     <span class='glyphicon glyphicon-info-sign'></span> Visualizar
                                 </a>

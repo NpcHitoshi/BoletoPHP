@@ -103,7 +103,59 @@ require_once 'menu_adm.php';
                         $boletos = $bDao->listarBoletos();
                         foreach ($boletos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
+                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
+                            <td class="col-md-5">
+                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
+                                   <?php echo $obj->getCodigoBoleto() ?>">
+                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
+                                </a>
+                                <button 
+                                <?php if($obj->getSituacao() != 2){ ?>
+                                    name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    num="<?php echo $obj->getCodigoBoleto() ?>" data-toggle="modal" data-target="#modal2via"
+                                <<?php }else{?> disabled <?php } ?>        
+                                    class="btn btn-yes bt2via" >
+                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
+                                </button>
+                                <a href="control/BoletoControl.php?action=enviarEmailBotao&codigo=
+                                    <?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
+                                    <span class="glyphicon glyphicon-send"></span> E-mail
+                                </a>
+                                <a
+                                <?php if($obj->getSituacao() != 2){ ?> 
+                                    href="control/BoletoControl.php?action=baixarBoleto&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
+                                    <?php }else{?> disabled <?php } ?>
+                                    class="btn btn-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Baixar
+                                </a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+
+                <div id="abertos" class="tab-pane fade">
+            <input class="form-control input-lg" id="buscar2" alt="table3" placeholder="Pesquisar..." type="text">
+            <table class="table3 table table-hover table-inverse">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">Pagador</th>
+                        <th class="col-md-2">Nosso Número</th>
+                        <th class="col-md-1">Vencimento</th>
+                        <th class="col-md-5" colspan="5"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><?php
+                        $boletosAbertos = $bDao->listarBoletosAbertos();
+                        foreach ($boletosAbertos as $obj) {
+                            ?>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-5">
@@ -152,7 +204,8 @@ require_once 'menu_adm.php';
                         $boletosPagos = $bDao->listarBoletosPagos();
                         foreach ($boletosPagos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-2"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-2"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-5">
@@ -168,55 +221,6 @@ require_once 'menu_adm.php';
                                     <span class="glyphicon glyphicon-send"></span> E-mail
                                 </button>
                                 <a disabled class="btn btn-delete">
-                                    <span class="glyphicon glyphicon-remove"></span> Baixar
-                                </a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="abertos" class="tab-pane fade">
-            <input class="form-control input-lg" id="buscar2" alt="table3" placeholder="Pesquisar..." type="text">
-            <table class="table3 table table-hover table-inverse">
-                <thead>
-                    <tr>
-                        <th class="col-md-3">Pagador</th>
-                        <th class="col-md-2">Nosso Número</th>
-                        <th class="col-md-1">Vencimento</th>
-                        <th class="col-md-5" colspan="5"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><?php
-                        $boletosAbertos = $bDao->listarBoletosAbertos();
-                        foreach ($boletosAbertos as $obj) {
-                            ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
-                            <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
-                            <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
-                            <td class="col-md-5">
-                                <a class='btn btn-edit' target="_blank" href="control/BoletoControl.php?action=vizualizar&codigo=
-                                   <?php echo $obj->getCodigoBoleto() ?>">
-                                    <span class='glyphicon glyphicon-info-sign'></span> Visualizar
-                                </a>
-                                <button 
-                                <?php if($obj->getSituacao() != 2){ ?>
-                                    name="control/BoletoControl.php?action=gerar2Via&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
-                                    num="<?php echo $obj->getCodigoBoleto() ?>" data-toggle="modal" data-target="#modal2via"
-                                <<?php }else{?> disabled <?php } ?>        
-                                    class="btn btn-yes bt2via" >
-                                    <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
-                                </button>
-                                <a href="control/BoletoControl.php?action=enviarEmailBotao&codigo=<?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
-                                    <span class="glyphicon glyphicon-send"></span> E-mail
-                                </a>
-                                <a
-                                <?php if($obj->getSituacao() != 2){ ?> 
-                                    href="control/BoletoControl.php?action=baixarBoleto&codigo=<?php echo $obj->getCodigoBoleto() ?>" 
-                                    <?php }else{?> disabled <?php } ?>
-                                    class="btn btn-delete">
                                     <span class="glyphicon glyphicon-remove"></span> Baixar
                                 </a>
                             </td>
@@ -242,7 +246,8 @@ require_once 'menu_adm.php';
                         $boletosVencidos = $bDao->listarBoletosVencidos();
                         foreach ($boletosVencidos as $obj) {
                             ?>
-                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span><?php echo $obj->getCliente()->getNomeCliente() ?></td>
+                            <td class="busca col-md-4"><span class="color col-md-1 c-<?php echo $obj->getSituacao() ?>"></span>
+                                <?php echo "&nbsp".$obj->getCliente()->getNomeCliente() ?></td>
                             <td class="col-md-2"><?php echo $obj->getNossoNumero() ?></td>
                             <td class="col-md-1"><?php echo date("d/m/Y", strtotime($obj->getDataVencimento())); ?></td>
                             <td class="col-md-5">
