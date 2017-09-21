@@ -125,9 +125,17 @@ switch ($action) {
         $_SESSION["boleto"] = $boleto;
         if ($boletoDao->validaCampos($boleto)) {
             $codigo = $boletoDao->inserirBoleto($boleto);
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+            if($boleto->getBanco()->getCodigoBanco() == 748){
+                $_SESSION["msg_retorno"] = "Boleto gerado com sucesso!";
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+            }
+            else if($boleto->getBanco()->getCodigoBanco() == 502){
+                $_SESSION["msg_retorno"] = "Boleto gerado com sucesso!";
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_banespa.php");
+            }
             exit();
         } else {
+            $_SESSION["msg_retorno"] = "Falha ao gerar boleto!";
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_boleto.php");
             exit();
         }

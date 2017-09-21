@@ -20,7 +20,7 @@ class BancoDAO {
 
     public function listarBancos() {
         try {
-            $sql = "SELECT * FROM banco ORDER BY nomeBanco";
+            $sql = "SELECT * FROM banco WHERE id_banco = 748 OR id_banco = 502 ORDER BY nomeBanco ";
             $result = Database::conexao()->query($sql);
             $lista = $result->fetchAll(PDO::FETCH_ASSOC);
             $bancos = array();
