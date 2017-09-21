@@ -6,6 +6,9 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 session_start();
+if (($_SESSION["cliente"]) == null) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+}
 $mail = new PHPMailer(true);
 $mail->CharSet = 'UTF-8';
 

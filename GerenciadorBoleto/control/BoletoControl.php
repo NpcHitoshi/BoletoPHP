@@ -13,6 +13,9 @@ require_once BASE_DIR . "model" . DS . "Boleto.php";
 $db = new Database();
 $pdo = $db->conexao();
 session_start();
+if (($_SESSION["cliente"]) == null) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+}
 $action = $_GET["action"];
 $boletoDao = new BoletoDAO();
 $clienteDao = new ClienteDAO();

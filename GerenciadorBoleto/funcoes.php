@@ -11,6 +11,9 @@ define('COOKIELOCAL', str_replace('\\', '/', realpath('./')).'/'.$pasta_cookies)
 
 // inicia sessão
 @session_start();
+if (($_SESSION["cliente"]) == null) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+}
 
 // função para pegar o que interessa
 function pega_o_que_interessa($inicio,$fim,$total)

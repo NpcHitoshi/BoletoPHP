@@ -10,7 +10,8 @@ require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "model" . DS . "Boleto.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDao.php";
 session_start();
-if (($_SESSION["cliente"]) == null) {
+$usuario = $_SESSION["cliente"];
+if (($_SESSION["cliente"]) == null || $usuario->getTipoConta() == 0) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 ?>

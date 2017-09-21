@@ -13,6 +13,9 @@ require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 $db = new Database();
 $pdo = $db->conexao();
 session_start();
+if (($_SESSION["cliente"]) == null) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+}
 $action = $_GET["action"];
 
 switch ($action) {
