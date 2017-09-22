@@ -26,27 +26,27 @@ switch ($action) {
     case "editarDados":
         try {
             $eDao = new EnderecoDao();
-            $adminitrador->setNomeCliente(trim($_POST["nomeCliente"]));
-            $adminitrador->setDocumento(trim($_POST["documento"]));
-            $adminitrador->setEmail(trim($_POST["email"]));
-            $adminitrador->getEndereco()->setBairro(trim($_POST["bairro"]));
-            $adminitrador->getEndereco()->setCep(trim($_POST["cep"]));
-            $adminitrador->getEndereco()->setRua(preg_replace("/[0-9|]|,|\.\d+/", "", trim($_POST["rua"])));
-            $adminitrador->getEndereco()->setNumero(trim($_POST["numero"]));
-            $adminitrador->getEndereco()->setComplemento(trim($_POST["complemento"]));
+            $administrador->setNomeAdministrador(trim($_POST["nomeAdministrador"]));
+            $administrador->setDocumento(trim($_POST["documento"]));
+            $administrador->setEmail(trim($_POST["email"]));
+            $administrador->getEndereco()->setBairro(trim($_POST["bairro"]));
+            $administrador->getEndereco()->setCep(trim($_POST["cep"]));
+            $administrador->getEndereco()->setRua(preg_replace("/[0-9|]|,|\.\d+/", "", trim($_POST["rua"])));
+            $administrador->getEndereco()->setNumero(trim($_POST["numero"]));
+            $administrador->getEndereco()->setComplemento(trim($_POST["complemento"]));
             $cidade = $eDao->buscaCidadeNome(trim($_POST["cidade"]), trim($_POST["uf"]));
-            $cliente->getEndereco()->setCidade($cidade);
-            if ($cDao->validaCampos($adminitrador)) {
-                if ($cDao->editaAdministrador($Administrador)) {
+            $administrador->getEndereco()->setCidade($cidade);
+            if ($administradorDao->validaCampos($administrador)) {
+                if ($administradorDao->editaAdministrador($administrador)) {
                     $_SESSION["msg_retorno"] = "Dados atualizado com sucesso!";
                 } else {
                     $_SESSION["msg_retorno"] = "Falha ao atualizar dados!";
                 }
             } else {
                 $_SESSION["msg_retorno"] = "Dados inválidos. Preencha todos os campos corretamente!";
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . "control/ClienteControl.php?action=carrega_editar&codigo=" . $cliente->getCodigoCliente());
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes.php");
             }
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes.php");
             exit();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();

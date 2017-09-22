@@ -42,14 +42,16 @@ require_once 'menu_adm.php';
     <div id="tab-config" class="tab-content">
         <!-- Inicio Dados Empresa-->
         <div id="empresa" class="tab-pane fade in active">
-            <div class="col-md-6">
-                <h4 class="title">Dados Básicos</h4>
-                <div class="container-fluid">
-                    <form id="form-emp" action="control/ClienteControl.php?action=inserir" method="POST">
+            <form id="form-emp" action="control/AdministradorControl.php?action=editarDados" method="POST">
+                <div class="col-md-6">
+                    <h4 class="title">Dados Básicos</h4>
+                    <div class="container-fluid">
+
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="documento">Nº do documento:</label>
-                                <input id="documento" type="text" name="documento" class="form-control" placeholder="Nº do documento"/>
+                                <input id="documento" type="text" name="documento" class="form-control" placeholder="Nº do documento"
+                                       value="<?php echo $usuario->getDocumento() ?>"/>
                                 <div class="erro"></div>
                             </div>
                         </div>
@@ -66,7 +68,8 @@ require_once 'menu_adm.php';
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="documento">Nome / Razão Social:</label>
-                                <input id="nome" type="text" name="nomeCliente" class="form-control" placeholder="Nome / Razão Social"/>
+                                <input id="nome" type="text" name="nomeAdministrador" class="form-control" placeholder="Nome / Razão Social"
+                                       value="<?php echo $usuario->getNomeAdministrador() ?>"/>
                                 <div class="erro"></div>
                             </div>
                         </div>
@@ -74,149 +77,159 @@ require_once 'menu_adm.php';
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="email">E-mail:</label>
-                                <input id="email" type="text" name="email" class="form-control" placeholder="E-mail"/>
+                                <input id="email" type="text" name="email" class="form-control" placeholder="E-mail"
+                                       value="<?php echo $usuario->getEmail() ?>"/>
                                 <div class="erro"></div>
                             </div>
                         </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <h4 class="title">Endereço</h4>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label for="cep">CEP:</label>
-                            <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP"/>
-                            <div class="erro"></div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-8">
-                            <label for="rua">Rua:</label>
-                            <input id="rua" type="text" name="rua" class="form-control" placeholder="Rua"/>
-                            <div class="erro"></div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="numero">Número:</label>
-                            <input id="num" type="text" name="numero" class="form-control" placeholder="Número"/>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="uf">Estado:</label>
-                            <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado" readonly/>
-                            <div class="erro"></div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="cidade">Cidade:</label>
-                            <input id="cidade" type="text" name="cidade" class="form-control" placeholder="Cidade" readonly/>
-                            <div class="erro"></div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="bairro">Bairro:</label>
-                            <input id="bairro" type="text" name="bairro" class="form-control" placeholder="Bairro"/>
-                            <div class="erro"></div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="complemento">Complemento:</label>
-                            <input id="complemento" type="text" name="complemento" class="form-control" placeholder="Complemento"/>
-                            <div class="erro"></div>
-                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="cadastrar" class="col-md-12">
-                <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
-            </div>
-            </form>
-        </div>
-        <!-- Fim Dados Empresa-->
-        <!-- Inicio Dados Bancários-->
-        <div id="banco" class="tab-pane fade">
-            <div class="col-md-12">
-                <form id="form-banco" action="control/ClienteControl.php?action=inserir" method="POST">
-                    <h4 class="title">Dados Básicos</h4>
-                    <div class="form-group col-md-12">
-                        <label for="cliente">Cliente:</label>
-                        <select id="banco" name="codigoBanco" class="js-example-basic-single form-control">
-                            <?php
-                            $bDao = new BancoDAO();
-                            $bancos[] = new Banco();
-                            $bancos = $bDao->listarbancos();
-                            foreach ($bancos as $objBanco) {
-                                ?>
-                                <option value="<?php echo $objBanco->getCodigoBanco() ?>"><?php echo $objBanco->getNomeBanco() ?></option>
-                            <?php } ?>
-                        </select>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="agencia">Agência:</label>
-                        <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"/>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="conta">Conta-Corrente:</label>
-                        <input id="conta" type="text" name="conta" class="form-control" placeholder="Conta-Corrente"/>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label class="gasparzinho" for="dv">sas</label>
-                        <input id="dv" type="text" name="dv" class="form-control" placeholder="DV"/>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="juros">Juros:</label>
-                        <input id="juros" type="text" name="juros" class="form-control" placeholder="Juros"/>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="multa">Multa:</label>
-                        <input id="multa" type="text" name="multa" class="form-control" placeholder="Multa"/>
-                        <div class="erro"></div>
-                    </div>
-            </div>
-            <div id="cadastrar" class="col-md-12">
-                <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
-            </div>
-            </form>
-        </div>
-        <!-- Fim Dados Bancários -->
-        <!-- Inicio Senha -->
-        <div id="senha" class="tab-pane fade">
-            <div class="col-md-12">
-                <form id="form-senha" action="control/AdministradorControl.php?action=editarSenha" method="POST">
-                    <h4 class="title">Dados Básicos</h4>
-                    <div class="form-group col-md-4">
-                        <label for="senhaAtual">Senha Atual:</label>
-                        <input id="senhaAtual" type="password" name="senhaAtual" class="form-control" placeholder="Senha Atual"/>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="novaSenha">Nova Senha:</label>
-                        <input id="novaSenha" type="password" name="novaSenha" class="form-control" placeholder="Nova Senha"/>
-                        <div class="erro"></div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="confirmaSenha">Confirmar Senha:</label>
-                        <input id="confirmaSenha" type="password" name="confirmaSenha" class="form-control" placeholder="Confirmar Senha"/>
-                        <div class="erro"></div>
-                    </div>
+                <div class="col-md-6">
+                    <h4 class="title">Endereço</h4>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="cep">CEP:</label>
+                                <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP"
+                                       value="<?php echo $usuario->getEndereco()->getCep() ?>"/>
+                                <div class="erro"></div>
+                            </div>
+                        </div>
 
-                    <div id="cadastrar" class="col-md-12">
-                        <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label for="rua">Rua:</label>
+                                <input id="rua" type="text" name="rua" class="form-control" placeholder="Rua"
+                                       value="<?php echo $usuario->getEndereco()->getRua() ?>"/>
+                                <div class="erro"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="numero">Número:</label>
+                                <input id="num" type="text" name="numero" class="form-control" placeholder="Número"
+                                       value="<?php echo $usuario->getEndereco()->getNumero() ?>"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="uf">Estado:</label>
+                                <input id="estado" type="text" name="uf" class="form-control" placeholder="Estado" readonly
+                                       value="<?php echo $usuario->getEndereco()->getCidade()->getEstado()->getUF() ?>"/>
+                                <div class="erro"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cidade">Cidade:</label>
+                                <input id="cidade" type="text" name="cidade" class="form-control" placeholder="Cidade" readonly
+                                       value="<?php echo $usuario->getEndereco()->getCidade()->getNomecidade() ?>"/>
+                                <div class="erro"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="bairro">Bairro:</label>
+                                <input id="bairro" type="text" name="bairro" class="form-control" placeholder="Bairro"
+                                       value="<?php echo $usuario->getEndereco()->getBairro() ?>"/>
+                                <div class="erro"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="complemento">Complemento:</label>
+                                <input id="complemento" type="text" name="complemento" class="form-control" placeholder="Complemento"
+                                       value="<?php echo $usuario->getEndereco()->getComplemento() ?>"/>
+                                <div class="erro"></div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div id="cadastrar" class="col-md-12">
+                    <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
+                </div>
+            </form>
         </div>
-        <!-- Fim Senha-->
-        <!-- Fim Painel Abas-->
     </div>
+    <!-- Fim Dados Empresa-->
+    <!-- Inicio Dados Bancários-->
+    <div id="banco" class="tab-pane fade">
+        <div class="col-md-12">
+            <form id="form-banco" action="control/ClienteControl.php?action=editarAdministrador" method="POST">
+                <h4 class="title">Dados Básicos</h4>
+                <div class="form-group col-md-12">
+                    <label for="cliente">Cliente:</label>
+                    <select id="banco" name="codigoBanco" class="js-example-basic-single form-control">
+                        <?php
+                        $bDao = new BancoDAO();
+                        $bancos[] = new Banco();
+                        $bancos = $bDao->listarbancos();
+                        foreach ($bancos as $objBanco) {
+                            ?>
+                            <option value="<?php echo $objBanco->getCodigoBanco() ?>"><?php echo $objBanco->getNomeBanco() ?></option>
+                        <?php } ?>
+                    </select>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="agencia">Agência:</label>
+                    <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"/>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="conta">Conta-Corrente:</label>
+                    <input id="conta" type="text" name="conta" class="form-control" placeholder="Conta-Corrente"/>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="gasparzinho" for="dv">sas</label>
+                    <input id="dv" type="text" name="dv" class="form-control" placeholder="DV"/>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="juros">Juros:</label>
+                    <input id="juros" type="text" name="juros" class="form-control" placeholder="Juros"/>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="multa">Multa:</label>
+                    <input id="multa" type="text" name="multa" class="form-control" placeholder="Multa"/>
+                    <div class="erro"></div>
+                </div>
+
+                <div id="cadastrar" class="col-md-12">
+                    <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fim Dados Bancários -->
+    <!-- Inicio Senha -->
+    <div id="senha" class="tab-pane fade">
+        <div class="col-md-12">
+            <form id="form-senha" action="control/AdministradorControl.php?action=editarSenha" method="POST">
+                <h4 class="title">Dados Básicos</h4>
+                <div class="form-group col-md-4">
+                    <label for="senhaAtual">Senha Atual:</label>
+                    <input id="senhaAtual" type="password" name="senhaAtual" class="form-control" placeholder="Senha Atual"/>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="novaSenha">Nova Senha:</label>
+                    <input id="novaSenha" type="password" name="novaSenha" class="form-control" placeholder="Nova Senha"/>
+                    <div class="erro"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="confirmaSenha">Confirmar Senha:</label>
+                    <input id="confirmaSenha" type="password" name="confirmaSenha" class="form-control" placeholder="Confirmar Senha"/>
+                    <div class="erro"></div>
+                </div>
+
+                <div id="cadastrar" class="col-md-12">
+                    <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fim Senha-->
+    <!-- Fim Painel Abas-->
+</div>
 </div>
 </body>
 <script src="assets/js/mascara_cliente.js" type="text/javascript"></script>

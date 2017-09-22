@@ -55,7 +55,7 @@ class AdministradorDAO {
 
     public function buscarAdministrador($codigo) {
         try {
-            $sql = "SELECT * FROM cliente WHERE id_adminitrador = :codigo";
+            $sql = "SELECT * FROM administrador WHERE id_adminitrador = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
@@ -87,7 +87,7 @@ class AdministradorDAO {
 			e.numero = :numero, e.bairro = UPPER(:bairro), e.complemento = UPPER(:complemento)
 			WHERE a.id_administrador = :codigoAdministrador";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":codigoAdminitrador", $administrador->getCodigoAdministrador());
+            $stmt->bindValue(":codigoAdministrador", $administrador->getCodigoAdministrador());
             $stmt->bindValue(":nomeAdministrador", $administrador->getNomeAdministrador());
             $stmt->bindValue(":documento", $administrador->getDocumento());
             $stmt->bindValue(":email", $administrador->getEmail());
