@@ -8,7 +8,7 @@
 
 // inicia sessão
 @session_start();
-if (($_SESSION["cliente"]) == null) {
+if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 //	define o local onde serão guardados os cookies de sessão , path real e completo

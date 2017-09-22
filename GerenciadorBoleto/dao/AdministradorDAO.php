@@ -44,7 +44,6 @@ class AdministradorDAO {
             $stmt->execute();
             $administrador = $this->populaAdministrador($stmt->fetch(PDO::FETCH_ASSOC));
             if (password_verify($senha, $administrador->getSenha())) {
-                $administrador->setSenha("");
                 return $administrador;
             } else {
                 return new Administrador();
@@ -68,12 +67,13 @@ class AdministradorDAO {
 
     public function editaSenha($administrador) {
         try {
-            $sql = "UPDATE administrador SET senha = :senha WHERE id_adminitrador = :codigo";
+            $sql = "UPDATE administrador SET senha = :senha WHERE id_administrador = :codigo";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":senha", $administrador->getSenha());
+            $senha = $administrador->getSenha();
+            $hash = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt->bindValue(":senha", $hash);
             $stmt->bindValue(":codigo", $administrador->getCodigoAdministrador());
             $stmt->execute();
-            $administrador->setSenha("");
             return $administrador;
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
@@ -87,8 +87,8 @@ class AdministradorDAO {
 			e.numero = :numero, e.bairro = UPPER(:bairro), e.complemento = UPPER(:complemento)
 			WHERE a.id_administrador = :codigoAdministrador";
             $stmt = Database::conexao()->prepare($sql);
-            $stmt->bindValue(":codigoCliente", $administrador->getCodigoAdministrador());
-            $stmt->bindValue(":nomeCliente", $administrador->getNomeAdministrador());
+            $stmt->bindValue(":codigoAdminitrador", $administrador->getCodigoAdministrador());
+            $stmt->bindValue(":nomeAdministrador", $administrador->getNomeAdministrador());
             $stmt->bindValue(":documento", $administrador->getDocumento());
             $stmt->bindValue(":email", $administrador->getEmail());
             $stmt->bindValue(":id_cidade", $administrador->getEndereco()->getCidade()->getCodigoCidade());

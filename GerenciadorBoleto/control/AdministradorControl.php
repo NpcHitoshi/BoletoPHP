@@ -55,21 +55,24 @@ switch ($action) {
 
     case "editarSenha":
         try {
-            if (password_verify(trim($_POST["senhaAntiga"]), $adminitrador->getSenha())) {
-                $novaSenha = (trim($_POST["novaSenha"]));
-                $confirmaSenha = (trim($_POST["confirmaSenha"]));
+            var_dump($administrador);
+            if (password_verify($_POST["senhaAtual"], $administrador->getSenha())) {
+                $novaSenha = $_POST["novaSenha"];
+                $confirmaSenha = $_POST["confirmaSenha"];
                 if ($novaSenha == $confirmaSenha) {
-                    $administradorDao->editaAdministrador($administrador);
-                    $_SESSION["msg_retorno"] = "Dados atualizados com sucesso";
+                    $administrador->setSenha($novaSenha);
+                    $administradorDao->editaSenha($administrador);
+                    $_SESSION["msg_retorno"] = "Senha atualizada com sucesso!";
                     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes.php");
                 } else {
-                    $_SESSION["msg_retorno"] = "As senhas não se correspondem";
+                    $_SESSION["msg_retorno"] = "Confirmação de senha errada!";
                     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes.php");
                 }
+            } else {
+                $_SESSION["msg_retorno"] = "Senha atual incorreta!";
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes.php");
+                exit();
             }
-            $_SESSION["msg_retorno"] = "Senha antiga não corresponde";
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes.php");
-            exit();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
