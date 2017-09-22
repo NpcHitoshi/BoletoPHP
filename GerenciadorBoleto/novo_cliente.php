@@ -5,11 +5,13 @@ if (!defined("DS")) {
 if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(__FILE__) . DS);
 }
+require_once BASE_DIR . "model" . DS . "Administrador.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 session_start();
-$usuario = $_SESSION["cliente"];
-if (($_SESSION["cliente"]) == null || $usuario->getTipoConta() == 0) {
+$usuario = $_SESSION["usuario"];
+if ($usuario == null || $usuario->getTipoConta() == 0) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 include("getcaptcha.php");

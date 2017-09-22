@@ -30,6 +30,12 @@ class AdministradorDAO {
         return $administrador;
     }
 
+    public function validaCampos($administrador) {
+        return $administrador->getDocumento() != null && $administrador->getNomeAdministrador() != null && $administrador->getEmail() &&
+                $administrador->getEndereco()->getCep() != null && $administrador->getEndereco()->getCidade()->getNomeCidade() != null &&
+                $administrador->getEndereco()->getCidade()->getEstado()->getUf() != null;
+    }
+
     public function autenticaAdministrador($email, $senha) {
         try {
             $sql = "SELECT * FROM administrador WHERE email = :email";
@@ -43,6 +49,55 @@ class AdministradorDAO {
             } else {
                 return new Administrador();
             }
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function buscarAdministrador($codigo) {
+        try {
+            $sql = "SELECT * FROM cliente WHERE id_adminitrador = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $codigo);
+            $stmt->execute();
+            return $this->populaAdministrador($stmt->fetch(PDO::FETCH_ASSOC));
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function editaSenha($administrador) {
+        try {
+            $sql = "UPDATE administrador SET senha = :senha WHERE id_adminitrador = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":senha", $administrador->getSenha());
+            $stmt->bindValue(":codigo", $administrador->getCodigoAdministrador());
+            $stmt->execute();
+            $administrador->setSenha("");
+            return $administrador;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function editaAdministrador($administrador) {
+        try {
+            $sql = "UPDATE administrador a, endereco e SET a.nomeAdministrador = UPPER(:nomeAdministrador), a.email = 
+			UPPER(:email), a.documento = :documento, e.id_cidade = :id_cidade, e.cep = :cep, e.rua = UPPER(:rua),
+			e.numero = :numero, e.bairro = UPPER(:bairro), e.complemento = UPPER(:complemento)
+			WHERE a.id_administrador = :codigoAdministrador";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigoCliente", $administrador->getCodigoAdministrador());
+            $stmt->bindValue(":nomeCliente", $administrador->getNomeAdministrador());
+            $stmt->bindValue(":documento", $administrador->getDocumento());
+            $stmt->bindValue(":email", $administrador->getEmail());
+            $stmt->bindValue(":id_cidade", $administrador->getEndereco()->getCidade()->getCodigoCidade());
+            $stmt->bindValue(":cep", $administrador->getEndereco()->getCep());
+            $stmt->bindValue(":rua", $administrador->getEndereco()->getRua());
+            $stmt->bindValue(":numero", $administrador->getEndereco()->getNumero());
+            $stmt->bindValue(":bairro", $administrador->getEndereco()->getBairro());
+            $stmt->bindValue(":complemento", $administrador->getEndereco()->getComplemento());
+            return $stmt->execute();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }

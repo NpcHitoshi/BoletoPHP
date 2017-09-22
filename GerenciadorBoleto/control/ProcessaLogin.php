@@ -29,12 +29,12 @@ switch ($action) {
                 $administrador = $administradorDAO->autenticaAdministrador($email, $senha);
             }
             if ($cliente->getCodigoCliente() != null) {
-                $_SESSION["cliente"] = $cliente;
+                $_SESSION["usuario"] = $cliente;
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/meu_boletos.php");
                 exit;
             }
             if ($administrador->getCodigoAdministrador() != null) {
-                $_SESSION["cliente"] = $administrador;
+                $_SESSION["usuario"] = $administrador;
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
                 exit;
             } else {

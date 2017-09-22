@@ -11,7 +11,7 @@ define('COOKIELOCAL', str_replace('\\', '/', realpath('./')).'/'.$pasta_cookies)
 
 // inicia sessão
 @session_start();
-if (($_SESSION["cliente"]) == null) {
+if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 
