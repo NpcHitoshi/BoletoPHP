@@ -87,9 +87,6 @@ $(document).ready(function(){
 			$("#erro-submit").html("Não é possível cadastrar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();
 		}
-		else{
-			cadastrar();
-		}
 		flag1 = flag2 = flag3 = flag4 = flag5 = flag6 = flag7 = flag8 = flag9 = flag10 = false; 	
 	});
 
@@ -102,21 +99,72 @@ $(document).ready(function(){
 			retiraErro($("#agencia"));
 		}
 		if($("#conta").val().length < 1){
-			flag1 = true;
+			flag2 = true;
 			estaVazio($("#conta"));
 		}else{
-			flag1= false;
+			flag2= false;
 			retiraErro($("#conta"));
 		}
 		if($("#dv").val().length < 1){
-			flag1 = true;
+			flag3 = true;
 			estaVazio($("#dv"));
 		}else{
-			flag1= false;
+			flag3= false;
 			retiraErro($("#dv"));
 		}
+		if($("#juros").val().length < 1){
+			flag4 = true;
+			estaVazio($("#juros"));
+		}else{
+			flag4= false;
+			retiraErro($("#juros"));
+		}
+		if($("#multa").val().length < 1){
+			flag5 = true;
+			estaVazio($("#multa"));
+		}else{
+			flag5= false;
+			retiraErro($("#multa"));
+		}
+		if(flag1 || flag2 || flag3 || flag4 || flag5){
+			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
+			$("#erro-submit").html("Não é possível cadastrar! Conserte os erros de preenchimento antes!");
+			e.preventDefault();
+		}
+		flag1 = flag2 = flag3 = flag4 = flag5 = false;
+	});
 
-
+	$("#form-senha").submit(function(e){
+		if($("#senhaAtual").val().length < 1){
+			flag1 = true;
+			estaVazio($("#senhaAtual"));
+		}else{
+			flag1= false;
+			retiraErro($("#senhaAtual"));
+		}
+		if($("#novaSenha").val().length < 1){
+			flag2 = true;
+			estaVazio($("#novaSenha"));
+		}else{
+			flag2= false;
+			retiraErro($("#novaSenha"));
+		}
+		if($("#confirmaSenha").val().length < 1){
+			flag3 = true;
+			estaVazio($("#confirmaSenha"));
+		}else if(novaSenha($("#confirmaSenha"))){
+			flag3 = true;
+			erroSenha();
+		}else{
+			flag3= false;
+			retiraErro($("#confirmaSenha"));
+		}
+		if(flag1 || flag2 || flag3){
+			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
+			$("#erro-submit").html("Não é possível cadastrar! Conserte os erros de preenchimento antes!");
+			e.preventDefault();
+		}
+		flag1 = flag2 = flag3 = false;
 	});
 
 	
@@ -182,6 +230,58 @@ $("#bairro").focusout(function(){
 	else
 		retiraErro(this);	
 });
+$("#agencia").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#conta").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#dv").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#juros").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#multa").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#senhaAtual").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#novaSenha").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else
+		retiraErro(this);	
+});
+$("#confirmaSenha").focusout(function(){
+	if($(this).val().length < 1)
+		estaVazio(this);
+	else if(novaSenha()){
+		erroSenha(this);
+	}else
+	retiraErro(this);	
+});
+
+
 
 
 
@@ -202,6 +302,19 @@ function retiraErro(campo){
 	var erro = $(campo).next();
 	erro.attr("class", "");
 	erro.html("");
+}
+
+function novaSenha(){
+	return $("#novaSenha").val() != $("#confirmaSenha").val();
+}
+
+function erroSenha(campo){
+	var pai = $(campo).closest("div");	
+	pai.attr("class", pai.attr("class")+" has-error");
+	var erro = $(campo).next();
+	erro.attr("class", "alert alert-danger");
+	erro.html("As senhas não são iguais!");
+	flag_error = true;
 }
 
 function valida_cnpj (cnpj) {
