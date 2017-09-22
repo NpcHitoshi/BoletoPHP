@@ -150,7 +150,10 @@ switch ($action) {
         $boleto = $boletoDao->buscarBoleto($codigo);
         $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
         $_SESSION["boleto"] = $boleto;
-        header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+        if($boleto->getBanco()->getCodigoBanco() == 748)
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
+        else if($boleto->getBanco()->getCodigoBanco() == 502)
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_banespa.php");
         exit();
         break;
 

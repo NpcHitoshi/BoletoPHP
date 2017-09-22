@@ -121,6 +121,11 @@ body {
     overflow: auto;
 }
 
+#tab-config{
+    height: auto !important;
+    overflow: auto;
+}
+
 td{
     vertical-align: middle !important;
     border-bottom: 1px solid #bbbcbf;

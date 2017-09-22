@@ -32,12 +32,22 @@ $(document).ready(function(){
 			flag5= true;
 			estaVazio($("#vencimento"));
 		}
-		else{
+		else if(validaVencimento()){
+			erroVencimento(this);		
+		}else{
 			flag5 = false;
-			retiraErro($("#vencimento"));		
+			retiraErro($("#vencimento"));
+		}
+		if(($("#juros")).val().length < 1){
+			flag6 = true;
+			estaVazio($("#juros"));
+		}
+		else {
+			flag6 = false;
+			retiraErro($("#juros"));	
 		}
 		//Cancela submit caso haja erros.
-		if(flag1 || flag2 || flag4 || flag5){
+		if(flag1 || flag2 || flag4 || flag5 || flag6){
 			$("#erro-submit").attr("class", $("#erro-submit").attr("class")+" alert alert-danger");
 			$("#erro-submit").html("Não é possível gerar! Conserte os erros de preenchimento antes!");
 			e.preventDefault();
@@ -53,6 +63,8 @@ $(document).ready(function(){
 $("#vencimento").focusout(function(){
 	if(!Date.parse($(this).val()))
 		estaVazio(this);
+	else if(validaVencimento())
+		erroVencimento(this);
 	else
 		retiraErro(this);	
 });
@@ -90,6 +102,15 @@ function estaVazio(campo){
 	flag_error = true;
 }
 
+function erroVencimento(campo){
+	var pai = $(campo).closest("div");	
+	pai.attr("class", pai.attr("class")+" has-error");
+	var erro = $(campo).next();
+	erro.attr("class", "alert alert-danger");
+	erro.html("Vencimento Inválido!");
+	flag_error = true;
+}
+
 function retiraErro(campo){
 	var pai = $(campo).closest("div");	
 	var classe = pai.attr("class");
@@ -98,6 +119,22 @@ function retiraErro(campo){
 	var erro = $(campo).next();
 	erro.attr("class", "");
 	erro.html("");
+}
+
+function validaVencimento(){
+	var atual = new Date();
+	var dd = atual.getDate();
+	var mm = atual.getMonth()+1; //January is 0!
+	var yyyy = atual.getFullYear();
+
+	if(dd<10) {
+		dd = '0'+dd
+	} 
+	if(mm<10) {
+		mm = '0'+mm
+	} 
+	atual = yyyy + '-' + mm + '-' + dd;
+	return Date.parse($("#vencimento").val()) < Date.parse(atual);
 }
 
 function email(){

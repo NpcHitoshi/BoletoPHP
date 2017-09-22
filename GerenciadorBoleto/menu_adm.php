@@ -26,6 +26,11 @@
                         echo $clientes_active;
                     }
                     ?>"><a href="clientes.php">Clientes</a></li>
+                    <li class="<?php
+                    if (isset($configuracoes_active)) {
+                        echo $configuracoes_active;
+                    }
+                    ?>"><a href="configuracoes.php">Configurações</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <div class="navbar-header">
