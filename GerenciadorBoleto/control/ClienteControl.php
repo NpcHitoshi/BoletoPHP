@@ -1,28 +1,32 @@
 <?php
-
+//Define cosntantes para caminhos de importações
 if (!defined("DS")) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
 }
-
+//Importa arquivos necessários
 require_once BASE_DIR . "dao" . DS . "DataBase.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDao.php";
-
+//Conecta ao DB
 $db = new Database();
 $pdo = $db->conexao();
 session_start();
+//Verifica se está logado
 if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
+//Captura action e instância DAO's
 $action = $_GET["action"];
 $cDao = new ClienteDAO();
 $cliente = new Cliente();
 
 switch ($action) {
+    //Insere cliente no DB
     case "inserir":
         try {
+            //Pega dados do formulário
             $cliente->setNomeCliente(trim($_POST["nomeCliente"]));
             $cliente->setDocumento(trim($_POST["documento"]));
             $cliente->setEmail(trim($_POST["email"]));
@@ -38,11 +42,15 @@ switch ($action) {
             $endereco->setCidade($cidade);
             $endereco->setComplemento(trim($_POST["complemento"]));
             $endereco->setNumero(trim($_POST["numero"]));
+            //Deixa somente letras na Rua
             $endereco->setRua(preg_replace("/[0-9|]|,|\.\d+/", "", trim($_POST["rua"])));
             $cliente->setEndereco($endereco);
+            //Valida campos do cliente
             if ($cDao->validaCampos($cliente)) {
+                //Insere cliente
                 $codigo = $cDao->inserirCliente($cliente);
                 if($codigo != null){
+                    //Envia e-mail de cadastro caso sucesso.
                     $cliente->setCodigoCliente($codigo);
                     $_SESSION["msg_retorno"] = "Cliente gravado com sucesso!";
                     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/ClienteControl.php"
@@ -50,11 +58,13 @@ switch ($action) {
                     exit();
                 }
                 else{
+                    //Mensagem de falha caso erro.
                     $_SESSION["msg_retorno"] = "Falha ao gravar cliente!";
                     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
                     exit();
                 }
             } else {
+                //Mensagem de dados incorretos caso falhe validação de campos.
                 $_SESSION["msg_retorno"] = "Dados incorretos! Preencha todos os campos corretamente.";
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_cliente.php");
                 exit();
@@ -63,7 +73,7 @@ switch ($action) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
-
+    //Carrega dados da página Editar Cliente.    
     case "carrega_editar":
         try {
             $codigo = $_GET["codigo"];
@@ -75,9 +85,10 @@ switch ($action) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
-
+    //Edita dados do cliente.    
     case "editar":
         try {
+            //Pega dados do formulário.
             $eDao = new EnderecoDao();
             $cliente = $_SESSION["usuarioCliente"];
             $cliente->setNomeCliente(trim($_POST["nomeCliente"]));
@@ -89,7 +100,9 @@ switch ($action) {
             $cliente->getEndereco()->setComplemento(trim($_POST["complemento"]));
             $cidade = $eDao->buscaCidadeNome(trim($_POST["cidade"]), trim($_POST["uf"]));
             $cliente->getEndereco()->setCidade($cidade);
+            //Valida campos
             if ($cDao->validaCamposEditar($cliente)) {
+                //Atualiza cliente
                 if($cDao->editaCliente($cliente))
                     $_SESSION["msg_retorno"] = "Cliente atualizado com sucesso!";
                 else
@@ -106,7 +119,7 @@ switch ($action) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
-
+    //Desativa cliente    
     case "desativar":
         try {
             $codigo = $_GET["codigo"];
@@ -117,7 +130,7 @@ switch ($action) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
-
+    //Ativa cliente    
     case "ativar":
         try {
             $codigo = $_GET["codigo"];
@@ -128,7 +141,7 @@ switch ($action) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
-
+    //Envia e-mail após cadastro.    
     case "emailCadastro":
         try {
             $codigo = $_GET["cod"];
@@ -146,7 +159,7 @@ switch ($action) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;
-
+    //Envia e-mail Esqueci minha senha.    
     case "emailSenha":
         try {
             $documento = $_POST["documento"];
