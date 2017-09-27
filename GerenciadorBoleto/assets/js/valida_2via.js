@@ -1,3 +1,4 @@
+//Validações 2 via boleto.
 $(document).ready(function(){ 
 	//Validações ao tentar Submit
 	$("#form-2via").submit(function(e){
@@ -27,9 +28,7 @@ $(document).ready(function(){
 		}
 		else{
 			//Recarrega página após gerar boleto
-			console.log("Foooi");
 			window.location.replace("https://stackoverflow.com/questions/503093/how-to-redirect-to-another-webpage");
-			console.log("Foooi2");
 		}	
 	});
 

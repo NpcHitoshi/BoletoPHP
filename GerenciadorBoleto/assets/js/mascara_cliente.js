@@ -1,3 +1,4 @@
+//Máscara CNPJ e CPF.
 $(document).ready(function(){
 	$("#documento").keypress(function(){
 			v_obj=this;

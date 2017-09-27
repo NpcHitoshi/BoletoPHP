@@ -1,3 +1,4 @@
+//Validações Novo Boleto
 $(document).ready(function(){ 
 	//Validações ao tentar Submit
 	$("form").submit(function(e){

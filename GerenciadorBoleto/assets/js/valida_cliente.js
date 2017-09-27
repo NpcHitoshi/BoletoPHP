@@ -1,3 +1,4 @@
+//Validações CRUD Cliente
 $(document).ready(function(){ 
 	//Validações ao tentar Submit
 	$("form").submit(function(e){
@@ -6,7 +7,7 @@ $(document).ready(function(){
 			flag1 = true;
 			estaVazio($("#documento"));
 		}
-		else if(valida_cnpj($("#documento").val())){
+		else if(valida_cnpj($("#documento").val()) && $("#documento").val().length < 16){
 			flag1 = false;
 			retiraErro($("#documento"));	
 		}

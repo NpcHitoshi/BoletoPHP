@@ -1,3 +1,4 @@
+//Executa requisição AJAX para recarregar o Captcha.
 $(document).ready(function(){
 	$.ajax({
 				type: 'GET',

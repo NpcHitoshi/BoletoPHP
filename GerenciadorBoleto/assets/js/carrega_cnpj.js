@@ -1,3 +1,5 @@
+//Pega dados da empresa a partir do CNPJ.
+//Prepara JQuery para execução.
 $(document).ready(function(){
 	//Função acionada quando campo captcha perde foco.
 	$("#captcha").focusout(function(){
@@ -14,11 +16,13 @@ $(document).ready(function(){
 				var vetor = viravet(returnedData);
 				//Verifica se achou dados.
 				if(vetor[vetor.length-1].indexOf("OK") < 0){
+					//Caso não ache, recarrega a tela após 5 segundos.
 					setTimeout(
 						function(){}, 5000);
 					window.location.reload();
 					setaplaceholder(3);
 				} else{
+					//Seta campos caso dê certo.
 					setaCampos(vetor);
 					setaplaceholder(1);
 				}

@@ -1,3 +1,4 @@
+//Máscara valor monetário.
 $(document).ready(function(){
 	$("#valor").keypress(function(){
 		v_obj=this;

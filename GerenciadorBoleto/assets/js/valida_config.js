@@ -1,3 +1,4 @@
+//Validações COnfigurações.
 $(document).ready(function(){ 
 	//Validações ao tentar Submit
 	$("#form-emp").submit(function(e){

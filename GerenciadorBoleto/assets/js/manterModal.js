@@ -1,3 +1,4 @@
+//Carrega links dinamicamente nos modais.
 $(document).ready(function(){
 	$(".btexcluir").click(function(){
 		link = $(this).attr("name");

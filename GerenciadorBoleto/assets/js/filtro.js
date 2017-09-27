@@ -1,3 +1,4 @@
+//JQuery responsável pelos campos de busca do sistema. - NÃO MEXA!!!!
 $(function(){
     $("#buscar").keyup(function(){
         //pega o css da tabela 
