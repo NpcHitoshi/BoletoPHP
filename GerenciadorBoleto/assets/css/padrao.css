@@ -1,3 +1,4 @@
+/*Importa fontes para uso no sistema*/
 @import url(https://fonts.googleapis.com/css?family=Oswald);
 @import url('https://fonts.googleapis.com/css?family=Passion+One|Roboto|Teko');
 
@@ -27,17 +28,17 @@ body {
                           supported by Chrome and Opera */
     cursor:default
 }
-
+/*Ajuste distânca botões barra de navegação*/
 .navbar a{
     color: black;
     margin-left: 0.5px;
     margin-right: 0.5px;
 }
-
+/*Cor hover botões*/
 .navbar a:hover{
     background-color: #ff8d30 !important;
 }
-
+/*Cor active botões*/
 .navbar .active a{
     background-color: #ff8d30;
 }
@@ -47,48 +48,48 @@ body {
     font-family: "Oswald", sans-serif;
     border-bottom: 1px solid #bbbcbf;
 }
-
+/*CSS botão padrão*/
 .btn-default{
     background-color: #ff8d30;
     border-radius: 0px;
     font-family: 'Passion One', cursive;
     font-size: medium;
 }
-
+/*CSS botões tabela*/
 .btn-edit, .btn-delete, .btn-yes, .btn-email{
     border-radius: 0px;
     font-family: 'Passion One', cursive;
     margin-left: 2px;
 }
-
+/*Cor botão Editar*/
 .btn-edit{
     background-color: #5998ff;
 }
-
+/*Cor botão Editar em hover*/
 .btn-edit:hover{
     background-color: #d1e2ff;
 }
-
+/*Cor botão Excluir*/
 .btn-delete{
     background-color: #fc3737;
 }
-
+/*Cor botão Excluir em hover*/
 .btn-delete:hover{
     background-color: #fc7171;
 }
-
+/*Cor botão Ativar*/
 .btn-yes{
     background-color: #11c401;
 }
-
+/*Cor botão Ativar em hover*/
 .btn-yes:hover{
     background-color: #8fd689;
 }
-
+/*Cor botão Enviar E-mail*/
 .btn-email{
     background-color: #fcd62d;
 }
-
+/*Cor botão Enviar E-mail em hover*/
 .btn-email:hover{
     background-color: #f7e7a3;
 }
@@ -120,23 +121,24 @@ body {
     height: 350px;
     overflow: auto;
 }
-
+/*CSS painéis*/
 #tab-config{
     height: auto !important;
     overflow: auto;
 }
-
+/*CSS linhas da tabela*/
 td{
     vertical-align: middle !important;
     border-bottom: 1px solid #bbbcbf;
 }
 
-/*Modal*/
+/*Conteúdo Modal*/
 .modal-content{
     border-radius: 0px;
     font-family: 'Roboto', sans-serif;
 }
 
+/*Cabeçalho Modal*/
 .modal-header{
     background-color: #ff8d30;
 }
@@ -146,17 +148,18 @@ td{
     visibility: hidden;
 }
 
+/*Cor padrão dos links*/
 a{
     color: #333;
 }
-
+/*Mensagens de erro*/
 .alert{
     margin-top: 2px !important;
     margin-bottom: 0px !important;
     padding: 5px;
     border-radius: 0px;
 }
-
+/*Mensagens de retorno*/
 #mensagem{
     font-size: small;
     padding: 5px;

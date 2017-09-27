@@ -1,3 +1,4 @@
+/*Div legenda*/
 #legenda{
     border: 1px solid #bbbcbf;
     margin-top: 1%;
@@ -8,7 +9,7 @@
     font-family: 'Passion One', cursive;
     font-size: medium;
 }
-
+/*Quadrados coloridos*/
 .color{
     height: 20px;
     width: 20px;
@@ -25,7 +26,7 @@
 .c-3{
     background-color: #ed6f6f;
 }
-
+/*Tamanho botões tabela*/
 .btn-edit, .btn-delete, .btn-yes, .btn-email{
     width: 100px !important;
 }
