@@ -10,6 +10,7 @@ if (!defined("BASE_DIR")) {
 require_once BASE_DIR . "model" . DS . "Administrador.php";
 require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "EnderecoDAO.php";
+require_once BASE_DIR . "dao" . DS . "BancoDAO.php";
 
 $db = new Database();
 $pdo = $db->conexao();
@@ -26,14 +27,34 @@ class AdministradorDAO {
         $administrador->setTipoConta($row['tipo_conta']);
         $eDao = new EnderecoDAO();
         $administrador->setEndereco($eDao->buscaEndereco($row['id_endereco']));
-        $administrador->setDadosBancario(1);
+        $administrador->setDadosBancario($this->buscaDadosBancarios($row['id_administrador']));
         return $administrador;
+    }
+
+    private function populaDadosBancario($row) {
+        $dadosBancario = new dadosBancario();
+        $dadosBancario->setCodigoDadosBancario($row['id_dadosBancario']);
+        $dadosBancario->setCodigoAdministrador($row['id_administrador']);
+        $bDao = new BancoDao();
+        $dadosBancario->setBanco($bDao->buscarBanco($row['id_banco']));
+        $dadosBancario->setAgencia($row['agencia']);
+        $dadosBancario->setContaCorrente($row['contaCorrente']);
+        $dadosBancario->setDigitoVerificador($row['digitoVerificador']);
+        $dadosBancario->setJurosPadrao($row['jurosPadrao']);
+        $dadosBancario->setMultaPadrao($row['multaPadrao']);
+        return $dadosBancario;
     }
 
     public function validaCampos($administrador) {
         return $administrador->getDocumento() != null && $administrador->getNomeAdministrador() != null && $administrador->getEmail() &&
                 $administrador->getEndereco()->getCep() != null && $administrador->getEndereco()->getCidade()->getNomeCidade() != null &&
                 $administrador->getEndereco()->getCidade()->getEstado()->getUf() != null;
+    }
+
+    public function validaCamposDadosBancario($dadosBancario) {
+        return $dadosBancario->getAgencia() != null && $dadosBancario->getContaCorrente() != null &&
+                $dadosBancario->getDigitoVerificador() != null && $dadosBancario->getJurosPadrao() != null &&
+                $dadosBancario->getMultaPadrao() != null;
     }
 
     public function autenticaAdministrador($email, $senha) {
@@ -55,7 +76,7 @@ class AdministradorDAO {
 
     public function buscarAdministrador($codigo) {
         try {
-            $sql = "SELECT * FROM administrador WHERE id_adminitrador = :codigo";
+            $sql = "SELECT * FROM administrador WHERE id_administrador = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
@@ -83,9 +104,9 @@ class AdministradorDAO {
     public function editaAdministrador($administrador) {
         try {
             $sql = "UPDATE administrador a, endereco e SET a.nomeAdministrador = UPPER(:nomeAdministrador), a.email = 
-			UPPER(:email), a.documento = :documento, e.id_cidade = :id_cidade, e.cep = :cep, e.rua = UPPER(:rua),
-			e.numero = :numero, e.bairro = UPPER(:bairro), e.complemento = UPPER(:complemento)
-			WHERE a.id_administrador = :codigoAdministrador";
+            UPPER(:email), a.documento = :documento, e.id_cidade = :id_cidade, e.cep = :cep, e.rua = UPPER(:rua),
+            e.numero = :numero, e.bairro = UPPER(:bairro), e.complemento = UPPER(:complemento)
+            WHERE a.id_administrador = :codigoAdministrador";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoAdministrador", $administrador->getCodigoAdministrador());
             $stmt->bindValue(":nomeAdministrador", $administrador->getNomeAdministrador());
@@ -103,4 +124,51 @@ class AdministradorDAO {
         }
     }
 
+    public function buscaDadosBancarios($codigo) {
+        try {
+            $sql = "SELECT * FROM dadosBancario WHERE id_administrador = :codigo ORDER BY id_banco";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $codigo);
+            $stmt->execute();
+            $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $dadosBancarios = array();
+            foreach ($lista as $l) {
+                $dadosBancarios[] = $this->populaDadosBancario($l);
+            }
+            return $dadosBancarios;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function editaDadosBancarios($dadosBancario) {
+        try {
+            $sql = "UPDATE dadosBancario SET agencia = :agencia, contaCorrente = :contaCorrente, "
+                    . "digitoVerificador = :digitoVerificador, jurosPadrao = :jurosPadrao, multaPadrao = :multaPadrao "
+                    . "where id_banco = :codigoBanco";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":agencia", $dadosBancario->getAgencia());
+            $stmt->bindValue(":contaCorrente", $dadosBancario->getContaCorrente());
+            $stmt->bindValue(":digitoVerificador", $dadosBancario->getDigitoVerificador());
+            $stmt->bindValue(":jurosPadrao", $dadosBancario->getJurosPadrao());
+            $stmt->bindValue(":multaPadrao", $dadosBancario->getMultaPadrao());
+            $stmt->bindValue(":codigoBanco", $dadosBancario->getBanco());
+            return $stmt->execute();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function carregaDadosDocumento($codigo) {
+        try {
+            $sql = "SELECT * FROM dadosBancario WHERE id_dadosBancario = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $codigo);
+            $stmt->execute();
+            $retorno = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $retorno;
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
 }

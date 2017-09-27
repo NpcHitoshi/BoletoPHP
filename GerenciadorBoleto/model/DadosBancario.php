@@ -3,6 +3,8 @@
 class DadosBancario {
 
     private $codigoDadosBancario;
+    private $codigoAdministrador;
+    private $banco;
     private $agencia;
     private $contaCorrente;
     private $digitoVerificador;
@@ -11,6 +13,14 @@ class DadosBancario {
 
     function getCodigoDadosBancario() {
         return $this->codigoDadosBancario;
+    }
+
+    function getBanco() {
+        return $this->banco;
+    }
+
+    function getCodigoAdministrador() {
+        return $this->codigoAdministrador;
     }
 
     function getAgencia() {
@@ -35,6 +45,14 @@ class DadosBancario {
 
     function setCodigoDadosBancario($codigoDadosBancario) {
         $this->codigoDadosBancario = $codigoDadosBancario;
+    }
+
+    function setBanco($banco) {
+        $this->banco = $banco;
+    }
+
+    function setCodigoAdministrador($codigoAdministrador) {
+        $this->codigoAdministrador = $codigoAdministrador;
     }
 
     function setAgencia($agencia) {

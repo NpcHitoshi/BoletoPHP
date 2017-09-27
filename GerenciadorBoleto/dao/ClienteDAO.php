@@ -51,8 +51,8 @@ class ClienteDAO {
     public function listarClientesAtivos() {
         try {
             $sql = "SELECT * FROM cliente WHERE ativo = (1)  AND tipo_conta = (0) ORDER BY nomeCliente";
-            $result = Database::conexao()->query($sql);
-            $lista = $result->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = Database::conexao()->query($sql);
+            $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $clientes = array();
             foreach ($lista as $l) {
                 $clientes[] = $this->populaCliente($l);

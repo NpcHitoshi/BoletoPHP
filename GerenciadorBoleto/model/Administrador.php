@@ -4,7 +4,7 @@ class Administrador {
 
     private $codigoAdministrador;
     private $endereco;
-    private $dadosBancario;
+    private $dadosBancario = array();
     private $nomeAdministrador;
     private $documento;
     private $email;

@@ -11,6 +11,8 @@ require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "model" . DS . "Banco.php";
 require_once BASE_DIR . "dao" . DS . "BancoDAO.php";
+require_once BASE_DIR . "model" . DS . "DadosBancario.php";
+
 session_start();
 $usuario = $_SESSION["usuario"];
 if (($_SESSION["usuario"]) == null || $usuario->getTipoConta() == 0) {
@@ -146,97 +148,104 @@ require_once 'menu_adm.php';
                 </div>
             </form>
         </div>
-    </div>
-    <!-- Fim Dados Empresa-->
-    <!-- Inicio Dados Bancários-->
-    <div id="banco" class="tab-pane fade">
-        <div class="col-md-12">
-            <form id="form-banco" action="control/ClienteControl.php?action=editarAdministrador" method="POST">
-                <h4 class="title">Dados Básicos</h4>
-                <div class="form-group col-md-12">
-                    <label for="cliente">Cliente:</label>
-                    <select id="banco" name="codigoBanco" class="js-example-basic-single form-control">
-                        <?php
-                        $bDao = new BancoDAO();
-                        $bancos[] = new Banco();
-                        $bancos = $bDao->listarbancos();
-                        foreach ($bancos as $objBanco) {
-                            ?>
-                            <option value="<?php echo $objBanco->getCodigoBanco() ?>"><?php echo $objBanco->getNomeBanco() ?></option>
-                        <?php } ?>
-                    </select>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="agencia">Agência:</label>
-                    <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"/>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="conta">Conta-Corrente:</label>
-                    <input id="conta" type="text" name="conta" class="form-control" placeholder="Conta-Corrente"/>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-1">
-                    <label class="gasparzinho" for="dv">sas</label>
-                    <input id="dv" type="text" name="dv" class="form-control" placeholder="DV"/>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="juros">Juros:</label>
-                    <input id="juros" type="text" name="juros" class="form-control" placeholder="Juros"/>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="multa">Multa:</label>
-                    <input id="multa" type="text" name="multa" class="form-control" placeholder="Multa"/>
-                    <div class="erro"></div>
-                </div>
+        <!-- Fim Dados Empresa-->
+        <!-- Inicio Dados Bancários-->
+        <div id="banco" class="tab-pane fade">
+            <div class="col-md-12">
+                <form id="form-banco" action="control/AdministradorControl.php?action=editarDadosBancario" method="POST">
+                    <h4 class="title">Dados Básicos</h4>
+                    <div class="form-group col-md-12">
+                        <label for="cliente">Banco:</label>
+                        <select id="selectBanco" name="codigoBanco" class="js-example-basic-single form-control">
+                            <?php
+                            $aDao = new AdministradorDAO();
+                            $dadosBancarios[] = new DadosBancario();
+                            $dadosBancarios = $aDao->buscaDadosBancarios($usuario->getCodigoAdministrador());
+                            foreach ($dadosBancarios as $objBanco) {
+                                ?>
+                                <option value="<?php echo $objBanco->getBanco()->getCodigoBanco() ?>">
+                                    <?php echo $objBanco->getBanco()->getNomeBanco() ?></option>
+                            <?php } ?>
+                        </select>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="agencia">Agência:</label>
+                        <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"
+                               value="<?php echo $dadosBancarios[0]->getAgencia() ?>"/>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="conta">Conta-Corrente:</label>
+                        <input id="conta" type="text" name="contaCorrente" class="form-control" placeholder="Conta Corrente"
+                               value="<?php echo $dadosBancarios[0]->getContaCorrente() ?>"/>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label class="gasparzinho" for="dv">DV</label>
+                        <input id="dv" type="text" name="digitoVerificador" class="form-control" placeholder="DV" maxlength="1"
+                               value="<?php echo $dadosBancarios[0]->getDigitoVerificador() ?>" />
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="juros">Juros:</label>
+                        <input id="juros" type="text" name="jurosPadrao" class="form-control" placeholder="Juros"
+                               value="<?php echo $dadosBancarios[0]->getJurosPadrao() ?>" />
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="multa">Multa:</label>
+                        <input id="multa" type="text" name="multaPadrao" class="form-control" placeholder="Multa"
+                               value="<?php echo $dadosBancarios[0]->getMultaPadrao() ?>"/>
+                        <div class="erro"></div>
+                    </div>
 
-                <div id="cadastrar" class="col-md-12">
-                    <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
-                </div>
-            </form>
+                    <div id="cadastrar" class="col-md-12">
+                        <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-    <!-- Fim Dados Bancários -->
-    <!-- Inicio Senha -->
-    <div id="senha" class="tab-pane fade">
-        <div class="col-md-12">
-            <form id="form-senha" action="control/AdministradorControl.php?action=editarSenha" method="POST">
-                <h4 class="title">Dados Básicos</h4>
-                <div class="form-group col-md-4">
-                    <label for="senhaAtual">Senha Atual:</label>
-                    <input id="senhaAtual" type="password" name="senhaAtual" class="form-control" placeholder="Senha Atual"/>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="novaSenha">Nova Senha:</label>
-                    <input id="novaSenha" type="password" name="novaSenha" class="form-control" placeholder="Nova Senha"/>
-                    <div class="erro"></div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="confirmaSenha">Confirmar Senha:</label>
-                    <input id="confirmaSenha" type="password" name="confirmaSenha" class="form-control" placeholder="Confirmar Senha"/>
-                    <div class="erro"></div>
-                </div>
+        <!-- Fim Dados Bancários -->
+        <!-- Inicio Senha -->
+        <div id="senha" class="tab-pane fade">
+            <div class="col-md-12">
+                <form id="form-senha" action="control/AdministradorControl.php?action=editarSenha" method="POST">
+                    <h4 class="title">Dados Básicos</h4>
+                    <div class="form-group col-md-4">
+                        <label for="senhaAtual">Senha Atual:</label>
+                        <input id="senhaAtual" type="password" name="senhaAtual" class="form-control" placeholder="Senha Atual"/>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="novaSenha">Nova Senha:</label>
+                        <input id="novaSenha" type="password" name="novaSenha" class="form-control" placeholder="Nova Senha"/>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="confirmaSenha">Confirmar Senha:</label>
+                        <input id="confirmaSenha" type="password" name="confirmaSenha" class="form-control" placeholder="Confirmar Senha"/>
+                        <div class="erro"></div>
+                    </div>
 
-                <div id="cadastrar" class="col-md-12">
-                    <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
-                </div>
-            </form>
+                    <div id="cadastrar" class="col-md-12">
+                        <button type="submit" class="btn btn-default col-md-offset-5 col-md-2">Atualizar</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <!-- Fim Senha-->
+        <!-- Fim Painel Abas-->
     </div>
-    <!-- Fim Senha-->
-    <!-- Fim Painel Abas-->
 </div>
 </div>
 </body>
 <script src="assets/js/mascara_cliente.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cep.js" type="text/javascript"></script>
+<script src="assets/js/carrega_dados_banco.js" type="text/javascript"></script>
 <script src="assets/js/valida_config.js" type="text/javascript"></script>
-<script src="assets/js/mascara_valor.js.js" type="text/javascript"></script>
+<script src="assets/js/mascara_valor.js" type="text/javascript"></script>
 <script src="assets/dist/js/select2.min.js"></script>
 <link rel="stylesheet" href="assets/css/novo_cliente.css">
 <link href="assets/dist/css/select2.min.css" rel="stylesheet" />
