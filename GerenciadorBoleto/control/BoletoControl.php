@@ -1,4 +1,5 @@
 <?php
+
 //Define cosntantes para caminhos de importações
 if (!defined("DS")) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -32,7 +33,7 @@ switch ($action) {
         $objJSON = json_encode($obj);
         echo $objJSON;
         break;
-        //Carrega dados para preenchimento de 2ª Via Boleto e retorna via JSON
+    //Carrega dados para preenchimento de 2ª Via Boleto e retorna via JSON
     case "carrega2via":
         $obj = new \stdClass();
         $boleto = $boletoDao->buscarBoleto($_GET["cod"]);
@@ -77,7 +78,7 @@ switch ($action) {
         //Caso sucesso encaminha para visualização do boleto
         if (retorno) {
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/BoletoControl.php?action=vizualizar&codigo=" . $boleto->getCodigoBoleto());
-        //Falha envia para tela principal    
+            //Falha envia para tela principal    
         } else {
             $_SESSION["msg_retorno"] = "Falha ao gerar 2ª via!";
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
@@ -92,7 +93,7 @@ switch ($action) {
         $validaData = $dataVencimento->diff($dataHoje);
         $diasCorridos = $dataVencimento->diff($dataHoje);
         $diasCorridos->days;
-        
+
         if ($diasCorridos->invert == 0 && $diasCorridos->days > 0) {
             $boleto->setValor($boleto->getValor()) + (($boleto->getValor() * ($boleto->getMulta() / 100))) +
                     ($boleto->getJuros() * $diasCorridos->days);
@@ -142,18 +143,17 @@ switch ($action) {
             //Salva boleto no DB
             $codigo = $boletoDao->inserirBoleto($boleto);
             //Verifica qual é o banco do boleto.
-            if($boleto->getBanco()->getCodigoBanco() == 748){
+            if ($boleto->getBanco()->getCodigoBanco() == 748) {
                 //Gera boleto Sicredi
                 $_SESSION["msg_retorno"] = "Boleto gerado com sucesso!";
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
-            }
-            else if($boleto->getBanco()->getCodigoBanco() == 502){
+            } else if ($boleto->getBanco()->getCodigoBanco() == 502) {
                 //Gera boleto Santander
                 $_SESSION["msg_retorno"] = "Boleto gerado com sucesso!";
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_banespa.php");
             }
             exit();
-        //Caso os campos estejam incorretos.    
+            //Caso os campos estejam incorretos.    
         } else {
             $_SESSION["msg_retorno"] = "Falha ao gerar boleto!";
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/novo_boleto.php");
@@ -165,11 +165,13 @@ switch ($action) {
     case "vizualizar":
         $codigo = $_GET["codigo"];
         $boleto = $boletoDao->buscarBoleto($codigo);
-        $boleto->setValor(number_format($boleto->getValor(), 2, ",", "."));
+        $valor = (str_replace("R$", "", ( $boleto->getValor())));
+        $valor = (str_replace(",", ".", $valor));
+        $boleto->setValor($valor);
         $_SESSION["boleto"] = $boleto;
-        if($boleto->getBanco()->getCodigoBanco() == 748)
+        if ($boleto->getBanco()->getCodigoBanco() == 748)
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
-        else if($boleto->getBanco()->getCodigoBanco() == 502)
+        else if ($boleto->getBanco()->getCodigoBanco() == 502)
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_banespa.php");
         exit();
         break;
@@ -206,18 +208,17 @@ switch ($action) {
         break;
     //Finalizar ou dar baixa em boleto    
     case "baixarBoleto":
-        try{
+        try {
             $codigo = $_GET["codigo"];
             $boleto = $boletoDao->buscarBoleto($codigo);
             $retorno = $boletoDao->baixaBoleto($boleto);
-            if($retorno){
+            if ($retorno) {
                 $_SESSION["msg_retorno"] = "Boleto baixado com sucesso!";
-            }
-            else
+            } else
                 $_SESSION["msg_retorno"] = "Falha ao baixar boleto!";
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boletos.php");
             exit();
-        } catch (Exception $e){
+        } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }
         break;

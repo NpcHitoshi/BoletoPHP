@@ -8,16 +8,25 @@ if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
 }
 
+require_once BASE_DIR . "model" . DS . "Administrador.php";
 require_once BASE_DIR . "model" . DS . "Boleto.php";
 require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "model" . DS . "DadosBancario.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
 session_start();
-if (($_SESSION["cliente"]) == null) {
+if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
+
+$aDao = new AdministradorDAO();
 $boleto = ($_SESSION["boleto"]);
+$codigoBanco = 748;
+$usuario = ($_SESSION["usuario"]);
+$usuario->setDadosBancario($aDao->buscaBancoDadosBancarios($codigoBanco));
 // +----------------------------------------------------------------------+
 // | BoletoPhp - Versão Beta                                              |
 // +----------------------------------------------------------------------+
@@ -50,9 +59,9 @@ $boleto = ($_SESSION["boleto"]);
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
 $data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento())); // Prazo de X dias OU informe data: "13/04/2006";
-$valor_boleto = $boleto->getValor(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+$valor_boleto = number_format($boleto->getValor(),2,",",".");// Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
 $juros = number_format($boleto->getJuros(),2,",",".");
-$multa = number_format($boleto->getMulta(),2,",",".");
+$multa = $boleto->getMulta();
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
 $dadosboleto["nosso_numero"] = $boleto->getNossoNumero(); // Nosso numero (máx. 5 digitos) - Numero sequencial de controle.
@@ -84,9 +93,9 @@ $dadosboleto["especie"] = "REAL";
 $dadosboleto["especie_doc"] = "DMI"; // OS - Outros segundo manual para cedentes de cobrança SICREDI
 // ---------------------- DADOS FIXOS DE CONFIGURAÇÃO DO SEU BOLETO --------------- //
 // DADOS DA SUA CONTA - SICREDI
-$dadosboleto["agencia"] = "0725"; // Num da agencia (4 digitos), sem Digito Verificador
-$dadosboleto["conta"] = "24354"; // Num da conta (5 digitos), sem Digito Verificador
-$dadosboleto["conta_dv"] = "6"; // Digito Verificador do Num da conta
+$dadosboleto["agencia"] = $usuario->getDadosBancario()->getAgencia(); // Num da agencia (4 digitos), sem Digito Verificador
+$dadosboleto["conta"] = $usuario->getDadosBancario()->getContaCorrente(); // Num da conta (5 digitos), sem Digito Verificador
+$dadosboleto["conta_dv"] = $usuario->getDadosBancario()->getDigitoVerificador(); // Digito Verificador do Num da conta
 // DADOS PERSONALIZADOS - SICREDI
 $dadosboleto["posto"] = "29"; // Código do posto da cooperativa de crédito
 $dadosboleto["byte_idt"] = "2"; // Byte de identificação do cedente do bloqueto utilizado para compor o nosso número.
@@ -94,15 +103,17 @@ $dadosboleto["byte_idt"] = "2"; // Byte de identificação do cedente do bloquet
 $dadosboleto["carteira"] = "A"; // Código da Carteira: A (Simples) 
 
 // SEUS DADOS
-$dadosboleto["identificacao"] = "MICROVIL AUTOMACAO COMERCIAL LTDA";
-$dadosboleto["cpf_cnpj"] = "03.919.470/0001-41";
-$dadosboleto["endereco"] = "Rua Laranjeira, 469 - Jardim Primavera";
-$dadosboleto["cidade_uf"] = "Piraquara / PR";
-$dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
+$dadosboleto["identificacao"] = $usuario->getNomeAdministrador();
+$dadosboleto["cpf_cnpj"] = $usuario->getDocumento();
+$dadosboleto["endereco"] = $usuario->getEndereco()->getRua().", ". $usuario->getEndereco()->getNumero().
+       " - ".$usuario->getEndereco()->getBairro();
+$dadosboleto["cidade_uf"] = $usuario->getEndereco()->getCidade()->getNomeCidade()." / ".
+        $usuario->getEndereco()->getCidade()->getEstado()->getUf();
+$dadosboleto["cedente"] = $usuario->getNomeAdministrador();
 
 // NÃO ALTERAR!
 ob_start();
-unset($_SESSION['boleto']);
+unset($_SESSION["boleto"]);
 include("include/funcoes_sicredi.php");
 include("include/layout_sicredi.php");
 
@@ -134,4 +145,3 @@ catch(HTML2PDF_exception $e) {
 	echo $e;
 	exit;
 }
-

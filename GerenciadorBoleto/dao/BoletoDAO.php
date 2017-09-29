@@ -35,7 +35,7 @@ class BoletoDAO {
 
     public function listarBoletos() {
         try {
-            $sql = "SELECT * FROM boleto ORDER BY nosso_Numero";
+            $sql = "SELECT * FROM boleto ORDER BY nosso_Numero DESC";
             $stmt = Database::conexao()->query($sql);
             $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $boletos = array();
@@ -50,7 +50,7 @@ class BoletoDAO {
 
     public function listarBoletosAbertos() {
         try {
-            $sql = "SELECT * FROM boleto WHERE situacao = 1 ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto WHERE situacao = 1 ORDER BY numero_documento DESC";
             $stmt = Database::conexao()->query($sql);
             $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $boletos = array();
@@ -65,7 +65,7 @@ class BoletoDAO {
 
     public function listarBoletosPagos() {
         try {
-            $sql = "SELECT * FROM boleto WHERE situacao = 2 ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto WHERE situacao = 2 ORDER BY numero_documento DESC";
             $stmt = Database::conexao()->query($sql);
             $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $boletos = array();
@@ -80,7 +80,7 @@ class BoletoDAO {
 
     public function listarBoletosVencidos() {
         try {
-            $sql = "SELECT * FROM boleto WHERE situacao = 3 ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto WHERE situacao = 3 ORDER BY numero_documento DESC";
             $stmt = Database::conexao()->query($sql);
             $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $boletos = array();
@@ -95,7 +95,7 @@ class BoletoDAO {
 
         public function listarBoletosCliente($codigo) {
         try {
-            $sql = "SELECT * FROM boleto WHERE id_cliente = :codigo ORDER BY nosso_numero";
+            $sql = "SELECT * FROM boleto WHERE id_cliente = :codigo ORDER BY nosso_numero DESC";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
@@ -112,7 +112,7 @@ class BoletoDAO {
 
     public function listarBoletosAbertosCliente($codigo) {
         try {
-            $sql = "SELECT * FROM boleto WHERE situacao = 1 AND id_cliente = :codigo ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto WHERE situacao = 1 AND id_cliente = :codigo ORDER BY numero_documento DESC";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
@@ -129,7 +129,7 @@ class BoletoDAO {
 
     public function listarBoletosPagosCliente($codigo) {
         try {
-            $sql = "SELECT * FROM boleto WHERE situacao = 2 AND id_cliente = :codigo ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto WHERE situacao = 2 AND id_cliente = :codigo ORDER BY numero_documento DESC";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
@@ -146,7 +146,7 @@ class BoletoDAO {
 
     public function listarBoletosVencidosCliente($codigo) {
         try {
-            $sql = "SELECT * FROM boleto WHERE situacao = 3 AND id_cliente = :codigo ORDER BY numero_documento";
+            $sql = "SELECT * FROM boleto WHERE situacao = 3 AND id_cliente = :codigo ORDER BY numero_documento DESC";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();

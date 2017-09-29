@@ -11,7 +11,6 @@ require_once BASE_DIR . "model" . DS . "DadosBancario.php";
 require_once BASE_DIR . "dao" . DS . "AdministradorDao.php";
 require_once BASE_DIR . "dao" . DS . "DataBase.php";
 
-
 $db = new Database();
 $pdo = $db->conexao();
 session_start();
@@ -56,7 +55,6 @@ switch ($action) {
 
     case "editarSenha":
         try {
-            var_dump($administrador);
             if (password_verify($_POST["senhaAtual"], $administrador->getSenha())) {
                 $novaSenha = $_POST["novaSenha"];
                 $confirmaSenha = $_POST["confirmaSenha"];
@@ -86,7 +84,9 @@ switch ($action) {
             $dadosBancario->setAgencia(trim($_POST["agencia"]));
             $dadosBancario->setContaCorrente(trim($_POST["contaCorrente"]));
             $dadosBancario->setDigitoVerificador($_POST["digitoVerificador"]);
-            $dadosBancario->setJurosPadrao($_POST["jurosPadrao"]);
+            $juros = (str_replace("R$", "", ($_POST["jurosPadrao"])));
+            $juros = (str_replace(",", ".", $juros));
+            $dadosBancario->setJurosPadrao($juros);
             $dadosBancario->setMultaPadrao($_POST["multaPadrao"]);
             if ($administradorDao->validaCamposDadosBancario($dadosBancario)) {
                 if ($administradorDao->editaDadosBancarios($dadosBancario)) {
@@ -107,9 +107,10 @@ switch ($action) {
 
     case "carregaDadosBanco":
         try {
-            $obj = new \tdClass();
-            $obj = $boletoDao->carregaDadosDocumento($_GET["cod"]);
-            $objJSON = json_encode($obj);
+            $dados = $administradorDao->carregaDadosDocumento($_GET["cod"]);;
+            $juros = "R$".number_format($dados['jurosPadrao'], 2, ",", ".");
+            $dados['jurosPadrao']= $juros;
+            $objJSON = json_encode($dados);
             echo $objJSON;
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();

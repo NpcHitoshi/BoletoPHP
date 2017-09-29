@@ -171,6 +171,22 @@ $(document).ready(function(){
 	
 });
 
+$("#agencia").keyup(function(){
+	$(this).val($(this).val().replace(/\D/g,""));
+});
+
+$("#conta").keyup(function(){
+	$(this).val($(this).val().replace(/\D/g,""));
+});
+
+$("#dv").keyup(function(){
+	$(this).val($(this).val().replace(/\D/g,""));
+});
+
+$("#multa").keyup(function(){
+	$(this).val($(this).val().replace(/\D/g,""));
+});
+
 $("#documento").focusout(function(){
 	if($(this).val().length < 1)
 		estaVazio(this);

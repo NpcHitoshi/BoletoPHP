@@ -47,7 +47,7 @@
     <tr>
       <td valign="top" class="cp">
         <div align="center">
-          Instruções de Impressão
+          InstruÃ§Ãµes de ImpressÃ£o
         </div>
       </td>
     </tr>
@@ -56,22 +56,22 @@
         <div align="left" class="cabecalho">
           <ul>
             <li>
-            Imprima em impressora jato de tinta (ink jet) ou laser em qualidade normal ou alta (Não use modo econômico).
+            Imprima em impressora jato de tinta (ink jet) ou laser em qualidade normal ou alta (NÃ£o use modo econÃ´mico).
             </li>
             <br>
-            <li>Utilize folha A4 (210 x 297 mm) ou Carta (216 x 279 mm) e margens mínimas à esquerda e à direita do formulário.
+            <li>Utilize folha A4 (210 x 297 mm) ou Carta (216 x 279 mm) e margens mÃ­nimas Ã  esquerda e Ã  direita do formulÃ¡rio.
             </li>
             <br>
-            <li>Corte na linha indicada. Não rasure, risque, fure ou dobre a região onde se encontra o código de barras.
+            <li>Corte na linha indicada. NÃ£o rasure, risque, fure ou dobre a regiÃ£o onde se encontra o cÃ³digo de barras.
             </li>
             <br>
-            <li>Caso não apareça o código de barras no final, clique em F5 para atualizar esta tela.
+            <li>Caso nÃ£o apareÃ§a o cÃ³digo de barras no final, clique em F5 para atualizar esta tela.
             </li>
             <br>
             <li>
-            Caso tenha problemas ao imprimir, copie a seqüencia numérica abaixo e pague no caixa eletrônico ou no internet banking:<br><br>
+            Caso tenha problemas ao imprimir, copie a seqÃ¼encia numÃ©rica abaixo e pague no caixa eletrÃ´nico ou no internet banking:<br><br>
             <span style="font-size: 13px; font-weight: normal; color:#000033; padding:10px;">
-            <div>Linha Digitável: &nbsp;<?php echo $dadosboleto["linha_digitavel"]?></div>
+            <div>Linha DigitÃ¡vel: &nbsp;<?php echo $dadosboleto["linha_digitavel"]?></div>
             <div>Valor: &nbsp;&nbsp;<?php echo $dadosboleto["valor_boleto"]?></div>
             </span>
             </li>
@@ -119,7 +119,7 @@
       <td height=13><img src=imagens/1.png width=1 height=13></td>
       <td colspan=7 class=ct>Cedente</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Agência/Código do Cedente</td>
+      <td class=ct>AgÃªncia/CÃ³digo do Cedente</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>Vencimento</td>
     </tr>
@@ -136,9 +136,9 @@
       <td height=13><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>CPF/CNPJ</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Número do documento</td>
+      <td class=ct>NÃºmero do documento</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Espécie</td>
+      <td class=ct>EspÃ©cie</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>Quantidade</td>
       <td><img src=imagens/1.png width=1 height=13></td>
@@ -165,11 +165,11 @@
       <td height=13><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>(-) Desconto / Abatimentos</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>(-) Outras deduções</td>
+      <td class=ct>(-) Outras deduÃ§Ãµes</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td colspan=3 class=ct>(+) Mora / Multa</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>(+) Outros acréscimos</td>
+      <td class=ct>(+) Outros acrÃ©scimos</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>(=) Valor cobrado</td>
     </tr>
@@ -190,7 +190,7 @@
       <td height=13><img src=imagens/1.png width=1 height=13></td>
       <td colspan=9 class=ct>Sacado</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Nosso número</td>
+      <td class=ct>Nosso nÃºmero</td>
     </tr>
     <tr>
       <td height=12><img src=imagens/1.png width=1 height=12></td>
@@ -205,7 +205,7 @@
       <td width=7 height=12 class=ct>&nbsp;</td>
       <td width=558 class=ct>Demonstrativo</td>
       <td width=7 class=ct>&nbsp;</td>
-      <td width=94 class=ct>Autenticação mecânica</td>
+      <td width=94 class=ct>AutenticaÃ§Ã£o mecÃ¢nica</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
@@ -260,7 +260,7 @@
     </tr>
     <tr>
       <td height=12><img src=imagens/1.png width=1 height=12></td>
-      <td colspan=11 class=cp>Pagável em qualquer Banco até o vencimento.</td>
+      <td colspan=11 class=cp>PagÃ¡vel em qualquer Banco atÃ© o vencimento.</td>
       <td><img src=imagens/1.png width=1 height=12></td>
       <td class=cp align=right><?php echo $dadosboleto["data_vencimento"]?></td>
     </tr>
@@ -269,7 +269,7 @@
       <td height=13><img src=imagens/1.png width=1 height=13></td>
       <td colspan=11 class=ct>Cedente</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Agência/Código cedente</td>
+      <td class=ct>AgÃªncia/CÃ³digo cedente</td>
     </tr>
     <tr>
       <td height=12><img src=imagens/1.png width=1 height=12></td>
@@ -282,15 +282,15 @@
       <td height=13><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>Data do documento</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td colspan=3 class=ct>Número do documento</td>
+      <td colspan=3 class=ct>NÃºmero do documento</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Espécie doc.</td>
+      <td class=ct>EspÃ©cie doc.</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>Aceite</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>Data processamento</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Nosso número</td>
+      <td class=ct>Nosso nÃºmero</td>
     </tr>
     <tr>
       <td height=12><img src=imagens/1.png width=1 height=12></td>
@@ -313,7 +313,7 @@
       <td><img src=imagens/1.png width=1 height=13></td>
       <td class=ct>Carteira</td>
       <td><img src=imagens/1.png width=1 height=13></td>
-      <td class=ct>Espécie</td>
+      <td class=ct>EspÃ©cie</td>
       <td><img src=imagens/1.png width=1 height=13></td>
       <td colspan=3 class=ct>Quantidade</td>
       <td><img src=imagens/1.png width=1 height=13></td>
@@ -341,7 +341,7 @@
     <tr>
       <td width=7 height=26><img src=imagens/1.png width=1 height=26></td>
       <td width=472 rowspan=9 valign=top>
-        <span class=ct>Instruções (Texto de responsabilidade do cedente)</span><br>
+        <span class=ct>InstruÃ§Ãµes (Texto de responsabilidade do cedente)</span><br>
         &nbsp;<br>
         <span class=cp><?php echo $dadosboleto["instrucoes1"] . '<br>' . $dadosboleto["instrucoes2"] . '<br>' . $dadosboleto["instrucoes3"] . '<br>' . $dadosboleto["instrucoes4"]?></span>
       </td>
@@ -352,7 +352,7 @@
     <tr>
       <td height=26><img src=imagens/1.png width=1 height=26></td>
       <td><img src=imagens/2.png width=1 height=26></td>
-      <td class=ct>(-) Outras deduções</td>
+      <td class=ct>(-) Outras deduÃ§Ãµes</td>
     </tr>
     <tr><td height=1><img src=imagens/1.png width=1 height=1></td><td><img src=imagens/2.png width=7 height=1></td><td><img src=imagens/2.png width=180 height=1></td></tr>
     <tr>
@@ -364,7 +364,7 @@
     <tr>
       <td height=26><img src=imagens/1.png width=1 height=26></td>
       <td><img src=imagens/2.png width=1 height=26></td>
-      <td class=ct>(+) Outros acréscimos</td>
+      <td class=ct>(+) Outros acrÃ©scimos</td>
     </tr>
     <tr><td height=1><img src=imagens/1.png width=1 height=1></td><td><img src=imagens/2.png width=7 height=1></td><td><img src=imagens/2.png width=180 height=1></td></tr>
     <tr>
@@ -383,7 +383,7 @@
       <td height=39><img src=imagens/1.png width=1 height=39></td>
       <td class=cp><?php echo $dadosboleto["sacado"] . '<br>' . $dadosboleto["endereco1"] . '<br>' . $dadosboleto["endereco2"]?></td>
       <td valign=bottom><img src=imagens/1.png width=1 height=13></td>
-      <td valign=bottom><span class=ct>Cód. baixa</span></td>
+      <td valign=bottom><span class=ct>CÃ³d. baixa</span></td>
     </tr>
     <tr><td colspan=4 height=1><img src=imagens/2.png width=666 height=1></td></tr>
   </table>
@@ -391,7 +391,7 @@
   <table cellspacing=0 cellpadding=0 border=0>
     <tr>
       <td width=333 class=ct>Sacador/Avalista</td>
-      <td width=333 class=ct align=right>Autenticação mecânica - <span class=cp>Ficha de Compensação</span></td>
+      <td width=333 class=ct align=right>AutenticaÃ§Ã£o mecÃ¢nica - <span class=cp>Ficha de CompensaÃ§Ã£o</span></td>
     </tr>
     <tr><td height=50 colspan=2><?php fbarcode($dadosboleto["codigo_barras"]); ?></td></tr>
     <tr><td colspan=2 class=ct align=right>Corte na linha pontilhada</td></tr>

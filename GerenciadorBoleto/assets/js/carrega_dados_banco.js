@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#selectBanco").on('select2:opening change', function(){
+	$("#banco").on('select2:opening change', function(){
 		var xmlhttp = new XMLHttpRequest();
 
 		xmlhttp.onreadystatechange = function() {
@@ -12,7 +12,6 @@ $(document).ready(function(){
                                 $("#multa").val(myObj.multaPadrao);
 			}
 		};
-                alert($(this).val());
 		var url = "control/AdministradorControl.php?action=carregaDadosBanco&cod=" + $(this).val();
 		xmlhttp.open("GET", url , true);
 		xmlhttp.send();

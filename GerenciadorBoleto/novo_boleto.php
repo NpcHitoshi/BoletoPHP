@@ -79,13 +79,13 @@ require_once 'menu_adm.php';
         <div class="row">
             <div class="form-group col-md-3">
                 <label for="multa">Multa (%):</label>
-                <input id="multa" type="number" name="multa" value="3" class="form-control" placeholder="Multa"/>
+                <input id="multa" type="number" name="multa" class="form-control" placeholder="Multa"/>
                 <div class="erro"></div>
             </div>
 
             <div class="form-group col-md-3">
                 <label for="juros">Juros (Diário):</label>
-                <input id="juros" type="text" name="juros" value="" class="form-control" placeholder="Juros"/>
+                <input id="juros" type="text" name="juros" class="form-control" placeholder="Juros"/>
                 <div class="erro"></div>
             </div>
 
@@ -109,6 +109,6 @@ require_once 'menu_adm.php';
 <script src="assets/js/combo_boleto.js"></script>
 <script src="assets/js/mascara_valor.js"></script>
 <script src="assets/js/valida_boleto.js"></script>
-
+<script src="assets/js/carrega_dados_banco.js" type="text/javascript"></script>
 <script src="assets/js/carrega_num_doc.js"></script>
 </html>

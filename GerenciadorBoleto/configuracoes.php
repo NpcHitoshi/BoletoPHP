@@ -37,7 +37,7 @@ require_once 'menu_adm.php';
     <div id="erro-submit" class="col-md-12"></div>
     <ul class="nav nav-tabs">
         <li class="active title"><a data-toggle="tab" href="#empresa">Dados Empresa</a></li>
-        <li class="title"><a data-toggle="tab" href="#banco">Dados Bancários</a></li>
+        <li class="title"><a data-toggle="tab" href="#divBanco">Dados Bancários</a></li>
         <li class="title"><a data-toggle="tab" href="#senha">Senha</a></li>
     </ul>
     <!-- Inicio Painel Abas-->
@@ -53,7 +53,7 @@ require_once 'menu_adm.php';
                             <div class="form-group col-md-12">
                                 <label for="documento">Nº do documento:</label>
                                 <input id="documento" type="text" name="documento" class="form-control" placeholder="Nº do documento"
-                                       value="<?php echo $usuario->getDocumento() ?>"/>
+                                       maxlength="18" value="<?php echo $usuario->getDocumento() ?>"/>
                                 <div class="erro"></div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ require_once 'menu_adm.php';
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="cep">CEP:</label>
-                                <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP"
+                                <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP" maxlength="10"
                                        value="<?php echo $usuario->getEndereco()->getCep() ?>"/>
                                 <div class="erro"></div>
                             </div>
@@ -150,13 +150,13 @@ require_once 'menu_adm.php';
         </div>
         <!-- Fim Dados Empresa-->
         <!-- Inicio Dados Bancários-->
-        <div id="banco" class="tab-pane fade">
+        <div id="divBanco" class="tab-pane fade">
             <div class="col-md-12">
                 <form id="form-banco" action="control/AdministradorControl.php?action=editarDadosBancario" method="POST">
                     <h4 class="title">Dados Básicos</h4>
                     <div class="form-group col-md-12">
                         <label for="cliente">Banco:</label>
-                        <select id="selectBanco" name="codigoBanco" class="js-example-basic-single form-control">
+                        <select id="banco" name="codigoBanco" class="js-example-basic-single form-control">
                             <?php
                             $aDao = new AdministradorDAO();
                             $dadosBancarios[] = new DadosBancario();
@@ -172,17 +172,17 @@ require_once 'menu_adm.php';
                     <div class="form-group col-md-4">
                         <label for="agencia">Agência:</label>
                         <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"
-                               value="<?php echo $dadosBancarios[0]->getAgencia() ?>"/>
+                               maxlength="10" value="<?php echo $dadosBancarios[0]->getAgencia() ?>"/>
                         <div class="erro"></div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="conta">Conta-Corrente:</label>
+                        <label for="conta">Conta Corrente:</label>
                         <input id="conta" type="text" name="contaCorrente" class="form-control" placeholder="Conta Corrente"
-                               value="<?php echo $dadosBancarios[0]->getContaCorrente() ?>"/>
+                               maxlength="10" value="<?php echo $dadosBancarios[0]->getContaCorrente() ?>"/>
                         <div class="erro"></div>
                     </div>
                     <div class="form-group col-md-1">
-                        <label class="gasparzinho" for="dv">DV</label>
+                        <label class="" for="dv">DV:</label>
                         <input id="dv" type="text" name="digitoVerificador" class="form-control" placeholder="DV" maxlength="1"
                                value="<?php echo $dadosBancarios[0]->getDigitoVerificador() ?>" />
                         <div class="erro"></div>
@@ -190,12 +190,12 @@ require_once 'menu_adm.php';
                     <div class="form-group col-md-2">
                         <label for="juros">Juros:</label>
                         <input id="juros" type="text" name="jurosPadrao" class="form-control" placeholder="Juros"
-                               value="<?php echo $dadosBancarios[0]->getJurosPadrao() ?>" />
+                               value="<?php echo "R$".number_format($dadosBancarios[0]->getJurosPadrao(), 2, ",", ".") ?>" />
                         <div class="erro"></div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="multa">Multa:</label>
-                        <input id="multa" type="text" name="multaPadrao" class="form-control" placeholder="Multa"
+                        <label for="multa">Multa(%):</label>
+                        <input id="multa" type="text" name="multaPadrao" class="form-control" placeholder="Multa" maxlength="3"
                                value="<?php echo $dadosBancarios[0]->getMultaPadrao() ?>"/>
                         <div class="erro"></div>
                     </div>
@@ -240,7 +240,8 @@ require_once 'menu_adm.php';
 </div>
 </div>
 </body>
-<script src="assets/js/mascara_cliente.js" type="text/javascript"></script>
+<script src="assets/js/mascara_documento.js" type="text/javascript"></script>
+<script src="assets/js/mascara_cep.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cep.js" type="text/javascript"></script>
 <script src="assets/js/carrega_dados_banco.js" type="text/javascript"></script>

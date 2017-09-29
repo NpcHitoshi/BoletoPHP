@@ -8,16 +8,24 @@ if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
 }
 
+require_once BASE_DIR . "model" . DS . "Administrador.php";
 require_once BASE_DIR . "model" . DS . "Boleto.php";
 require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "model" . DS . "DadosBancario.php";
+require_once BASE_DIR . "model" . DS . "Cliente.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
 session_start();
-if (($_SESSION["cliente"]) == null) {
+if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
+$aDao = new AdministradorDAO();
 $boleto = ($_SESSION["boleto"]);
+$codigoBanco = 502;
+$usuario = ($_SESSION["usuario"]);
+$usuario->setDadosBancario($aDao->buscaBancoDadosBancarios($codigoBanco));
 // +----------------------------------------------------------------------+
 // | BoletoPhp - Versão Beta                                              |
 // +----------------------------------------------------------------------+
@@ -53,20 +61,17 @@ $boleto = ($_SESSION["boleto"]);
 $dias_de_prazo_para_pagamento = 5;
 $taxa_boleto = 2.95;
 $data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006"; 
-$valor_cobrado = $boleto->getValor(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+$valor_cobrado = number_format($boleto->getValor(),2,",","."); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
 
 $juros = number_format($boleto->getJuros(),2,",",".");
-$multa = number_format($boleto->getMulta(),2,",",".");
-
-$valor_cobrado = str_replace(",", ".",$valor_cobrado);
-$valor_boleto=number_format($valor_cobrado+$taxa_boleto, 2, ',', '');
+$multa = $boleto->getMulta();
 
 $dadosboleto["nosso_numero"] = $boleto->getNossoNumero(); // Nosso numero - REGRA: Máximo de 7 caracteres!
 $dadosboleto["numero_documento"] = $boleto->getNumeroDocumento();// Num do pedido ou nosso numero
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
 $dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao())); // Data de emissão do Boleto
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
-$dadosboleto["valor_boleto"] = $valor_boleto; 	// Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
+$dadosboleto["valor_boleto"] = $valor_cobrado; 	// Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 
 // DADOS DO SEU CLIENTE
 $dadosboleto["sacado"] = $boleto->getCliente()->getNomeCliente();
@@ -98,15 +103,17 @@ $dadosboleto["especie_doc"] = "";
 $dadosboleto["codigo_cedente"] = "07252924354"; // Código do cedente (Somente 11 digitos)
 $dadosboleto["ponto_venda"] = "400"; // Ponto de Venda = Agencia 
 $dadosboleto["carteira"] = "COB";  // COB - SEM Registro
-$dadosboleto["nome_da_agencia"] = "";
+$dadosboleto["nome_da_agencia"] = $usuario->getDadosBancario()->getAgencia();
   // Nome da agencia (Opcional)
 
 // SEUS DADOS
-$dadosboleto["identificacao"] = "MICROVIL AUTOMACAO COMERCIAL LTDA";
-$dadosboleto["cpf_cnpj"] = "03.919.470/0001-41";
-$dadosboleto["endereco"] = "Rua Laranjeira, 469 - Jardim Primavera";
-$dadosboleto["cidade_uf"] = "Piraquara / PR";
-$dadosboleto["cedente"] = "MICROVIL AUTOMACAO COM LTDA";
+$dadosboleto["identificacao"] = $usuario->getNomeAdministrador();
+$dadosboleto["cpf_cnpj"] = $usuario->getDocumento();
+$dadosboleto["endereco"] = $usuario->getEndereco()->getRua().", ". $usuario->getEndereco()->getNumero().
+       " - ".$usuario->getEndereco()->getBairro();
+$dadosboleto["cidade_uf"] = $usuario->getEndereco()->getCidade()->getNomeCidade()." / ".
+        $usuario->getEndereco()->getCidade()->getEstado()->getUf();
+$dadosboleto["cedente"] = $usuario->getNomeAdministrador();
 
 // NÃO ALTERAR!
 ob_start();

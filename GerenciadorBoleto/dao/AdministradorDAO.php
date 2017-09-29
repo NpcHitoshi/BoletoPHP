@@ -8,6 +8,7 @@ if (!defined("BASE_DIR")) {
 }
 
 require_once BASE_DIR . "model" . DS . "Administrador.php";
+require_once BASE_DIR . "model" . DS . "DadosBancario.php";
 require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "EnderecoDAO.php";
 require_once BASE_DIR . "dao" . DS . "BancoDAO.php";
@@ -48,13 +49,14 @@ class AdministradorDAO {
     public function validaCampos($administrador) {
         return $administrador->getDocumento() != null && $administrador->getNomeAdministrador() != null && $administrador->getEmail() &&
                 $administrador->getEndereco()->getCep() != null && $administrador->getEndereco()->getCidade()->getNomeCidade() != null &&
-                $administrador->getEndereco()->getCidade()->getEstado()->getUf() != null;
+                $administrador->getEndereco()->getCidade()->getEstado()->getUf() != null && strlen($administrador->getDocumento()) < 19
+                && strlen($administrador->getEndereco()->getCep()) < 11;
     }
 
     public function validaCamposDadosBancario($dadosBancario) {
         return $dadosBancario->getAgencia() != null && $dadosBancario->getContaCorrente() != null &&
-                $dadosBancario->getDigitoVerificador() != null && $dadosBancario->getJurosPadrao() != null &&
-                $dadosBancario->getMultaPadrao() != null;
+                $dadosBancario->getDigitoVerificador() != null && $dadosBancario->getJurosPadrao() != null && $dadosBancario->getMultaPadrao() != null && strlen($dadosBancario->getAgencia()) < 11 && strlen($dadosBancario->getContaCorrente()) < 11 &&
+                strlen($dadosBancario->getDigitoVerificador()) < 2;
     }
 
     public function autenticaAdministrador($email, $senha) {
@@ -110,10 +112,12 @@ class AdministradorDAO {
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoAdministrador", $administrador->getCodigoAdministrador());
             $stmt->bindValue(":nomeAdministrador", $administrador->getNomeAdministrador());
-            $stmt->bindValue(":documento", $administrador->getDocumento());
+            $documento = preg_replace("/(\/|-|\.)/", "", $administrador->getDocumento());
+            $stmt->bindValue(":documento", $documento);
             $stmt->bindValue(":email", $administrador->getEmail());
             $stmt->bindValue(":id_cidade", $administrador->getEndereco()->getCidade()->getCodigoCidade());
-            $stmt->bindValue(":cep", $administrador->getEndereco()->getCep());
+            $cep = preg_replace("/(\/|-|\.)/", "", $administrador->getEndereco()->getCep());
+            $stmt->bindValue(":cep", $cep);
             $stmt->bindValue(":rua", $administrador->getEndereco()->getRua());
             $stmt->bindValue(":numero", $administrador->getEndereco()->getNumero());
             $stmt->bindValue(":bairro", $administrador->getEndereco()->getBairro());
@@ -141,6 +145,18 @@ class AdministradorDAO {
         }
     }
 
+    public function buscaBancoDadosBancarios($codigo) {
+        try {
+            $sql = "SELECT * FROM dadosBancario WHERE id_banco = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $stmt->bindValue(":codigo", $codigo);
+            $stmt->execute();
+            return $this->populaDadosBancario($stmt->fetch(PDO::FETCH_ASSOC));
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
     public function editaDadosBancarios($dadosBancario) {
         try {
             $sql = "UPDATE dadosBancario SET agencia = :agencia, contaCorrente = :contaCorrente, "
@@ -161,12 +177,11 @@ class AdministradorDAO {
 
     public function carregaDadosDocumento($codigo) {
         try {
-            $sql = "SELECT * FROM dadosBancario WHERE id_dadosBancario = :codigo";
+            $sql = "SELECT * FROM dadosBancario WHERE id_banco = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             $stmt->execute();
-            $retorno = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $retorno;
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }

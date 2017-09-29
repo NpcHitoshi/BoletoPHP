@@ -89,10 +89,11 @@ class EnderecoDAO {
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":nomeCidade", $nomeCidade);
             $stmt->bindValue(":uf", $uf);
-            if($stmt->execute())
+            if ($stmt->execute()) {
                 return $this->populaCidade($stmt->fetch(PDO::FETCH_ASSOC));
-            else 
+            } else {
                 return null;
+            }
         } catch (Exception $e) {
             print $e->getCode() . " Mensagem: " . $e->getMessage();
         }

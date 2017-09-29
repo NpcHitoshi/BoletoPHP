@@ -38,7 +38,8 @@ require_once 'menu_adm.php';
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="documento">Nº do documento:</label>
-                        <input id="documento" type="text" name="documento" class="form-control" placeholder="Nº do documento"/>
+                        <input id="documento" type="text" name="documento" class="form-control" placeholder="Nº do documento"
+                               maxlength="18" />
                         <div class="erro"></div>
                     </div>
                 </div>
@@ -77,7 +78,7 @@ require_once 'menu_adm.php';
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="cep">CEP:</label>
-                        <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP"/>
+                        <input id="cep" type="text" name="cep" class="form-control" placeholder="CEP" maxlength="10"/>
                         <div class="erro"></div>
                     </div>
                 </div>
@@ -128,7 +129,8 @@ require_once 'menu_adm.php';
     </div>
 </form>
 </body>
-<script src="assets/js/mascara_cliente.js" type="text/javascript"></script>
+<script src="assets/js/mascara_documento.js" type="text/javascript"></script>
+<script src="assets/js/mascara_cep.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cnpj.js" type="text/javascript"></script>
 <script src="assets/js/carrega_cep.js" type="text/javascript"></script>
 <script src="assets/js/valida_cliente.js" type="text/javascript"></script>

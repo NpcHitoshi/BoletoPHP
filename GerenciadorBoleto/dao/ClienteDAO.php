@@ -151,7 +151,9 @@ class ClienteDAO {
 
     public function validaCampos($cliente) {
         return $cliente->getDocumento() != null && $cliente->getNomeCliente() != null && $cliente->getEmail() &&
-                $cliente->getEndereco()->getCep() != null && $cliente->getEndereco()->getCidade()->getNomeCidade() != null && $cliente->getEndereco()->getCidade()->getEstado()->getUf() != null;
+                $cliente->getEndereco()->getCep() != null && $cliente->getEndereco()->getCidade()->getNomeCidade() != null && 
+                $cliente->getEndereco()->getCidade()->getEstado()->getUf() != null && strlen($cliente->getDocumento()) < 19
+                && strlen($cliente->getEndereco()->getCep()) < 11;
     }
 
     public function validaCamposEditar($cliente) {
