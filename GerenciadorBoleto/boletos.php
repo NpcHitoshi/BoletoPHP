@@ -123,8 +123,7 @@ require_once 'menu_adm.php';
                                     class="btn btn-yes bt2via" >
                                     <span class="glyphicon glyphicon-duplicate"></span> 2ª Via
                                 </button>
-                                <a href="control/BoletoControl.php?action=enviarEmailBotao&codigo=
-                                    <?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
+                                <a link1="control/BoletoControl.php?action=enviarEmailBotao&codigo=<?php echo $obj->getCliente()->getCodigoCliente() ?>" class="btn btn-email">
                                     <span class="glyphicon glyphicon-send"></span> E-mail
                                 </a>
                                 <a

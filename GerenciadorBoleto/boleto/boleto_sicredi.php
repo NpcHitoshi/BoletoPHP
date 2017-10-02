@@ -57,6 +57,19 @@ $usuario->setDadosBancario($aDao->buscaBancoDadosBancarios($codigoBanco));
 // ------------------------- DADOS DINÂMICOS DO SEU CLIENTE PARA A GERAÇÃO DO BOLETO (FIXO OU VIA GET) -------------------- //
 // Os valores abaixo podem ser colocados manualmente ou ajustados p/ formulário c/ POST, GET ou de BD (MySql,Postgre,etc)	//
 // DADOS DO BOLETO PARA O SEU CLIENTE
+// MASCARA CPF / CNPJ
+if (strlen($usuario->getDocumento()) === 14) {
+    $documento = $usuario->getDocumento();
+    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' . 
+            substr($usuario->getDocumento(), 5, 3) . '/' . substr($usuario->getDocumento(), 8, 4) . '-' . substr($usuario->getDocumento(), 12);
+}
+else {
+    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' . 
+            substr($usuario->getDocumento(), 5, 3) . '/' . substr($usuario->getDocumento(), 8, 4) . '-' . substr($usuario->getDocumento(), 12);
+}
+$cep = $boleto->getCliente()->getEndereco()->getCep();
+$cep = substr($cep, 0, 2) . '.' . substr($cep, 2, 3) . '-' . substr($cep, 5);
+
 $dias_de_prazo_para_pagamento = 5;
 $data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento())); // Prazo de X dias OU informe data: "13/04/2006";
 $valor_boleto = number_format($boleto->getValor(),2,",",".");// Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
@@ -74,7 +87,7 @@ $dadosboleto["valor_boleto"] = "R$ ".$valor_boleto;  // Valor do Boleto - REGRA:
 $dadosboleto["sacado"] = $boleto->getCliente()->getNomeCliente();
 $dadosboleto["endereco1"] = $boleto->getCliente()->getEndereco()->getRua() .", ".$boleto->getCliente()->getEndereco()->getNumero();
 $dadosboleto["endereco2"] = $boleto->getCliente()->getEndereco()->getCidade()->getNomeCidade()." - ".
-$boleto->getCliente()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $boleto->getCliente()->getEndereco()->getCep();
+$boleto->getCliente()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $cep;
 // INFORMACOES PARA O CLIENTE
 $dadosboleto["demonstrativo1"] = "Recebimento através do cheque Nº";
 $dadosboleto["demonstrativo2"] = "Esta quitação só terá validade após o pagamento do cheque pelo banco pagador." ;
@@ -102,9 +115,11 @@ $dadosboleto["byte_idt"] = "2"; // Byte de identificação do cedente do bloquet
 // 1 - Idtf emitente: Cooperativa | 2 a 9 - Idtf emitente: Cedente
 $dadosboleto["carteira"] = "A"; // Código da Carteira: A (Simples) 
 
-// SEUS DADOS
+// SEUS DADO
 $dadosboleto["identificacao"] = $usuario->getNomeAdministrador();
-$dadosboleto["cpf_cnpj"] = $usuario->getDocumento();
+$dadosboleto["cpf_cnpj"] = $documento;
+$usuario->setDocumento($usuario->getDocumento());
+
 $dadosboleto["endereco"] = $usuario->getEndereco()->getRua().", ". $usuario->getEndereco()->getNumero().
        " - ".$usuario->getEndereco()->getBairro();
 $dadosboleto["cidade_uf"] = $usuario->getEndereco()->getCidade()->getNomeCidade()." / ".

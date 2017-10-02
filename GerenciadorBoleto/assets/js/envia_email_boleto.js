@@ -23,7 +23,8 @@ $(document).ready(function(){
 			}
 		};
 		//Executa requisição AJAX para primeira etapa do e-mail.
-		var url = $(this).attr("href");
+                alert($(this).attr("link1"));
+		var url = $(this).attr("link1");
 		xmlhttp.open("GET", url , true);
 		xmlhttp.send();
 	});

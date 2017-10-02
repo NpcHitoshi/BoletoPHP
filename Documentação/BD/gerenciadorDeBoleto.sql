@@ -40,25 +40,27 @@ FOREIGN KEY (id_cidade) REFERENCES Cidade (id_cidade)
 
 CREATE TABLE IF NOT EXISTS dadosBancario (
 id_dadosBancario INT NOT NULL AUTO_INCREMENT,
-agencia VARCHAR(10) NOT NULL,
-contaCorrente VARCHAR(10) NOT NULL,
+id_administrador INT NOT NULL,
+id_banco INT NOT NULL,
+agencia VARCHAR(4) NOT NULL,
+contaCorrente VARCHAR(5) NOT NULL,
 digitoVerificador VARCHAR(1) NOT NULL,
 jurosPadrao DOUBLE,
 multaPadrao DOUBLE,
-PRIMARY KEY (id_dadosBancario)
+PRIMARY KEY (id_dadosBancario),
+CONSTRAINT fk_dadosBancarioAdministrador FOREIGN KEY (id_administrador) REFERENCES administrador(id_administrador),
+CONSTRAINT fk_dadosBancarioBanco FOREIGN KEY (id_banco) REFERENCES banco(id_banco)
 )engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS administrador (
 id_administrador INT NOT NULL AUTO_INCREMENT,
 id_endereco INT,
-id_dadosBancario INT,
 nomeAdministrador VARCHAR(50) NOT NULL,
 documento VARCHAR(14) UNIQUE NOT NULL,
 email VARCHAR(50) NOT NULL,
 senha VARCHAR(60) NOT NULL,
 tipo_conta BIT NOT NULL,
 PRIMARY KEY (id_administrador),
-CONSTRAINT fk_dadosBancariosAdministrador FOREIGN KEY (id_dadosBancario) REFERENCES dadosBancario(id_dadosBancario) ON DELETE CASCADE,
 CONSTRAINT fk_enderecoAdministrador FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco) ON DELETE CASCADE
 )engine=InnoDB;
 

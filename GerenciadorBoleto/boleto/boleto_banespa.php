@@ -58,6 +58,21 @@ $usuario->setDadosBancario($aDao->buscaBancoDadosBancarios($codigoBanco));
 // Os valores abaixo podem ser colocados manualmente ou ajustados p/ formulário c/ POST, GET ou de BD (MySql,Postgre,etc)	//
 
 // DADOS DO BOLETO PARA O SEU CLIENTE
+
+// MASCARA CPF /CNPJ
+// MASCARA CPF / CNPJ
+if (strlen($usuario->getDocumento()) === 14) {
+    $documento = $usuario->getDocumento();
+    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' . 
+            substr($usuario->getDocumento(), 5, 3) . '/' . substr($usuario->getDocumento(), 8, 4) . '-' . substr($usuario->getDocumento(), 12);
+}
+else {
+    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' . 
+            substr($usuario->getDocumento(), 5, 3) . '/' . substr($usuario->getDocumento(), 8, 4) . '-' . substr($usuario->getDocumento(), 12);
+}
+$cep = $boleto->getCliente()->getEndereco()->getCep();
+$cep = substr($cep, 0, 2) . '.' . substr($cep, 2, 3) . '-' . substr($cep, 5);
+
 $dias_de_prazo_para_pagamento = 5;
 $taxa_boleto = 2.95;
 $data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento()));  // Prazo de X dias OU informe data: "13/04/2006"; 
@@ -108,7 +123,7 @@ $dadosboleto["nome_da_agencia"] = $usuario->getDadosBancario()->getAgencia();
 
 // SEUS DADOS
 $dadosboleto["identificacao"] = $usuario->getNomeAdministrador();
-$dadosboleto["cpf_cnpj"] = $usuario->getDocumento();
+$dadosboleto["cpf_cnpj"] = $documento;
 $dadosboleto["endereco"] = $usuario->getEndereco()->getRua().", ". $usuario->getEndereco()->getNumero().
        " - ".$usuario->getEndereco()->getBairro();
 $dadosboleto["cidade_uf"] = $usuario->getEndereco()->getCidade()->getNomeCidade()." / ".

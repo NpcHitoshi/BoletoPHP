@@ -38,7 +38,6 @@ class ClienteDAO {
             $stmt->execute();
             $cliente = $this->populaCliente($stmt->fetch(PDO::FETCH_ASSOC));
             if (password_verify($senha, $cliente->getSenha())) {
-                $cliente->setSenha("");
                 return $cliente;
             } else {
                 return new cliente();
@@ -151,9 +150,8 @@ class ClienteDAO {
 
     public function validaCampos($cliente) {
         return $cliente->getDocumento() != null && $cliente->getNomeCliente() != null && $cliente->getEmail() &&
-                $cliente->getEndereco()->getCep() != null && $cliente->getEndereco()->getCidade()->getNomeCidade() != null && 
-                $cliente->getEndereco()->getCidade()->getEstado()->getUf() != null && strlen($cliente->getDocumento()) < 19
-                && strlen($cliente->getEndereco()->getCep()) < 11;
+                $cliente->getEndereco()->getCep() != null && $cliente->getEndereco()->getCidade()->getNomeCidade() != null &&
+                $cliente->getEndereco()->getCidade()->getEstado()->getUf() != null && strlen($cliente->getDocumento()) < 19 && strlen($cliente->getEndereco()->getCep()) < 11;
     }
 
     public function validaCamposEditar($cliente) {
@@ -178,6 +176,21 @@ class ClienteDAO {
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             return $stmt->execute();
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+    }
+
+    public function editaSenha($cliente) {
+        try {
+            $sql = "UPDATE cliente SET senha = :senha WHERE id_cliente = :codigo";
+            $stmt = Database::conexao()->prepare($sql);
+            $senha = $cliente->getSenha();
+            $hash = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt->bindValue(":senha", $hash);
+            $stmt->bindValue(":codigo", $cliente->getCodigoCliente());
+            $stmt->execute();
+            return $cliente;
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
         }

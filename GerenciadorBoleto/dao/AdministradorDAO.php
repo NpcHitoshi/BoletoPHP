@@ -112,12 +112,10 @@ class AdministradorDAO {
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigoAdministrador", $administrador->getCodigoAdministrador());
             $stmt->bindValue(":nomeAdministrador", $administrador->getNomeAdministrador());
-            $documento = preg_replace("/(\/|-|\.)/", "", $administrador->getDocumento());
-            $stmt->bindValue(":documento", $documento);
+            $stmt->bindValue(":documento", $administrador->getDocumento());
             $stmt->bindValue(":email", $administrador->getEmail());
             $stmt->bindValue(":id_cidade", $administrador->getEndereco()->getCidade()->getCodigoCidade());
-            $cep = preg_replace("/(\/|-|\.)/", "", $administrador->getEndereco()->getCep());
-            $stmt->bindValue(":cep", $cep);
+            $stmt->bindValue(":cep", $administrador->getEndereco()->getCep());
             $stmt->bindValue(":rua", $administrador->getEndereco()->getRua());
             $stmt->bindValue(":numero", $administrador->getEndereco()->getNumero());
             $stmt->bindValue(":bairro", $administrador->getEndereco()->getBairro());

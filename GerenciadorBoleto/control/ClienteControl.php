@@ -1,4 +1,5 @@
 <?php
+
 //Define cosntantes para caminhos de importações
 if (!defined("DS")) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -49,15 +50,14 @@ switch ($action) {
             if ($cDao->validaCampos($cliente)) {
                 //Insere cliente
                 $codigo = $cDao->inserirCliente($cliente);
-                if($codigo != null){
+                if ($codigo != null) {
                     //Envia e-mail de cadastro caso sucesso.
                     $cliente->setCodigoCliente($codigo);
                     $_SESSION["msg_retorno"] = "Cliente gravado com sucesso!";
                     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/control/ClienteControl.php"
                             . "?action=emailCadastro&cod=" . $cliente->getCodigoCliente());
                     exit();
-                }
-                else{
+                } else {
                     //Mensagem de falha caso erro.
                     $_SESSION["msg_retorno"] = "Falha ao gravar cliente!";
                     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
@@ -74,6 +74,31 @@ switch ($action) {
         }
         break;
     //Carrega dados da página Editar Cliente.    
+    case "editarSenha":
+        $cliente = $_SESSION["usuario"];
+        try {
+            if (password_verify($_POST["senhaAtual"], $cliente->getSenha())) {
+                $novaSenha = $_POST["novaSenha"];
+                $confirmaSenha = $_POST["confirmaSenha"];
+                
+                if ($novaSenha == $confirmaSenha) {
+                    $cliente->setSenha($novaSenha);
+                    $cDao->editaSenha($cliente);
+                    $_SESSION["msg_retorno"] = "Senha atualizada com sucesso!";
+                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes_cliente.php");
+                } else {
+                    $_SESSION["msg_retorno"] = "Confirmação de senha errada!";
+                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes_cliente.php");
+                }
+            } else {
+                $_SESSION["msg_retorno"] = "Senha atual incorreta!";
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/configuracoes_cliente.php");
+                exit();
+            }
+        } catch (Exception $e) {
+            print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
+        }
+        break;
     case "carrega_editar":
         try {
             $codigo = $_GET["codigo"];
@@ -103,14 +128,14 @@ switch ($action) {
             //Valida campos
             if ($cDao->validaCamposEditar($cliente)) {
                 //Atualiza cliente
-                if($cDao->editaCliente($cliente))
+                if ($cDao->editaCliente($cliente))
                     $_SESSION["msg_retorno"] = "Cliente atualizado com sucesso!";
                 else
                     $_SESSION["msg_retorno"] = "Falha ao atualizar cliente!";
             }
-            else{
-                    $_SESSION["msg_retorno"] = "Dados inválidos. Preencha todos os campos corretamente!";
-                    header("Location: http://" . $_SERVER["HTTP_HOST"] . "control/ClienteControl.php?action=carrega_editar&codigo=" . $cliente->getCodigoCliente());
+            else {
+                $_SESSION["msg_retorno"] = "Dados inválidos. Preencha todos os campos corretamente!";
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "control/ClienteControl.php?action=carrega_editar&codigo=" . $cliente->getCodigoCliente());
             }
             unset($_SESSION["usuarioCliente"]);
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/clientes.php");
@@ -149,7 +174,7 @@ switch ($action) {
             $_SESSION["email"] = $cliente->getEmail();
             $_SESSION["assunto"] = "Novo Cadastro - Gerenciador de Boletos Microvil";
             $_SESSION["mensagem"] = "Seu cadastro foi realizado através do nosso sistema de boletos, sua senha é: " .
-                    substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2) ;
+                    substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2);
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/clientes.php";
             $_SESSION["anexo"] = false;
             $_SESSION["flag_header"] = true;
@@ -168,7 +193,7 @@ switch ($action) {
                 $_SESSION["email"] = $cliente->getEmail();
                 $_SESSION["assunto"] = "Recuperação de senha - Gerenciador de Boletos Microvil";
                 $_SESSION["mensagem"] = "Sua senha atual é: " .
-                        substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2) ;
+                        substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2);
                 $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/index.php";
                 $_SESSION["msg_retorno"] = "E-mail de recuperação de senha enviado!";
                 $_SESSION["anexo"] = false;
