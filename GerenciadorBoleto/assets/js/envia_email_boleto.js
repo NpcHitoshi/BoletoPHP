@@ -17,13 +17,13 @@ $(document).ready(function(){
 		xmlhttp.onreadystatechange = function() {
 			//Caso sucesso faz requisição AJAX para segunda etapa do e-mail.
 			if (this.readyState == 4 && this.status == 200) {
-				var url1 = "/BoletoPHP/GerenciadorBoleto/email.php";
+				var url1 = "/BoletoPHP/GerenciadorBoleto/email.php?cod=" + cod;
 				xmlhttp1.open("GET", url1 , true);
 				xmlhttp1.send();
 			}
 		};
 		//Executa requisição AJAX para primeira etapa do e-mail.
-                alert($(this).attr("link1"));
+                var cod = $(this).attr("banco");
 		var url = $(this).attr("link1");
 		xmlhttp.open("GET", url , true);
 		xmlhttp.send();

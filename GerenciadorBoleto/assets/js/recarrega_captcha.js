@@ -1,8 +1,9 @@
 //Executa requisição AJAX para recarregar o Captcha.
 $(document).ready(function(){
+    var baseUrl = (location.protocol + '//' + location.host + '/' + "BoletoPHP/GerenciadorBoleto/")
 	$.ajax({
 				type: 'GET',
-				url: 'http://localhost/BoletoPHP/GerenciadorBoleto/getcaptcha.php',
+				url: baseUrl + 'getcaptcha.php',
 				dataType: 'text',
 				statusCode: {
 					404: function (response) {
@@ -17,7 +18,7 @@ $(document).ready(function(){
 	$("#captcha").focusout(function(){
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost/BoletoPHP/GerenciadorBoleto/getcaptcha.php',
+			url: baseUrl + 'getcaptcha.php',
 			dataType: 'text',
 			statusCode: {
 				404: function (response) {

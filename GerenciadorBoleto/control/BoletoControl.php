@@ -187,14 +187,16 @@ switch ($action) {
         try {
             $codigo = $_GET["codigo"];
             $boleto = $boletoDao->buscarBoleto($codigo);
-            $valor = (str_replace("R$", "", ( $boleto->getValor())));
+            $valor = (str_replace("R$", "", ($boleto->getValor())));
             $valor = (str_replace(",", ".", $valor));
             $boleto->setValor($valor);
             $_SESSION["boleto"] = $boleto;
-            if ($boleto->getBanco()->getCodigoBanco() == 748)
+            if ($boleto->getBanco()->getCodigoBanco() == 748) {
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_sicredi.php");
-            else if ($boleto->getBanco()->getCodigoBanco() == 502)
+            } else if ($boleto->getBanco()->getCodigoBanco() == 502) {
                 header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/boleto/boleto_banespa.php");
+            }
+
             exit();
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();
@@ -220,12 +222,19 @@ switch ($action) {
     case "enviarEmailBotao":
         try {
             $codigo = $_GET["codigo"];
+            $boleto = $boletoDao->buscarBoleto($codigo);
+            $valor = (str_replace("R$", "", ($boleto->getValor())));
+            $valor = (str_replace(",", ".", $valor));
+            $boleto->setValor($valor);
+            $_SESSION["boleto"] = $boleto;
+            
             $cliente = $clienteDao->buscarCliente($codigo);
             $_SESSION["email"] = $cliente->getEmail();
             $_SESSION["assunto"] = "Boleto - Gerenciador de Boletos Microvil";
             $_SESSION["mensagem"] = "Segue em anexo boleto";
             $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/boletos.php";
             $_SESSION["anexo"] = true;
+            $_SESSION["include"] = true;
             $_SESSION["flag_header"] = false;
         } catch (Exception $e) {
             print "Codigo: " . $e->getCode() . ", Mensagem:" . $e->getMessage();

@@ -1,4 +1,5 @@
 <?php
+
 header("Content-Type: text/html; charset=ISO-8859-1");
 
 if (!defined("DS")) {
@@ -17,7 +18,9 @@ require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
-session_start();
+if (!isset($_SESSION["include"])) {
+    session_start();
+}
 if (($_SESSION["usuario"]) == null) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
@@ -60,11 +63,10 @@ $usuario->setDadosBancario($aDao->buscaBancoDadosBancarios($codigoBanco));
 // MASCARA CPF / CNPJ
 if (strlen($usuario->getDocumento()) === 14) {
     $documento = $usuario->getDocumento();
-    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' . 
+    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' .
             substr($usuario->getDocumento(), 5, 3) . '/' . substr($usuario->getDocumento(), 8, 4) . '-' . substr($usuario->getDocumento(), 12);
-}
-else {
-    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' . 
+} else {
+    $documento = substr($usuario->getDocumento(), 0, 2) . '.' . substr($usuario->getDocumento(), 2, 3) . '.' .
             substr($usuario->getDocumento(), 5, 3) . '/' . substr($usuario->getDocumento(), 8, 4) . '-' . substr($usuario->getDocumento(), 12);
 }
 $cep = $boleto->getCliente()->getEndereco()->getCep();
@@ -72,8 +74,8 @@ $cep = substr($cep, 0, 2) . '.' . substr($cep, 2, 3) . '-' . substr($cep, 5);
 
 $dias_de_prazo_para_pagamento = 5;
 $data_venc = date("d/m/Y", strtotime($boleto->getDataVencimento())); // Prazo de X dias OU informe data: "13/04/2006";
-$valor_boleto = number_format($boleto->getValor(),2,",",".");// Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
-$juros = number_format($boleto->getJuros(),2,",",".");
+$valor_boleto = number_format($boleto->getValor(), 2, ",", "."); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+$juros = number_format($boleto->getJuros(), 2, ",", ".");
 $multa = $boleto->getMulta();
 
 $dadosboleto["inicio_nosso_numero"] = date("y"); // Ano da geração do título ex: 07 para 2007 
@@ -82,20 +84,20 @@ $dadosboleto["numero_documento"] = $boleto->getNumeroDocumento(); // Num do pedi
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
 $dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao())); // Data de emissão do Boleto
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
-$dadosboleto["valor_boleto"] = "R$ ".$valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
+$dadosboleto["valor_boleto"] = "R$ " . $valor_boleto;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 // DADOS DO SEU CLIENTE
 $dadosboleto["sacado"] = $boleto->getCliente()->getNomeCliente();
-$dadosboleto["endereco1"] = $boleto->getCliente()->getEndereco()->getRua() .", ".$boleto->getCliente()->getEndereco()->getNumero();
-$dadosboleto["endereco2"] = $boleto->getCliente()->getEndereco()->getCidade()->getNomeCidade()." - ".
-$boleto->getCliente()->getEndereco()->getCidade()->getEstado()->getUf()." - ". $cep;
+$dadosboleto["endereco1"] = $boleto->getCliente()->getEndereco()->getRua() . ", " . $boleto->getCliente()->getEndereco()->getNumero();
+$dadosboleto["endereco2"] = $boleto->getCliente()->getEndereco()->getCidade()->getNomeCidade() . " - " .
+        $boleto->getCliente()->getEndereco()->getCidade()->getEstado()->getUf() . " - " . $cep;
 // INFORMACOES PARA O CLIENTE
 $dadosboleto["demonstrativo1"] = "Recebimento através do cheque Nº";
-$dadosboleto["demonstrativo2"] = "Esta quitação só terá validade após o pagamento do cheque pelo banco pagador." ;
+$dadosboleto["demonstrativo2"] = "Esta quitação só terá validade após o pagamento do cheque pelo banco pagador.";
 $dadosboleto["demonstrativo3"] = "Até o vencimento pagável em qualquer agência bancária.";
 // INSTRUÇÕES PARA O CAIXA
 $dadosboleto["instrucoes1"] = "PARA ATUALIZAR BOLETO ENTRE NO SITE: WWW.MICROVIL.COM.BR";
-$dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE ".$boleto->getMulta()."%.";
-$dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ ".$juros.".";
+$dadosboleto["instrucoes2"] = "APOS VENCIMENTO COBRAR MULTA DE " . $boleto->getMulta() . "%.";
+$dadosboleto["instrucoes3"] = "APOS VENCIMENTO COBRAR MORA DIARIA DE R$ " . $juros . ".";
 $dadosboleto["instrucoes4"] = "";
 // DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
 $dadosboleto["quantidade"] = "";
@@ -114,15 +116,14 @@ $dadosboleto["posto"] = "29"; // Código do posto da cooperativa de crédito
 $dadosboleto["byte_idt"] = "2"; // Byte de identificação do cedente do bloqueto utilizado para compor o nosso número.
 // 1 - Idtf emitente: Cooperativa | 2 a 9 - Idtf emitente: Cedente
 $dadosboleto["carteira"] = "A"; // Código da Carteira: A (Simples) 
-
 // SEUS DADO
 $dadosboleto["identificacao"] = $usuario->getNomeAdministrador();
 $dadosboleto["cpf_cnpj"] = $documento;
 $usuario->setDocumento($usuario->getDocumento());
 
-$dadosboleto["endereco"] = $usuario->getEndereco()->getRua().", ". $usuario->getEndereco()->getNumero().
-       " - ".$usuario->getEndereco()->getBairro();
-$dadosboleto["cidade_uf"] = $usuario->getEndereco()->getCidade()->getNomeCidade()." / ".
+$dadosboleto["endereco"] = $usuario->getEndereco()->getRua() . ", " . $usuario->getEndereco()->getNumero() .
+        " - " . $usuario->getEndereco()->getBairro();
+$dadosboleto["cidade_uf"] = $usuario->getEndereco()->getCidade()->getNomeCidade() . " / " .
         $usuario->getEndereco()->getCidade()->getEstado()->getUf();
 $dadosboleto["cedente"] = $usuario->getNomeAdministrador();
 
@@ -135,28 +136,31 @@ include("include/layout_sicredi.php");
 $content = ob_get_clean();
 
 // convert
-require_once(dirname(__FILE__).'\html2pdf\html2pdf.class.php');
-try
-{
-	$html2pdf = new HTML2PDF('P','A4','fr', array(0, 0, 0, 0));
-	/* Abre a tela de impressão */
-	//$html2pdf->pdf->IncludeJS("print(true);");
-	
-	$html2pdf->pdf->SetDisplayMode('real');
-	
-	/* Parametro vuehtml = true desabilita o pdf para desenvolvimento do layout */
-	$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-	
-	/* Abrir no navegador */
-	$html2pdf->Output('boleto' . $boleto->getNossoNumero() . '.pdf');
-	
-	/* Salva o PDF no servidor para enviar por email */
-	$html2pdf->Output('attachments/boleto.pdf', 'F');
-	/* Força o download no browser */
-	//$html2pdf->Output('boleto.pdf', 'D');
+require_once(dirname(__FILE__) . '\html2pdf\html2pdf.class.php');
+try {
+    $html2pdf = new HTML2PDF('P', 'A4', 'fr', array(0, 0, 0, 0));
+    /* Abre a tela de impressão */
+    //$html2pdf->pdf->IncludeJS("print(true);");
+
+    $html2pdf->pdf->SetDisplayMode('real');
+
+    /* Parametro vuehtml = true desabilita o pdf para desenvolvimento do layout */
+    $html2pdf->writeHTML($content, isset($_GET['vuehtml']));
+
+    if (isset($_SESSION["include"])) {
+        ob_clean();
+    } else {
+        /* Abrir no navegador */
+        $html2pdf->Output('boleto' . $boleto->getNossoNumero() . '.pdf');
+    }
+
+    /* Salva o PDF no servidor para enviar por email */
+    $html2pdf->Output(BASE_DIR . "boleto" . DS . "attachments/boleto.pdf", 'F');
+    unset($_SESSION["include"]);
+    /* Força o download no browser */
+    //$html2pdf->Output('boleto.pdf', 'D');
+} catch (HTML2PDF_exception $e) {
+    echo $e;
+    exit;
 }
 
-catch(HTML2PDF_exception $e) {
-	echo $e;
-	exit;
-}

@@ -4,10 +4,23 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
-session_start();
+include 'vendor/autoload.php';
+
+if ($_GET['cod'] != null) {
+    $codbanco = $_GET['cod'];
+    if ($codbanco == 748) {
+        require 'boleto/boleto_sicredi.php';
+    } else {
+        require 'boleto/boleto_banespa.php';
+    }
+}
+
+if ((session_status() == PHP_SESSION_NONE)) {
+    session_start();
+}
+
 if (($_SESSION["usuario"]) == null) {
-    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
+    //header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
 $mail = new PHPMailer(true);
 $mail->CharSet = 'UTF-8';
@@ -25,7 +38,6 @@ try {
     //Recipients
     $mail->setFrom('vilson@microvil.com.br', 'Microvil Tecnologia em Automação');
     $mail->addAddress($_SESSION["email"]);     // Add a recipient
-    
     //Attachments
     if (($_SESSION["anexo"])) {
         $mail->addAttachment('boleto/attachments/boleto.pdf'); // Add attachments
@@ -44,10 +56,10 @@ try {
     unset($_SESSION["email"]);
     unset($_SESSION["assunto"]);
     unset($_SESSION["mensagem"]);
-    if($_SESSION["flag_header"]){
+    if ($_SESSION["flag_header"]) {
         unset($_SESSION["flag_header"]);
         header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SESSION["redirecionamento"]);
-        exit();   
+        exit();
     }
 } catch (Exception $e) {
     echo 'Não foi possível enviar mensagem. ';

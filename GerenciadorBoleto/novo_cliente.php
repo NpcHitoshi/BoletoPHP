@@ -14,6 +14,7 @@ $usuario = $_SESSION["usuario"];
 if ($usuario == null || $usuario->getTipoConta() == 0) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/BoletoPHP/GerenciadorBoleto/index.php");
 }
+$imagem_cnpj = "Não conexao com a internet";
 include("getcaptcha.php");
 ?>
 <?php

@@ -190,10 +190,13 @@ switch ($action) {
             $documento = $_POST["documento"];
             $cliente = $cDao->buscarClienteDocumento($documento);
             if ($cliente->getEmail() != null) {
+                $cliente->setSenha(substr($cliente->getDocumento(), 0, 8) . 
+                        substr($cliente->getDocumento(), 12, 2));
+                $cDao->editaSenha($cliente);
                 $_SESSION["email"] = $cliente->getEmail();
                 $_SESSION["assunto"] = "Recuperação de senha - Gerenciador de Boletos Microvil";
-                $_SESSION["mensagem"] = "Sua senha atual é: " .
-                        substr($cliente->getDocumento(), 0, 8) . substr($cliente->getDocumento(), 12, 2);
+                $_SESSION["mensagem"] = "Sua nova senha é: " .
+                        $cliente->getSenha();
                 $_SESSION["redirecionamento"] = "/BoletoPHP/GerenciadorBoleto/index.php";
                 $_SESSION["msg_retorno"] = "E-mail de recuperação de senha enviado!";
                 $_SESSION["anexo"] = false;
