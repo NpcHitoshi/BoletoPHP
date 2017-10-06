@@ -25,6 +25,7 @@ $(document).ready(function(){
 		//Executa requisição AJAX para primeira etapa do e-mail.
                 var cod = $(this).attr("banco");
 		var url = $(this).attr("link1");
+                alert(url);
 		xmlhttp.open("GET", url , true);
 		xmlhttp.send();
 	});

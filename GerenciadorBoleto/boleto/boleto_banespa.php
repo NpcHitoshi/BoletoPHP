@@ -149,6 +149,7 @@ try {
         /* Abrir no navegador */
         $html2pdf->Output('boleto' . $boleto->getNossoNumero() . '.pdf');
     }
+    
     /* Salva o PDF no servidor para enviar por email */
     $html2pdf->Output('attachments/boleto.pdf', 'F');
     unset($_SESSION["include"]);
@@ -158,4 +159,5 @@ try {
     echo $e;
     exit;
 }
+
 ?>
