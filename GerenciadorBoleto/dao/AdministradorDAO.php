@@ -58,8 +58,8 @@ class AdministradorDAO {
         return $dadosBancario->getAgencia() != null && $dadosBancario->getContaCorrente() != null &&
                 $dadosBancario->getDigitoVerificador() != null && $dadosBancario->getJurosPadrao() != null 
                 && $dadosBancario->getMultaPadrao() != null && $dadosBancario->getCodigoCedente() != null
-                && strlen($dadosBancario->getAgencia()) < 5 && strlen($dadosBancario->getContaCorrente()) < 11
-                && strlen($dadosBancario->getDigitoVerificador()) < 2;
+                && strlen($dadosBancario->getAgencia()) < 7 && strlen($dadosBancario->getContaCorrente()) < 11
+                && strlen($dadosBancario->getDigitoVerificador()) < 2 && strlen($dadosBancario->getCodigoCedente()) < 12;
     }
 
     public function autenticaAdministrador($email, $senha) {

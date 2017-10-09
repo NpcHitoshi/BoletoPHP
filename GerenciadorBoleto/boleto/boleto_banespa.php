@@ -109,10 +109,14 @@ $dadosboleto["especie_doc"] = "";
 
 // ---------------------- DADOS FIXOS DE CONFIGURAÇÃO DO SEU BOLETO --------------- //
 // DADOS PERSONALIZADOS - Banespa
-$dadosboleto["codigo_cedente"] = $usuario->getDadosBancario()->getAgencia(); // Código do cedente (Somente 11 digitos)
+$dadosboleto["codigo_cedente"] = $usuario->getDadosBancario()->getAgencia() . " " .
+        $usuario->getDadosBancario()->getCodigoCedente() . " " .
+        $usuario->getDadosBancario()->getDigitoVerificador(); // Código do cedente (Somente 11 digitos)
 $dadosboleto["ponto_venda"] = $usuario->getDadosBancario()->getAgencia(); // Ponto de Venda = Agencia 
 $dadosboleto["carteira"] = "COB";  // COB - SEM Registro
-$dadosboleto["nome_da_agencia"] = $usuario->getDadosBancario()->getAgencia() . " / " . $usuario->getDadosBancario()->getContaCorrente();
+$dadosboleto["nome_da_agencia"] = $usuario->getDadosBancario()->getAgencia() . " " .
+        $usuario->getDadosBancario()->getCodigoCedente() . " " .
+        $usuario->getDadosBancario()->getDigitoVerificador();
 // Nome da agencia (Opcional)
 // SEUS DADOS
 $dadosboleto["identificacao"] = $usuario->getNomeAdministrador();
@@ -149,7 +153,7 @@ try {
         /* Abrir no navegador */
         $html2pdf->Output('boleto' . $boleto->getNossoNumero() . '.pdf');
     }
-    
+
     /* Salva o PDF no servidor para enviar por email */
     $html2pdf->Output('attachments/boleto.pdf', 'F');
     unset($_SESSION["include"]);
@@ -159,5 +163,4 @@ try {
     echo $e;
     exit;
 }
-
 ?>

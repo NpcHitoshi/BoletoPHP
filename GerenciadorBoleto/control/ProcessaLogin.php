@@ -7,7 +7,7 @@ if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
 }
 
-require_once BASE_DIR . "dao" . DS . "DataBase.php";
+require_once BASE_DIR . "dao" . DS . "Database.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 

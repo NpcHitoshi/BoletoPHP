@@ -174,7 +174,7 @@ require_once 'menu_adm.php';
                     <div class="form-group col-md-3">
                         <label for="cedente">Codigo do Cedente: </label>
                         <input id="conta" type="text" name="codigoCedente" class="form-control" placeholder="Codigo Cedente"
-                               maxlength="5" value  ="<?php echo $dadosBancarios[0]->getCodigoCedente(); ?>"/>
+                               maxlength="11" value  ="<?php echo $dadosBancarios[0]->getCodigoCedente(); ?>"/>
                         <div class="erro"></div>
                     </div>
                     <div class="form-group col-md-2">
