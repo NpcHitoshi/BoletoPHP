@@ -83,6 +83,7 @@ switch ($action) {
         try {
             $dadosBancario = new DadosBancario();
             $dadosBancario->setBanco($_POST["codigoBanco"]);
+            $dadosBancario->setCodigoCedente(trim($_POST["codigoCedente"]));
             $dadosBancario->setAgencia(trim($_POST["agencia"]));
             $dadosBancario->setContaCorrente(trim($_POST["contaCorrente"]));
             $dadosBancario->setDigitoVerificador($_POST["digitoVerificador"]);

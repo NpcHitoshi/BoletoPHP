@@ -5,6 +5,7 @@ class DadosBancario {
     private $codigoDadosBancario;
     private $codigoAdministrador;
     private $banco;
+    private $codigoCedente;
     private $agencia;
     private $contaCorrente;
     private $digitoVerificador;
@@ -29,6 +30,14 @@ class DadosBancario {
 
     function getContaCorrente() {
         return $this->contaCorrente;
+    }
+
+    function getCodigoCedente() {
+        return $this->codigoCedente;
+    }
+
+    function setCodigoCedente($codigoCedente) {
+        $this->codigoCedente = $codigoCedente;
     }
 
     function getDigitoVerificador() {

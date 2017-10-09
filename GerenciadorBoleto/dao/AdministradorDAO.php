@@ -38,6 +38,7 @@ class AdministradorDAO {
         $dadosBancario->setCodigoAdministrador($row['id_administrador']);
         $bDao = new BancoDao();
         $dadosBancario->setBanco($bDao->buscarBanco($row['id_banco']));
+        $dadosBancario->setCodigoCedente($row['codigoCedente']);
         $dadosBancario->setAgencia($row['agencia']);
         $dadosBancario->setContaCorrente($row['contaCorrente']);
         $dadosBancario->setDigitoVerificador($row['digitoVerificador']);
@@ -55,8 +56,10 @@ class AdministradorDAO {
 
     public function validaCamposDadosBancario($dadosBancario) {
         return $dadosBancario->getAgencia() != null && $dadosBancario->getContaCorrente() != null &&
-                $dadosBancario->getDigitoVerificador() != null && $dadosBancario->getJurosPadrao() != null && $dadosBancario->getMultaPadrao() != null && strlen($dadosBancario->getAgencia()) < 11 && strlen($dadosBancario->getContaCorrente()) < 11 &&
-                strlen($dadosBancario->getDigitoVerificador()) < 2;
+                $dadosBancario->getDigitoVerificador() != null && $dadosBancario->getJurosPadrao() != null 
+                && $dadosBancario->getMultaPadrao() != null && $dadosBancario->getCodigoCedente() != null
+                && strlen($dadosBancario->getAgencia()) < 5 && strlen($dadosBancario->getContaCorrente()) < 11
+                && strlen($dadosBancario->getDigitoVerificador()) < 2;
     }
 
     public function autenticaAdministrador($email, $senha) {
@@ -157,12 +160,13 @@ class AdministradorDAO {
 
     public function editaDadosBancarios($dadosBancario) {
         try {
-            $sql = "UPDATE dadosBancario SET agencia = :agencia, contaCorrente = :contaCorrente, "
+            $sql = "UPDATE dadosBancario SET agencia = :agencia, contaCorrente = :contaCorrente, codigoCedente = :codigoCedente,"
                     . "digitoVerificador = :digitoVerificador, jurosPadrao = :jurosPadrao, multaPadrao = :multaPadrao "
                     . "where id_banco = :codigoBanco";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":agencia", $dadosBancario->getAgencia());
             $stmt->bindValue(":contaCorrente", $dadosBancario->getContaCorrente());
+            $stmt->bindValue(":codigoCedente", $dadosBancario->getCodigoCedente());
             $stmt->bindValue(":digitoVerificador", $dadosBancario->getDigitoVerificador());
             $stmt->bindValue(":jurosPadrao", $dadosBancario->getJurosPadrao());
             $stmt->bindValue(":multaPadrao", $dadosBancario->getMultaPadrao());

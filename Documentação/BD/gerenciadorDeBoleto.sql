@@ -5,8 +5,10 @@
 
 CREATE DATABASE IF NOT EXISTS gerenciadorDeBoleto;
 
+// Colocar o nome do database
 USE gerenciadorDeBoleto;
 
+// Disponibiliza a criação de eventos	
 SET GLOBAL event_scheduler = ON;
 
 SET SQL_SAFE_UPDATES = 0;
@@ -38,21 +40,7 @@ PRIMARY KEY (id_endereco),
 FOREIGN KEY (id_cidade) REFERENCES Cidade (id_cidade)
 )engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS dadosBancario (
-id_dadosBancario INT NOT NULL AUTO_INCREMENT,
-id_administrador INT NOT NULL,
-id_banco INT NOT NULL,
-agencia VARCHAR(4) NOT NULL,
-contaCorrente VARCHAR(5) NOT NULL,
-digitoVerificador VARCHAR(1) NOT NULL,
-jurosPadrao DOUBLE,
-multaPadrao DOUBLE,
-PRIMARY KEY (id_dadosBancario),
-CONSTRAINT fk_dadosBancarioAdministrador FOREIGN KEY (id_administrador) REFERENCES administrador(id_administrador),
-CONSTRAINT fk_dadosBancarioBanco FOREIGN KEY (id_banco) REFERENCES banco(id_banco)
-)engine=InnoDB;
-
-CREATE TABLE IF NOT EXISTS administrador (
+CREATE TABLE IF NOT EXISTS Administrador (
 id_administrador INT NOT NULL AUTO_INCREMENT,
 id_endereco INT,
 nomeAdministrador VARCHAR(50) NOT NULL,
@@ -64,7 +52,13 @@ PRIMARY KEY (id_administrador),
 CONSTRAINT fk_enderecoAdministrador FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco) ON DELETE CASCADE
 )engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS cliente (
+CREATE TABLE IF NOT EXISTS Banco (
+id_banco INT NOT NULL,
+nomeBanco VARCHAR(50) NOT NULL,
+PRIMARY KEY (id_banco)
+)engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS Cliente (
 id_cliente INT NOT NULL AUTO_INCREMENT,
 id_endereco INT,
 nomeCliente VARCHAR(50) NOT NULL,
@@ -77,10 +71,19 @@ PRIMARY KEY (id_cliente),
 CONSTRAINT FK_ENDERECO FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco) ON DELETE CASCADE
 )engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Banco (
+CREATE TABLE IF NOT EXISTS DadosBancario (
+id_dadosBancario INT NOT NULL AUTO_INCREMENT,
+id_administrador INT NOT NULL,
 id_banco INT NOT NULL,
-nomeBanco VARCHAR(50) NOT NULL,
-PRIMARY KEY (id_banco)
+codigoCedente VARCHAR(10) NOT NULL,
+agencia VARCHAR(4) NOT NULL,
+contaCorrente VARCHAR(10) NOT NULL,
+digitoVerificador VARCHAR(1) NOT NULL,
+jurosPadrao DOUBLE,
+multaPadrao DOUBLE,
+PRIMARY KEY (id_dadosBancario),
+CONSTRAINT fk_dadosBancarioAdministrador FOREIGN KEY (id_administrador) REFERENCES Administrador(id_administrador),
+CONSTRAINT fk_dadosBancarioBanco FOREIGN KEY (id_banco) REFERENCES Banco(id_banco)
 )engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Boleto (

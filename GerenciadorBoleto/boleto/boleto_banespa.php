@@ -83,7 +83,7 @@ $dadosboleto["numero_documento"] = $boleto->getNumeroDocumento(); // Num do pedi
 $dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
 $dadosboleto["data_documento"] = date("d/m/Y", strtotime($boleto->getDataEmissao())); // Data de emissão do Boleto
 $dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
-$dadosboleto["valor_boleto"] = $valor_cobrado;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
+$dadosboleto["valor_boleto"] = "R$ " . $valor_cobrado;  // Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
 // DADOS DO SEU CLIENTE
 $dadosboleto["sacado"] = $boleto->getCliente()->getNomeCliente();
 $dadosboleto["endereco1"] = $boleto->getCliente()->getEndereco()->getRua() . ", " . $boleto->getCliente()->getEndereco()->getNumero();
@@ -109,10 +109,10 @@ $dadosboleto["especie_doc"] = "";
 
 // ---------------------- DADOS FIXOS DE CONFIGURAÇÃO DO SEU BOLETO --------------- //
 // DADOS PERSONALIZADOS - Banespa
-$dadosboleto["codigo_cedente"] = "07252924354"; // Código do cedente (Somente 11 digitos)
-$dadosboleto["ponto_venda"] = "400"; // Ponto de Venda = Agencia 
+$dadosboleto["codigo_cedente"] = $usuario->getDadosBancario()->getAgencia(); // Código do cedente (Somente 11 digitos)
+$dadosboleto["ponto_venda"] = $usuario->getDadosBancario()->getAgencia(); // Ponto de Venda = Agencia 
 $dadosboleto["carteira"] = "COB";  // COB - SEM Registro
-$dadosboleto["nome_da_agencia"] = $usuario->getDadosBancario()->getAgencia();
+$dadosboleto["nome_da_agencia"] = $usuario->getDadosBancario()->getAgencia() . " / " . $usuario->getDadosBancario()->getContaCorrente();
 // Nome da agencia (Opcional)
 // SEUS DADOS
 $dadosboleto["identificacao"] = $usuario->getNomeAdministrador();

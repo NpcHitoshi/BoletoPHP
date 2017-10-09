@@ -97,6 +97,7 @@ function digitoVerificador_nossonumero($numero) {
 function formata_numero($numero,$loop,$insert,$tipo = "geral") {
 	if ($tipo == "geral") {
 		$numero = str_replace(",","",$numero);
+                $numero = str_replace("R$ ","",$numero);
 		while(strlen($numero)<$loop){
 			$numero = $insert . $numero;
 		}
@@ -108,6 +109,7 @@ function formata_numero($numero,$loop,$insert,$tipo = "geral") {
 		preenche com zeros
 		*/
 		$numero = str_replace(",","",$numero);
+                $numero = str_replace("R$ ","",$numero);
 		while(strlen($numero)<$loop){
 			$numero = $insert . $numero;
 		}

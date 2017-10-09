@@ -171,16 +171,22 @@ require_once 'menu_adm.php';
                         </select>
                         <div class="erro"></div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="agencia">Agência:</label>
-                        <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"
-                               maxlength="10" value="<?php echo $dadosBancarios[0]->getAgencia() ?>"/>
+                    <div class="form-group col-md-3">
+                        <label for="cedente">Codigo do Cedente: </label>
+                        <input id="conta" type="text" name="codigoCedente" class="form-control" placeholder="Codigo Cedente"
+                               maxlength="5" value  ="<?php echo $dadosBancarios[0]->getCodigoCedente(); ?>"/>
                         <div class="erro"></div>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
+                        <label for="agencia">Agência:</label>
+                        <input id="agencia" type="text" name="agencia" class="form-control" placeholder="Agência"
+                               maxlength="4" value="<?php echo $dadosBancarios[0]->getAgencia() ?>"/>
+                        <div class="erro"></div>
+                    </div>
+                    <div class="form-group col-md-2">
                         <label for="conta">Conta Corrente:</label>
                         <input id="conta" type="text" name="contaCorrente" class="form-control" placeholder="Conta Corrente"
-                               maxlength="10" value="<?php echo $dadosBancarios[0]->getContaCorrente() ?>"/>
+                               maxlength="10" value  ="<?php echo $dadosBancarios[0]->getContaCorrente() ?>"/>
                         <div class="erro"></div>
                     </div>
                     <div class="form-group col-md-1">
@@ -192,7 +198,7 @@ require_once 'menu_adm.php';
                     <div class="form-group col-md-2">
                         <label for="juros">Juros:</label>
                         <input id="juros" type="text" name="jurosPadrao" class="form-control" placeholder="Juros"
-                               value="<?php echo "R$".number_format($dadosBancarios[0]->getJurosPadrao(), 2, ",", ".") ?>" />
+                               value="<?php echo "R$" . number_format($dadosBancarios[0]->getJurosPadrao(), 2, ",", ".") ?>" />
                         <div class="erro"></div>
                     </div>
                     <div class="form-group col-md-2">
