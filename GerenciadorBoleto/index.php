@@ -37,6 +37,6 @@
             </div>
         </div>
         <script src="assets/js/index.js"></script>
-        <script src="assets/js/mascara_cliente.js"></script>
+        <script src="assets/js/mascara_documento.js"></script>
     </body>
 </html>

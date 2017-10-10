@@ -6,11 +6,11 @@ if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(__FILE__) . DS);
 }
 require_once BASE_DIR . "model" . DS . "Administrador.php";
-require_once BASE_DIR . "dao" . DS . "AdministradorDao.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 require_once BASE_DIR . "model" . DS . "Cliente.php";
 require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 require_once BASE_DIR . "model" . DS . "Boleto.php";
-require_once BASE_DIR . "dao" . DS . "BoletoDao.php";
+require_once BASE_DIR . "dao" . DS . "BoletoDAO.php";
 session_start();
 $usuario = $_SESSION["usuario"];
 if ($usuario == null || $usuario->getTipoConta() == 0) {

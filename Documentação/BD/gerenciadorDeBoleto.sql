@@ -1,17 +1,13 @@
-## Mandar E-mail
-## 1. Instalar composer em: https://getcomposer.org;
-## 2. Abrir prompt no caminho da pasta "gerenciadorDeBoleto";
-## 3. Executar o comando: "composer require phpmailer/phpmailer";
-
+## Comando somente para localhost
 CREATE DATABASE IF NOT EXISTS gerenciadorDeBoleto;
 
 ## Colocar o nome do database
 USE gerenciadorDeBoleto;
 
-## Disponibiliza a criação de eventos	
-##SET GLOBAL event_scheduler = ON;
-
-##SET SQL_SAFE_UPDATES = 0;
+## Disponibiliza a criação de eventos
+## Remove-los se realizar a instalação no servidor
+SET GLOBAL event_scheduler = ON;
+SET SQL_SAFE_UPDATES = 0;
 
 CREATE TABLE IF NOT EXISTS estado (
 id_estado INT NOT NULL,
@@ -47,7 +43,7 @@ nomeAdministrador VARCHAR(50) NOT NULL,
 documento VARCHAR(14) UNIQUE NOT NULL,
 email VARCHAR(50) NOT NULL,
 senha VARCHAR(60) NOT NULL,
-tipo_conta BIT NOT NULL,
+tipo_conta INTEGER NOT NULL,
 PRIMARY KEY (id_administrador),
 CONSTRAINT fk_enderecoAdministrador FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco) ON DELETE CASCADE
 )engine=InnoDB;
@@ -65,8 +61,8 @@ nomeCliente VARCHAR(50) NOT NULL,
 documento VARCHAR(14) UNIQUE NOT NULL,
 email VARCHAR(50) NOT NULL,
 senha VARCHAR(60) NOT NULL,
-tipo_conta BIT NOT NULL,
-ativo BIT NOT NULL,
+tipo_conta INT NOT NULL,
+ativo INT NOT NULL,
 PRIMARY KEY (id_cliente),
 CONSTRAINT FK_ENDERECO FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco) ON DELETE CASCADE
 )engine=InnoDB;
@@ -102,6 +98,7 @@ PRIMARY KEY (id_boleto),
 FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
 FOREIGN KEY (id_banco) REFERENCES banco (id_banco)
 )engine=InnoDB;
+
 
 CREATE EVENT boleto_vencido 
     ON SCHEDULE EVERY 30 second

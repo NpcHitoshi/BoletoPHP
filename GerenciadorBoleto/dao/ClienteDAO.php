@@ -49,7 +49,7 @@ class ClienteDAO {
 
     public function listarClientesAtivos() {
         try {
-            $sql = "SELECT * FROM cliente WHERE ativo = (1)  AND tipo_conta = (0) ORDER BY nomeCliente";
+            $sql = "SELECT * FROM cliente WHERE ativo = 1  AND tipo_conta = 0 ORDER BY nomeCliente";
             $stmt = Database::conexao()->query($sql);
             $lista = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $clientes = array();
@@ -77,7 +77,7 @@ class ClienteDAO {
 
     public function listarClientesDesativados() {
         try {
-            $sql = "SELECT * FROM cliente WHERE ativo = (0)  AND tipo_conta = (0) ORDER BY nomeCliente";
+            $sql = "SELECT * FROM cliente WHERE ativo = 0  AND tipo_conta = 0 ORDER BY nomeCliente";
             $result = Database::conexao()->query($sql);
             $lista = $result->fetchAll(PDO::FETCH_ASSOC);
             $clientes = array();
@@ -161,7 +161,7 @@ class ClienteDAO {
 
     public function desativarCliente($codigo) {
         try {
-            $sql = "UPDATE cliente SET ativo = (0) WHERE id_cliente = :codigo";
+            $sql = "UPDATE cliente SET ativo = 0 WHERE id_cliente = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             return $stmt->execute();
@@ -172,7 +172,7 @@ class ClienteDAO {
 
     public function ativarCliente($codigo) {
         try {
-            $sql = "UPDATE cliente SET ativo = (1) WHERE id_cliente = :codigo";
+            $sql = "UPDATE cliente SET ativo = 1 WHERE id_cliente = :codigo";
             $stmt = Database::conexao()->prepare($sql);
             $stmt->bindValue(":codigo", $codigo);
             return $stmt->execute();

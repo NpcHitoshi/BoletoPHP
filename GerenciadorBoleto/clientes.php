@@ -7,9 +7,9 @@ if (!defined("BASE_DIR")) {
 }
 
 require_once BASE_DIR . "model" . DS . "Administrador.php";
-require_once BASE_DIR . "dao" . DS . "AdministradorDao.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
 require_once BASE_DIR . "model" . DS . "Cliente.php";
-require_once BASE_DIR . "dao" . DS . "ClienteDao.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 
 session_start();
 $usuario = $_SESSION["usuario"];

@@ -8,8 +8,8 @@ if (!defined("BASE_DIR")) {
 }
 
 require_once BASE_DIR . "model" . DS . "DadosBancario.php";
-require_once BASE_DIR . "dao" . DS . "AdministradorDao.php";
-require_once BASE_DIR . "dao" . DS . "DataBase.php";
+require_once BASE_DIR . "dao" . DS . "AdministradorDAO.php";
+require_once BASE_DIR . "dao" . DS . "Database.php";
 
 $db = new Database();
 $pdo = $db->conexao();

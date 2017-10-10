@@ -136,7 +136,7 @@ include("include/layout_sicredi.php");
 $content = ob_get_clean();
 
 // convert
-require_once(dirname(__FILE__) . '\html2pdf\html2pdf.class.php');
+require_once(dirname(__FILE__) . '/html2pdf/html2pdf.class.php');
 try {
     $html2pdf = new HTML2PDF('P', 'A4', 'fr', array(0, 0, 0, 0));
     /* Abre a tela de impressão */

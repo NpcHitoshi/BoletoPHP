@@ -8,8 +8,8 @@ if (!defined("BASE_DIR")) {
     define('BASE_DIR', dirname(dirname(__FILE__)) . DS);
 }
 //Importa arquivos necessários
-require_once BASE_DIR . "dao" . DS . "DataBase.php";
-require_once BASE_DIR . "dao" . DS . "ClienteDao.php";
+require_once BASE_DIR . "dao" . DS . "Database.php";
+require_once BASE_DIR . "dao" . DS . "ClienteDAO.php";
 //Conecta ao DB
 $db = new Database();
 $pdo = $db->conexao();
